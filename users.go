@@ -18,7 +18,6 @@ package zentao
 
 import (
 	"fmt"
-	"time"
 
 	"github.com/imroc/req/v3"
 )
@@ -27,68 +26,105 @@ type UsersService struct {
 	client *Client
 }
 
-type User struct {
-	Profile Profile `json:"profile"`
-}
-
 type UserMeta struct {
-	ID       int    `json:"id"`
+	ID       int         `json:"id"`
+	Dept     int         `json:"dept"`
+	Account  string      `json:"account"`
+	Realname string      `json:"realname"`
+	Role     interface{} `json:"role"`
+	Email    string      `json:"email"`
+}
+
+type UserCreateMeta struct {
 	Account  string `json:"account"`
-	Avatar   string `json:"avatar"`
-	Realname string `json:"realname"`
+	Password string `json:"password"`
+	Realname string `json:"realname,omitempty"`
+	Visions  string `json:"visions,omitempty"`
 }
 
-type Profile struct {
+type SelfMsg struct {
+	Profile UserProfile `json:"profile"`
+}
+
+type UserProfile struct {
 	UserMeta
-	Company       int         `json:"company"`
-	Type          string      `json:"type"`
-	Dept          int         `json:"dept"`
-	Role          Role        `json:"role"`
-	Pinyin        string      `json:"pinyin"`
-	Nickname      string      `json:"nickname"`
-	Commiter      string      `json:"commiter"`
-	Birthday      interface{} `json:"birthday"`
-	Gender        string      `json:"gender"`
-	Email         string      `json:"email"`
-	Skype         string      `json:"skype"`
-	Qq            string      `json:"qq"`
-	Mobile        string      `json:"mobile"`
-	Phone         string      `json:"phone"`
-	Weixin        string      `json:"weixin"`
-	Dingding      string      `json:"dingding"`
-	Slack         string      `json:"slack"`
-	Whatsapp      string      `json:"whatsapp"`
-	Address       string      `json:"address"`
-	Zipcode       string      `json:"zipcode"`
-	Nature        string      `json:"nature"`
-	Analysis      string      `json:"analysis"`
-	Strategy      string      `json:"strategy"`
-	Join          interface{} `json:"join"`
-	Visits        int         `json:"visits"`
-	Visions       string      `json:"visions"`
-	IP            string      `json:"ip"`
-	Last          time.Time   `json:"last"`
-	Fails         int         `json:"fails"`
-	Locked        interface{} `json:"locked"`
-	Feedback      string      `json:"feedback"`
-	Ranzhi        string      `json:"ranzhi"`
-	Ldap          string      `json:"ldap"`
-	Score         int         `json:"score"`
-	ScoreLevel    int         `json:"scoreLevel"`
-	Deleted       string      `json:"deleted"`
-	ClientStatus  string      `json:"clientStatus"`
-	ClientLang    string      `json:"clientLang"`
-	Admin         bool        `json:"admin"`
-	SuperReviewer bool        `json:"superReviewer"`
+	UserSocial
+	Admin bool `json:"admin"`
 }
 
-type Role struct {
-	Code string `json:"code"`
-	Name string `json:"name"`
+type UserGetMsg struct {
+	UserMeta
+	UserSocial
 }
 
-func (s *UsersService) Self() (*User, *req.Response, error) {
-	var u User
+type UserCreateMsg struct {
+	UserMeta
+	Pinyin string `json:"pinyin"`
+	UserSocial
+	Visions      string `json:"visions"`
+	Feedback     string `json:"feedback"`
+	Ldap         string `json:"ldap"`
+	Clientstatus string `json:"clientStatus"`
+	Clientlang   string `json:"clientLang"`
+}
+
+type UserSocial struct {
+	Score      int         `json:"score"`
+	Scorelevel int         `json:"scoreLevel"`
+	Deleted    interface{} `json:"deleted"`
+	Ranzhi     string      `json:"ranzhi"`
+	Last       interface{} `json:"last"`
+	Fails      int         `json:"fails"`
+	Locked     interface{} `json:"locked"`
+	Join       interface{} `json:"join"`
+	Visits     int         `json:"visits"`
+	IP         string      `json:"ip"`
+	Company    int         `json:"company"`
+	Type       string      `json:"type"`
+	Nickname   string      `json:"nickname"`
+	Commiter   string      `json:"commiter"`
+	Avatar     string      `json:"avatar"`
+	Birthday   interface{} `json:"birthday"`
+	Address    string      `json:"address"`
+	Zipcode    string      `json:"zipcode"`
+	Nature     string      `json:"nature"`
+	Analysis   string      `json:"analysis"`
+	Strategy   string      `json:"strategy"`
+	Gender     string      `json:"gender"`
+	Skype      string      `json:"skype"`
+	Qq         string      `json:"qq"`
+	Mobile     string      `json:"mobile"`
+	Phone      string      `json:"phone"`
+	Weixin     string      `json:"weixin"`
+	Dingding   string      `json:"dingding"`
+	Slack      string      `json:"slack"`
+	Whatsapp   string      `json:"whatsapp"`
+}
+
+type UserUpdateMeta struct {
+	Dept     int    `json:"dept,omitempty"`
+	Role     string `json:"role,omitempty"`
+	Mobile   string `json:"mobile,omitempty"`
+	Realname string `json:"realname,omitempty"`
+	Email    string `json:"email,omitempty"`
+	Phone    string `json:"phone,omitempty"`
+}
+
+type UserList struct {
+	Page  int        `json:"page"`
+	Total int        `json:"total"`
+	Limit int        `json:"limit"`
+	Users []UserMeta `json:"users"`
+}
+
+type CustomResp struct {
+	Message string `json:"message,omitempty"`
+	Error   string `json:"error,omitempty"`
+}
+
+// Self 获取我的个人信息
+func (s *UsersService) Self() (*SelfMsg, *req.Response, error) {
+	var u SelfMsg
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
 		SetResult(&u).
@@ -96,11 +132,58 @@ func (s *UsersService) Self() (*User, *req.Response, error) {
 	return &u, resp, err
 }
 
-func (s *UsersService) GetByID(id int64) (*User, *req.Response, error) {
-	var u User
+// GetByID 获取用户信息
+func (s *UsersService) GetByID(id int) (*UserGetMsg, *req.Response, error) {
+	var u UserGetMsg
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
 		SetResult(&u).
 		Get(s.client.RequestURL(fmt.Sprintf("/users/%d", id)))
+	return &u, resp, err
+}
+
+// DeleteByID 删除用户
+func (s *UsersService) DeleteByID(id int) (*CustomResp, *req.Response, error) {
+	var u CustomResp
+	resp, err := s.client.client.R().
+		SetHeader("Token", s.client.token).
+		SetResult(&u).
+		Delete(s.client.RequestURL(fmt.Sprintf("/users/%d", id)))
+	return &u, resp, err
+}
+
+// Create 创建用户
+func (s *UsersService) Create(user UserCreateMeta) (*UserCreateMsg, *req.Response, error) {
+	var u UserCreateMsg
+	resp, err := s.client.client.R().
+		SetHeader("Token", s.client.token).
+		SetBody(&user).
+		SetResult(&u).
+		Post(s.client.RequestURL("/users"))
+	return &u, resp, err
+}
+
+// UpdateByID 更新用户
+func (s *UsersService) UpdateByID(id int, user UserUpdateMeta) (*UserGetMsg, *req.Response, error) {
+	var u UserGetMsg
+	resp, err := s.client.client.R().
+		SetHeader("Token", s.client.token).
+		SetBody(&user).
+		SetResult(&u).
+		Put(s.client.RequestURL(fmt.Sprintf("/users/%d", id)))
+	return &u, resp, err
+}
+
+// List 获取用户列表
+func (s *UsersService) List(limit, page string) (*UserList, *req.Response, error) {
+	var u UserList
+	resp, err := s.client.client.R().
+		SetHeader("Token", s.client.token).
+		SetQueryParams(map[string]string{
+			"page":  page,
+			"limit": limit,
+		}).
+		SetResult(&u).
+		Get(s.client.RequestURL("/users"))
 	return &u, resp, err
 }

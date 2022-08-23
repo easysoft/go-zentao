@@ -17,24 +17,43 @@
 package main
 
 import (
+	"fmt"
 	"log"
+	"time"
 
 	"github.com/ysicing/go-zentao"
 )
 
-func userExample() {
+func main() {
 	zt, err := zentao.NewBasicAuthClient(
-		"demo",
-		"123456",
+		"admin",
+		"jaege1ugh4ooYip7",
+		zentao.WithBaseURL("http://127.0.0.1"),
 		zentao.WithDevMode(),
 		zentao.WithDumpAll(),
 	)
 	if err != nil {
 		log.Fatal(err)
 	}
-	u, _, err := zt.Users.GetByID(2)
+	pl, _, err := zt.Products.List()
 	if err != nil {
 		log.Fatal(err)
 	}
-	log.Printf("account: %s", u.Account)
+	log.Printf("Products count: %v", len(pl.Products))
+	cp, _, err := zt.Products.Create(zentao.ProductsCreateMeta{
+		Name: fmt.Sprintf("abc%d%d", time.Now().Minute(), time.Now().Second()),
+		Code: fmt.Sprintf("abc%d%d", time.Now().Minute(), time.Now().Second()),
+	})
+	if err != nil {
+		log.Fatal(err)
+	}
+	log.Printf("program id: %v", cp.ID)
+	_, _, err = zt.Products.GetByID(cp.ID)
+	if err != nil {
+		log.Fatal(err)
+	}
+	_, _, err = zt.Products.DeleteByID(cp.ID)
+	if err != nil {
+		log.Fatal(err)
+	}
 }

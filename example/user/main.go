@@ -17,13 +17,14 @@
 package main
 
 import (
+	"fmt"
 	"log"
+	"time"
 
 	"github.com/ysicing/go-zentao"
 )
 
-// This example shows how to create a client with username and password.
-func basicAuthExample() {
+func main() {
 	zt, err := zentao.NewBasicAuthClient(
 		"admin",
 		"jaege1ugh4ooYip7",
@@ -39,4 +40,30 @@ func basicAuthExample() {
 		log.Fatal(err)
 	}
 	log.Printf("account: %s", u.Profile.Account)
+	cu, _, err := zt.Users.Create(zentao.UserCreateMeta{
+		Account:  fmt.Sprintf("abc%d%d", time.Now().Minute(), time.Now().Second()), // 不超过30位且字母、数字或下划线
+		Password: "demo11111111x.x",
+		Realname: fmt.Sprintf("abc%d%d", time.Now().Minute(), time.Now().Second()),
+	})
+	if err != nil {
+		log.Fatal(err)
+	}
+	if gu, _, err := zt.Users.GetByID(cu.ID); err != nil {
+		log.Fatal(err)
+	} else {
+		log.Printf("account: %v, name: %s", gu.ID, gu.Realname)
+	}
+	time.Sleep(time.Second * 2)
+	zt.Users.UpdateByID(cu.ID, zentao.UserUpdateMeta{Realname: fmt.Sprintf("abc%d%d", time.Now().Minute(), time.Now().Second())})
+	if gu, _, err := zt.Users.GetByID(cu.ID); err != nil {
+		log.Fatal(err)
+	} else {
+		log.Printf("account: %v, name: %s", gu.ID, gu.Realname)
+	}
+	zt.Users.DeleteByID(cu.ID)
+	ul, _, err := zt.Users.List("10", "1")
+	if err != nil {
+		log.Fatal(err)
+	}
+	log.Printf("user %v", ul.Total)
 }
