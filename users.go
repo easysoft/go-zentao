@@ -31,18 +31,22 @@ type User struct {
 	Profile Profile `json:"profile"`
 }
 
+type UserMeta struct {
+	ID       int    `json:"id"`
+	Account  string `json:"account"`
+	Avatar   string `json:"avatar"`
+	Realname string `json:"realname"`
+}
+
 type Profile struct {
-	ID            int         `json:"id"`
+	UserMeta
 	Company       int         `json:"company"`
 	Type          string      `json:"type"`
 	Dept          int         `json:"dept"`
-	Account       string      `json:"account"`
 	Role          Role        `json:"role"`
-	Realname      string      `json:"realname"`
 	Pinyin        string      `json:"pinyin"`
 	Nickname      string      `json:"nickname"`
 	Commiter      string      `json:"commiter"`
-	Avatar        string      `json:"avatar"`
 	Birthday      interface{} `json:"birthday"`
 	Gender        string      `json:"gender"`
 	Email         string      `json:"email"`

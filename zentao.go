@@ -31,8 +31,8 @@ const (
 )
 
 type Client struct {
-	client  *req.Client `json:"-"`
-	baseURL *url.URL    `json:"-"`
+	client  *req.Client
+	baseURL *url.URL
 
 	// Username and password used for basic authentication.
 	username, password string
@@ -42,8 +42,10 @@ type Client struct {
 
 	UserAgent string
 
-	Token *TokenService `json:"-"`
-	Users *UsersService `json:"-"`
+	Token      *TokenService
+	Users      *UsersService
+	Executions *ExecutionsService
+	Tasks      *TasksService
 }
 
 func NewClient(token string, options ...ClientOptionFunc) (*Client, error) {
@@ -87,6 +89,8 @@ func newClient(options ...ClientOptionFunc) (*Client, error) {
 	}
 	c.Token = &TokenService{client: c}
 	c.Users = &UsersService{client: c}
+	c.Executions = &ExecutionsService{client: c}
+	c.Tasks = &TasksService{client: c}
 	return c, nil
 }
 

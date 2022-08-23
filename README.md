@@ -26,7 +26,17 @@ Zentao API client enabling Go programs to interact with Zentao in a simple and u
 - [ ] 项目
 - [ ] 版本
 - [ ] 执行
+  - [x] 获取项目的执行列表
+  - [ ] 删除执行
+  - [ ] 修改执行
+  - [ ] 创建执行
+  - [ ] 查看执行详情
 - [ ] 任务
+  - [x] 获取任务列表
+  - [ ] 删除任务
+  - [ ] 修改任务
+  - [ ] 创建任务
+  - [ ] 查看任务详情
 - [ ] Bug
 - [ ] 用例
 - [ ] 测试单
