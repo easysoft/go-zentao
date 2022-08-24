@@ -49,6 +49,9 @@ type Client struct {
 	Programs     *ProgramsService
 	Products     *ProductsService
 	ProductPlans *ProductPlansService
+	Releases     *ReleasesService
+	Stories      *StoriesService
+	Projects     *ProjectsService
 }
 
 func NewClient(token string, options ...ClientOptionFunc) (*Client, error) {
@@ -97,6 +100,9 @@ func newClient(options ...ClientOptionFunc) (*Client, error) {
 	c.Programs = &ProgramsService{client: c}
 	c.Products = &ProductsService{client: c}
 	c.ProductPlans = &ProductPlansService{client: c}
+	c.Releases = &ReleasesService{client: c}
+	c.Stories = &StoriesService{client: c}
+	c.Projects = &ProjectsService{client: c}
 	return c, nil
 }
 

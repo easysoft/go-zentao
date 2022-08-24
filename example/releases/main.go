@@ -17,9 +17,7 @@
 package main
 
 import (
-	"fmt"
 	"log"
-	"time"
 
 	"github.com/ysicing/go-zentao"
 )
@@ -36,30 +34,6 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	pl, _, err := zt.Products.List()
-	if err != nil {
-		log.Fatal(err)
-	}
-	log.Printf("Products count: %v", len(pl.Products))
-	cp, _, err := zt.Products.Create(zentao.ProductsCreateMeta{
-		Name: fmt.Sprintf("abc%d%d", time.Now().Minute(), time.Now().Second()),
-		Code: fmt.Sprintf("abc%d%d", time.Now().Minute(), time.Now().Second()),
-	})
-	if err != nil {
-		log.Fatal(err)
-	}
-	log.Printf("program id: %v", cp.ID)
-	_, _, err = zt.Products.GetByID(cp.ID)
-	if err != nil {
-		log.Fatal(err)
-	}
-	// _, _, err = zt.Products.DeleteByID(cp.ID)
-	_, _, err = zt.ProductPlans.Create(cp.ID, zentao.ProductPlanMeta{
-		Title: fmt.Sprintf("abc%d%d", time.Now().Minute(), time.Now().Second()),
-	})
-	if err != nil {
-		log.Fatal(err)
-	}
-	zt.ProductPlans.List(cp.ID)
-	zt.ProductPlans.GetByID(5)
+	zt.Releases.ProjectsList(7)
+	zt.Releases.ProductsList(1)
 }
