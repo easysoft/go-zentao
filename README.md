@@ -6,7 +6,7 @@ Zentao API client enabling Go programs to interact with Zentao in a simple and u
 
 ## NOTE
 
-基于ZenTao开源版本 `17`
+基于ZenTao开源版本 `17.4`
 
 ## 支持
 
@@ -31,6 +31,15 @@ Zentao API client enabling Go programs to interact with Zentao in a simple and u
   - [x] 删除产品
   - [x] 创建产品
 - [ ] 产品计划
+  - [x] 创建计划
+  - [x] 获取产品计划列表
+  - [ ] 获取计划详情
+  - [ ] 修改计划
+  - [ ] 删除计划
+  - [ ] 产品计划关联需求
+  - [ ] 产品计划取消关联需求
+  - [ ] 产品计划关联Bug
+  - [ ] 产品计划取消关联Bug
 - [ ] 发布
 - [ ] 需求
 - [ ] 项目

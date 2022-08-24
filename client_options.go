@@ -36,3 +36,10 @@ func WithDumpAll() ClientOptionFunc {
 		return c.setDumpAll()
 	}
 }
+
+// WithoutProxy 禁用代理, 默认情况下会读取HTTP_PROXY/HTTPS_PROXY/http_proxy/https_proxy变量
+func WithoutProxy() ClientOptionFunc {
+	return func(c *Client) error {
+		return c.setDisableProxy()
+	}
+}

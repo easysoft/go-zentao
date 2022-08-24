@@ -14,34 +14,30 @@
 #  limitations under the License.
 #
 
-version: '2'
-
-networks:
-  zentao-net:
-    driver: bridge
-
+version: '3.8'
 services:
 
 # mysql service for zentao
   zentao-mysql:
     image: mysql:5.7
+    restart: always
     container_name: zentao-mysql
-    ports:
-      - '3306:3306'
     volumes:
       - 'zentao_db:/var/lib/mysql'
     environment:
       - MYSQL_ROOT_PASSWORD=pass4Zentao
       - MYSQL_DATABASE=zentao
     networks:
-      - zentao-net
+      zentao-net:
+        ipv4_address: 172.77.77.11
 
 # zentao service
   zentao:
     image: hub.qucheng.com/app/quickon-zentao:${TAG:-latest}
     container_name: zentao
-    ports:
-      - '80:80'
+    restart: always
+    # ports:
+    #   - '80:80'
     volumes:
       - 'zentao_data:/data'
     depends_on:
@@ -56,7 +52,15 @@ services:
       - DEBUG=1
       - IS_CONTAINER=true
     networks:
-      - zentao-net
+      zentao-net:
+        ipv4_address: 172.77.77.12
+
+networks:
+  zentao-net:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.77.77.0/24
 
 # persistence for mysql and zentao
 volumes:

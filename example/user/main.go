@@ -28,9 +28,10 @@ func main() {
 	zt, err := zentao.NewBasicAuthClient(
 		"admin",
 		"jaege1ugh4ooYip7",
-		zentao.WithBaseURL("http://127.0.0.1"),
+		zentao.WithBaseURL("http://172.77.77.12"),
 		zentao.WithDevMode(),
 		zentao.WithDumpAll(),
+		zentao.WithoutProxy(),
 	)
 	if err != nil {
 		log.Fatal(err)

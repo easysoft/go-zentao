@@ -42,12 +42,13 @@ type Client struct {
 
 	UserAgent string
 
-	Token      *TokenService
-	Users      *UsersService
-	Executions *ExecutionsService
-	Tasks      *TasksService
-	Programs   *ProgramsService
-	Products   *ProductsService
+	Token        *TokenService
+	Users        *UsersService
+	Executions   *ExecutionsService
+	Tasks        *TasksService
+	Programs     *ProgramsService
+	Products     *ProductsService
+	ProductPlans *ProductPlansService
 }
 
 func NewClient(token string, options ...ClientOptionFunc) (*Client, error) {
@@ -95,6 +96,7 @@ func newClient(options ...ClientOptionFunc) (*Client, error) {
 	c.Tasks = &TasksService{client: c}
 	c.Programs = &ProgramsService{client: c}
 	c.Products = &ProductsService{client: c}
+	c.ProductPlans = &ProductPlansService{client: c}
 	return c, nil
 }
 
@@ -126,6 +128,11 @@ func (c *Client) setDebug() error {
 
 func (c *Client) setDumpAll() error {
 	c.client.EnableDumpAll()
+	return nil
+}
+
+func (c *Client) setDisableProxy() error {
+	c.client.SetProxy(nil)
 	return nil
 }
 
