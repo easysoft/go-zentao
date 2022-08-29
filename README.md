@@ -83,12 +83,12 @@ Zentao API client enabling Go programs to interact with Zentao in a simple and u
   - [x] 创建Bug
   - [x] 删除Bug
   - [x] 修改Bug
-- [ ] 用例
+- [x] 用例
   - [x] 获取产品用例列表
-  - [ ] 获取用例详情
-  - [ ] 创建用例
-  - [ ] 删除用例
-  - [ ] 修改用例
+  - [x] 获取用例详情
+  - [x] 创建用例
+  - [x] 删除用例
+  - [x] 修改用例
 - [ ] 测试单
   - [ ] 获取测试单列表
   - [ ] 获取项目的测试单
