@@ -85,6 +85,193 @@ type Task struct {
 	Progress           int           `json:"progress"`
 }
 
+type TaskCreateMeta struct {
+	Module     int      `json:"module,omitempty"`
+	Story      int      `json:"story,omitempty"`
+	FromBug    int      `json:"fromBug,omitempty"`
+	Pri        int      `json:"pri,omitempty"`
+	Estimate   float64  `json:"estimate,omitempty"`
+	Name       string   `json:"name"`
+	Assignedto []string `json:"assignedTo"`
+	Type       string   `json:"type"`
+	Eststarted string   `json:"estStarted"`
+	Deadline   string   `json:"deadline"`
+}
+
+type TaskCreateMsg struct {
+	ID            int         `json:"id"`
+	Project       int         `json:"project"`
+	Parent        int         `json:"parent"`
+	Execution     int         `json:"execution"`
+	Module        int         `json:"module"`
+	Design        int         `json:"design"`
+	Story         int         `json:"story"`
+	Storyversion  int         `json:"storyVersion"`
+	Designversion int         `json:"designVersion"`
+	Frombug       int         `json:"fromBug"`
+	Name          string      `json:"name"`
+	Type          string      `json:"type"`
+	Pri           int         `json:"pri"`
+	Estimate      int         `json:"estimate"`
+	Consumed      int         `json:"consumed"`
+	Left          int         `json:"left"`
+	Deadline      string      `json:"deadline"`
+	Status        string      `json:"status"`
+	Substatus     string      `json:"subStatus"`
+	Color         string      `json:"color"`
+	Mailto        interface{} `json:"mailto"`
+	Desc          string      `json:"desc"`
+	Version       int         `json:"version"`
+	Openedby      struct {
+		ID       int    `json:"id"`
+		Account  string `json:"account"`
+		Avatar   string `json:"avatar"`
+		Realname string `json:"realname"`
+	} `json:"openedBy"`
+	Openeddate time.Time `json:"openedDate"`
+	Assignedto struct {
+		ID       int    `json:"id"`
+		Account  string `json:"account"`
+		Avatar   string `json:"avatar"`
+		Realname string `json:"realname"`
+	} `json:"assignedTo"`
+	Assigneddate       time.Time     `json:"assignedDate"`
+	Eststarted         string        `json:"estStarted"`
+	Realstarted        interface{}   `json:"realStarted"`
+	Finishedby         interface{}   `json:"finishedBy"`
+	Finisheddate       interface{}   `json:"finishedDate"`
+	Finishedlist       string        `json:"finishedList"`
+	Canceledby         interface{}   `json:"canceledBy"`
+	Canceleddate       interface{}   `json:"canceledDate"`
+	Closedby           interface{}   `json:"closedBy"`
+	Closeddate         interface{}   `json:"closedDate"`
+	Planduration       int           `json:"planDuration"`
+	Realduration       int           `json:"realDuration"`
+	Closedreason       string        `json:"closedReason"`
+	Lasteditedby       interface{}   `json:"lastEditedBy"`
+	Lastediteddate     interface{}   `json:"lastEditedDate"`
+	Activateddate      string        `json:"activatedDate"`
+	Deleted            bool          `json:"deleted"`
+	Storyid            interface{}   `json:"storyID"`
+	Storytitle         interface{}   `json:"storyTitle"`
+	Lateststoryversion interface{}   `json:"latestStoryVersion"`
+	Storystatus        interface{}   `json:"storyStatus"`
+	Assignedtorealname string        `json:"assignedToRealName"`
+	Children           []interface{} `json:"children"`
+	Team               []interface{} `json:"team"`
+	Files              []interface{} `json:"files"`
+	Needconfirm        bool          `json:"needConfirm"`
+	Progress           int           `json:"progress"`
+}
+
+type TaskGetMsg struct {
+	ID            int           `json:"id"`
+	Project       int           `json:"project"`
+	Parent        int           `json:"parent"`
+	Execution     int           `json:"execution"`
+	Module        int           `json:"module"`
+	Design        int           `json:"design"`
+	Story         int           `json:"story"`
+	Storyversion  int           `json:"storyVersion"`
+	Designversion int           `json:"designVersion"`
+	Frombug       int           `json:"fromBug"`
+	Name          string        `json:"name"`
+	Type          string        `json:"type"`
+	Pri           int           `json:"pri"`
+	Estimate      int           `json:"estimate"`
+	Consumed      int           `json:"consumed"`
+	Left          int           `json:"left"`
+	Deadline      string        `json:"deadline"`
+	Status        string        `json:"status"`
+	Substatus     string        `json:"subStatus"`
+	Color         string        `json:"color"`
+	Mailto        []interface{} `json:"mailto"`
+	Desc          string        `json:"desc"`
+	Version       int           `json:"version"`
+	Openedby      struct {
+		ID       int    `json:"id"`
+		Account  string `json:"account"`
+		Avatar   string `json:"avatar"`
+		Realname string `json:"realname"`
+	} `json:"openedBy"`
+	Openeddate time.Time `json:"openedDate"`
+	Assignedto struct {
+		ID       int    `json:"id"`
+		Account  string `json:"account"`
+		Avatar   string `json:"avatar"`
+		Realname string `json:"realname"`
+	} `json:"assignedTo"`
+	Assigneddate       time.Time     `json:"assignedDate"`
+	Eststarted         string        `json:"estStarted"`
+	Realstarted        interface{}   `json:"realStarted"`
+	Finishedby         interface{}   `json:"finishedBy"`
+	Finisheddate       interface{}   `json:"finishedDate"`
+	Finishedlist       string        `json:"finishedList"`
+	Canceledby         interface{}   `json:"canceledBy"`
+	Canceleddate       interface{}   `json:"canceledDate"`
+	Closedby           interface{}   `json:"closedBy"`
+	Closeddate         interface{}   `json:"closedDate"`
+	Planduration       int           `json:"planDuration"`
+	Realduration       int           `json:"realDuration"`
+	Closedreason       string        `json:"closedReason"`
+	Lasteditedby       interface{}   `json:"lastEditedBy"`
+	Lastediteddate     interface{}   `json:"lastEditedDate"`
+	Activateddate      string        `json:"activatedDate"`
+	Deleted            bool          `json:"deleted"`
+	Storyid            interface{}   `json:"storyID"`
+	Storytitle         interface{}   `json:"storyTitle"`
+	Lateststoryversion interface{}   `json:"latestStoryVersion"`
+	Storystatus        interface{}   `json:"storyStatus"`
+	Assignedtorealname string        `json:"assignedToRealName"`
+	Children           []interface{} `json:"children"`
+	Team               []struct {
+		ID       int    `json:"id"`
+		Root     int    `json:"root"`
+		Type     string `json:"type"`
+		Account  string `json:"account"`
+		Role     string `json:"role"`
+		Limited  string `json:"limited"`
+		Join     string `json:"join"`
+		Days     int    `json:"days"`
+		Hours    int    `json:"hours"`
+		Estimate int    `json:"estimate"`
+		Consumed int    `json:"consumed"`
+		Left     int    `json:"left"`
+		Order    int    `json:"order"`
+		Realname string `json:"realname"`
+		Avatar   string `json:"avatar"`
+		Progress int    `json:"progress"`
+	} `json:"team"`
+	Files         []interface{} `json:"files"`
+	Needconfirm   bool          `json:"needConfirm"`
+	Progress      int           `json:"progress"`
+	Storyspec     string        `json:"storySpec"`
+	Storyverify   string        `json:"storyVerify"`
+	Storyfiles    []interface{} `json:"storyFiles"`
+	Executionname string        `json:"executionName"`
+	Moduletitle   string        `json:"moduleTitle"`
+	Actions       []struct {
+		ID         int           `json:"id"`
+		Objecttype string        `json:"objectType"`
+		Objectid   int           `json:"objectID"`
+		Product    string        `json:"product"`
+		Project    int           `json:"project"`
+		Execution  int           `json:"execution"`
+		Actor      string        `json:"actor"`
+		Action     string        `json:"action"`
+		Date       string        `json:"date"`
+		Comment    string        `json:"comment"`
+		Extra      string        `json:"extra"`
+		Read       string        `json:"read"`
+		History    []interface{} `json:"history"`
+		Desc       string        `json:"desc"`
+	} `json:"actions"`
+	Preandnext struct {
+		Pre  string `json:"pre"`
+		Next string `json:"next"`
+	} `json:"preAndNext"`
+}
+
 type TasksService struct {
 	client *Client
 }
@@ -96,4 +283,46 @@ func (s *TasksService) ListByExecution(id int64) (*ExecutionTasks, *req.Response
 		SetResult(&et).
 		Get(s.client.RequestURL(fmt.Sprintf("/executions/%d/tasks", id)))
 	return &et, resp, err
+}
+
+// Create 创建任务
+func (s *TasksService) Create(id int, build TaskCreateMeta) (*TaskCreateMsg, *req.Response, error) {
+	var u TaskCreateMsg
+	resp, err := s.client.client.R().
+		SetHeader("Token", s.client.token).
+		SetBody(&build).
+		SetResult(&u).
+		Post(s.client.RequestURL(fmt.Sprintf("/executions/%d/tasks", id)))
+	return &u, resp, err
+}
+
+// DeleteByID 删除任务
+func (s *TasksService) DeleteByID(id int) (*CustomResp, *req.Response, error) {
+	var u CustomResp
+	resp, err := s.client.client.R().
+		SetHeader("Token", s.client.token).
+		SetResult(&u).
+		Delete(s.client.RequestURL(fmt.Sprintf("/tasks/%d", id)))
+	return &u, resp, err
+}
+
+// UpdateByID 修改任务
+func (s *TasksService) UpdateByID(id int, exec TaskCreateMeta) (*TaskCreateMsg, *req.Response, error) {
+	var u TaskCreateMsg
+	resp, err := s.client.client.R().
+		SetHeader("Token", s.client.token).
+		SetBody(&exec).
+		SetResult(&u).
+		Put(s.client.RequestURL(fmt.Sprintf("/tasks/%d", id)))
+	return &u, resp, err
+}
+
+// GetByID 获取任务详情
+func (s *TasksService) GetByID(id int) (*TaskGetMsg, *req.Response, error) {
+	var u TaskGetMsg
+	resp, err := s.client.client.R().
+		SetHeader("Token", s.client.token).
+		SetResult(&u).
+		Get(s.client.RequestURL(fmt.Sprintf("/tasks/%d", id)))
+	return &u, resp, err
 }
