@@ -16,6 +16,6 @@
 #
 
 
-# curl -X POST -d '{"account": "demo", "password": "123456"}'  https://demo16.zentao.net/api.php/v1/tokens
+# curl -X POST -d '{"account": "admin", "password": "jaege1ugh4ooYip7"}'  https://172.77.77.12/api.php/v1/tokens
 
-curl -H "Token: 138t0m1n6db08qaiansnshajj4" https://demo16.zentao.net/api.php/v1/user
+curl -H "Token: e3faabcc414b9e1bc9c7a575c3fbdc7a" http://172.77.77.12/api.php/v1/user

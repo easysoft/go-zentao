@@ -33,7 +33,7 @@ services:
 
 # zentao service
   zentao:
-    image: hub.qucheng.com/app/quickon-zentao:${TAG:-latest}
+    image: hub.qucheng.com/app/quickon-zentao:17.6-20220831
     container_name: zentao
     restart: always
     # ports:
