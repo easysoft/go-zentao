@@ -43,3 +43,12 @@ func WithoutProxy() ClientOptionFunc {
 		return c.setDisableProxy()
 	}
 }
+
+func WithUserAgent(ua string) ClientOptionFunc {
+	return func(c *Client) error {
+		if ua == "" {
+			ua = userAgent
+		}
+		return c.setReqUserAgent(ua)
+	}
+}

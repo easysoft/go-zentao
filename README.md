@@ -1,6 +1,10 @@
 # go-zentao
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/ysicing/go-zentao)](https://goreportcard.com/report/github.com/ysicing/go-zentao)
+![GitHub](https://img.shields.io/github/license/ysicing/go-zentao?style=flat-square)
+![GitHub go.mod Go version (subdirectory of monorepo)](https://img.shields.io/github/go-mod/go-version/ysicing/go-zentao?filename=go.mod&style=flat-square)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/w/ysicing/go-zentao?style=flat-square)
+![zentao](https://goproxy.cn/stats/github.com/ysicing/go-zentao/badges/download-count.svg)
 
 Zentao API client enabling Go programs to interact with Zentao in a simple and uniform way
 

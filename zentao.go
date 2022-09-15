@@ -40,8 +40,6 @@ type Client struct {
 	// Token used to make authenticated API calls.
 	token string
 
-	UserAgent string
-
 	Token        *TokenService
 	Users        *UsersService
 	Executions   *ExecutionsService
@@ -87,9 +85,10 @@ func NewBasicAuthClient(username, password string, options ...ClientOptionFunc) 
 }
 
 func newClient(options ...ClientOptionFunc) (*Client, error) {
-	c := &Client{UserAgent: userAgent}
+	c := &Client{}
 	c.client = req.C().SetLogger(nil)
 	c.setBaseURL(defaultBaseURL)
+	c.setReqUserAgent(userAgent)
 	for _, fn := range options {
 		if fn == nil {
 			continue
@@ -149,6 +148,11 @@ func (c *Client) setDumpAll() error {
 
 func (c *Client) setDisableProxy() error {
 	c.client.SetProxy(nil)
+	return nil
+}
+
+func (c *Client) setReqUserAgent(ua string) error {
+	c.client.SetUserAgent(ua)
 	return nil
 }
 
