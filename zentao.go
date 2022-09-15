@@ -88,7 +88,7 @@ func NewBasicAuthClient(username, password string, options ...ClientOptionFunc) 
 
 func newClient(options ...ClientOptionFunc) (*Client, error) {
 	c := &Client{UserAgent: userAgent}
-	c.client = req.C()
+	c.client = req.C().SetLogger(nil)
 	c.setBaseURL(defaultBaseURL)
 	for _, fn := range options {
 		if fn == nil {
