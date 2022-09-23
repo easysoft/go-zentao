@@ -21,6 +21,7 @@ import (
 	"log"
 	"time"
 
+	"github.com/davecgh/go-spew/spew"
 	"github.com/ysicing/go-zentao"
 )
 
@@ -28,7 +29,7 @@ func main() {
 	zt, err := zentao.NewBasicAuthClient(
 		"admin",
 		"jaege1ugh4ooYip7",
-		zentao.WithBaseURL("http://172.77.77.12"),
+		zentao.WithBaseURL("https://zentao-ysicing.cloud.okteto.net"),
 		zentao.WithDevMode(),
 		zentao.WithDumpAll(),
 		zentao.WithoutProxy(),
@@ -41,7 +42,7 @@ func main() {
 		log.Fatal(err)
 	}
 	log.Printf("Products count: %v", len(pl.Products))
-	cp, _, err := zt.Products.Create(zentao.ProductsCreateMeta{
+	cp, _, err := zt.Products.Create(zentao.ProductsMeta{
 		Name: fmt.Sprintf("abc%d%d", time.Now().Minute(), time.Now().Second()),
 		Code: fmt.Sprintf("abc%d%d", time.Now().Minute(), time.Now().Second()),
 	})
@@ -49,17 +50,18 @@ func main() {
 		log.Fatal(err)
 	}
 	log.Printf("program id: %v", cp.ID)
-	_, _, err = zt.Products.GetByID(cp.ID)
+	getmsg, _, err := zt.Products.GetByID(cp.ID)
 	if err != nil {
 		log.Fatal(err)
 	}
+	spew.Dump(getmsg)
 	// _, _, err = zt.Products.DeleteByID(cp.ID)
-	_, _, err = zt.ProductPlans.Create(cp.ID, zentao.ProductPlanMeta{
-		Title: fmt.Sprintf("abc%d%d", time.Now().Minute(), time.Now().Second()),
-	})
-	if err != nil {
-		log.Fatal(err)
-	}
-	zt.ProductPlans.List(cp.ID)
-	zt.ProductPlans.GetByID(5)
+	// _, _, err = zt.ProductPlans.Create(cp.ID, zentao.ProductPlanMeta{
+	// 	Title: fmt.Sprintf("abc%d%d", time.Now().Minute(), time.Now().Second()),
+	// })
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+	// zt.ProductPlans.List(cp.ID)
+	// zt.ProductPlans.GetByID(5)
 }

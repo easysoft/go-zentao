@@ -22,13 +22,13 @@ Zentao API client enabling Go programs to interact with Zentao in a simple and u
   - [x] 修改用户信息
   - [x] 获取用户列表
   - [x] 获取用户信息
-- [x] 项目集
+- [x] 项目集(Programs)
   - [x] 获取项目集列表
   - [x] 修改项目集
   - [x] 获取项目集详情
   - [x] 删除项目集
   - [x] 创建项目集
-- [x] 产品
+- [x] 产品(Products)
   - [x] 获取产品列表
   - [x] 修改产品
   - [x] 获取产品详情
