@@ -32,54 +32,29 @@ type ProductsList struct {
 	Page     int `json:"page"`
 	Limit    int `json:"limit"`
 	Products []struct {
-		ID        int    `json:"id"`
-		Program   int    `json:"program"`
-		Name      string `json:"name"`
-		Code      string `json:"code"`
-		Bind      string `json:"bind"`
-		Line      int    `json:"line"`
-		Type      string `json:"type"`
-		Status    string `json:"status"`
-		Substatus string `json:"subStatus"`
-		Desc      string `json:"desc"`
-		Po        struct {
-			ID       int    `json:"id"`
-			Account  string `json:"account"`
-			Avatar   string `json:"avatar"`
-			Realname string `json:"realname"`
-		} `json:"PO"`
-		Qd struct {
-			ID       int    `json:"id"`
-			Account  string `json:"account"`
-			Avatar   string `json:"avatar"`
-			Realname string `json:"realname"`
-		} `json:"QD"`
-		Rd struct {
-			ID       int    `json:"id"`
-			Account  string `json:"account"`
-			Avatar   string `json:"avatar"`
-			Realname string `json:"realname"`
-		} `json:"RD"`
-		ACL       string `json:"acl"`
-		Whitelist []struct {
-			ID       int    `json:"id"`
-			Account  string `json:"account"`
-			Avatar   string `json:"avatar"`
-			Realname string `json:"realname"`
-		} `json:"whitelist"`
-		Reviewer  string `json:"reviewer"`
-		Createdby struct {
-			ID       int    `json:"id"`
-			Account  string `json:"account"`
-			Avatar   string `json:"avatar"`
-			Realname string `json:"realname"`
-		} `json:"createdBy"`
-		Createddate    time.Time `json:"createdDate"`
-		Createdversion string    `json:"createdVersion"`
-		Order          int       `json:"order"`
-		Deleted        string    `json:"deleted"`
-		Linename       string    `json:"lineName"`
-		Programname    string    `json:"programName"`
+		ID             int        `json:"id"`
+		Program        int        `json:"program"`
+		Name           string     `json:"name"`
+		Code           string     `json:"code"`
+		Bind           string     `json:"bind"`
+		Line           int        `json:"line"`
+		Type           string     `json:"type"`
+		Status         string     `json:"status"`
+		Substatus      string     `json:"subStatus"`
+		Desc           string     `json:"desc"`
+		Po             UserMeta   `json:"PO"`
+		Qd             UserMeta   `json:"QD"`
+		Rd             UserMeta   `json:"RD"`
+		ACL            string     `json:"acl"`
+		Whitelist      []UserMeta `json:"whitelist"`
+		Reviewer       string     `json:"reviewer"`
+		Createdby      UserMeta   `json:"createdBy"`
+		Createddate    time.Time  `json:"createdDate"`
+		Createdversion string     `json:"createdVersion"`
+		Order          int        `json:"order"`
+		Deleted        string     `json:"deleted"`
+		Linename       string     `json:"lineName"`
+		Programname    string     `json:"programName"`
 		Stories        struct {
 			Num0    string `json:"0"`
 			Num1    string `json:"1"`
@@ -122,65 +97,55 @@ type ProductsCreateMeta struct {
 }
 
 type ProductsCreateMsg struct {
-	ID        int           `json:"id"`
-	Program   int           `json:"program"`
-	Name      string        `json:"name"`
-	Code      string        `json:"code"`
-	Bind      string        `json:"bind"`
-	Line      int           `json:"line"`
-	Type      string        `json:"type"`
-	Status    string        `json:"status"`
-	Substatus string        `json:"subStatus"`
-	Desc      string        `json:"desc"`
-	Po        interface{}   `json:"PO"`
-	Qd        interface{}   `json:"QD"`
-	Rd        interface{}   `json:"RD"`
-	Feedback  string        `json:"feedback"`
-	ACL       string        `json:"acl"`
-	Whitelist []interface{} `json:"whitelist"`
-	Reviewer  string        `json:"reviewer"`
-	Createdby struct {
-		ID       int    `json:"id"`
-		Account  string `json:"account"`
-		Avatar   string `json:"avatar"`
-		Realname string `json:"realname"`
-	} `json:"createdBy"`
-	Createddate    time.Time `json:"createdDate"`
-	Createdversion string    `json:"createdVersion"`
-	Order          int       `json:"order"`
-	Vision         string    `json:"vision"`
-	Deleted        string    `json:"deleted"`
+	ID             int           `json:"id"`
+	Program        int           `json:"program"`
+	Name           string        `json:"name"`
+	Code           string        `json:"code"`
+	Bind           string        `json:"bind"`
+	Line           int           `json:"line"`
+	Type           string        `json:"type"`
+	Status         string        `json:"status"`
+	Substatus      string        `json:"subStatus"`
+	Desc           string        `json:"desc"`
+	Po             interface{}   `json:"PO"`
+	Qd             interface{}   `json:"QD"`
+	Rd             interface{}   `json:"RD"`
+	Feedback       string        `json:"feedback"`
+	ACL            string        `json:"acl"`
+	Whitelist      []interface{} `json:"whitelist"`
+	Reviewer       string        `json:"reviewer"`
+	Createdby      UserMeta      `json:"createdBy"`
+	Createddate    time.Time     `json:"createdDate"`
+	Createdversion string        `json:"createdVersion"`
+	Order          int           `json:"order"`
+	Vision         string        `json:"vision"`
+	Deleted        string        `json:"deleted"`
 }
 
 type ProductsGetMsg struct {
-	ID        int           `json:"id"`
-	Program   int           `json:"program"`
-	Name      string        `json:"name"`
-	Code      string        `json:"code"`
-	Bind      string        `json:"bind"`
-	Line      int           `json:"line"`
-	Type      string        `json:"type"`
-	Status    string        `json:"status"`
-	Substatus string        `json:"subStatus"`
-	Desc      string        `json:"desc"`
-	Po        interface{}   `json:"PO"`
-	Qd        interface{}   `json:"QD"`
-	Rd        interface{}   `json:"RD"`
-	Feedback  interface{}   `json:"feedback"`
-	ACL       string        `json:"acl"`
-	Whitelist []interface{} `json:"whitelist"`
-	Reviewer  string        `json:"reviewer"`
-	Createdby struct {
-		ID       int    `json:"id"`
-		Account  string `json:"account"`
-		Avatar   string `json:"avatar"`
-		Realname string `json:"realname"`
-	} `json:"createdBy"`
-	Createddate    time.Time `json:"createdDate"`
-	Createdversion string    `json:"createdVersion"`
-	Order          int       `json:"order"`
-	Vision         string    `json:"vision"`
-	Deleted        string    `json:"deleted"`
+	ID             int           `json:"id"`
+	Program        int           `json:"program"`
+	Name           string        `json:"name"`
+	Code           string        `json:"code"`
+	Bind           string        `json:"bind"`
+	Line           int           `json:"line"`
+	Type           string        `json:"type"`
+	Status         string        `json:"status"`
+	Substatus      string        `json:"subStatus"`
+	Desc           string        `json:"desc"`
+	Po             interface{}   `json:"PO"`
+	Qd             interface{}   `json:"QD"`
+	Rd             interface{}   `json:"RD"`
+	Feedback       interface{}   `json:"feedback"`
+	ACL            string        `json:"acl"`
+	Whitelist      []interface{} `json:"whitelist"`
+	Reviewer       string        `json:"reviewer"`
+	Createdby      UserMeta      `json:"createdBy"`
+	Createddate    time.Time     `json:"createdDate"`
+	Createdversion string        `json:"createdVersion"`
+	Order          int           `json:"order"`
+	Vision         string        `json:"vision"`
+	Deleted        string        `json:"deleted"`
 	Stories        struct {
 		int     `json:""`
 		Draft   int `json:"draft"`
@@ -206,47 +171,27 @@ type ProductsUpdateMeta struct {
 }
 
 type ProductsUpdateMsg struct {
-	ID        int    `json:"id"`
-	Program   int    `json:"program"`
-	Name      string `json:"name"`
-	Code      string `json:"code"`
-	Bind      string `json:"bind"`
-	Line      int    `json:"line"`
-	Type      string `json:"type"`
-	Status    string `json:"status"`
-	Substatus string `json:"subStatus"`
-	Desc      string `json:"desc"`
-	Po        struct {
-		ID       int    `json:"id"`
-		Account  string `json:"account"`
-		Avatar   string `json:"avatar"`
-		Realname string `json:"realname"`
-	} `json:"PO"`
-	Qd struct {
-		ID       int    `json:"id"`
-		Account  string `json:"account"`
-		Avatar   string `json:"avatar"`
-		Realname string `json:"realname"`
-	} `json:"QD"`
-	Rd struct {
-		ID       int    `json:"id"`
-		Account  string `json:"account"`
-		Avatar   string `json:"avatar"`
-		Realname string `json:"realname"`
-	} `json:"RD"`
-	ACL       string        `json:"acl"`
-	Whitelist []interface{} `json:"whitelist"`
-	Reviewer  string        `json:"reviewer"`
-	Createdby struct {
-		ID       int    `json:"id"`
-		Account  string `json:"account"`
-		Avatar   string `json:"avatar"`
-		Realname string `json:"realname"`
-	} `json:"createdBy"`
-	Createddate    time.Time `json:"createdDate"`
-	Createdversion string    `json:"createdVersion"`
-	Order          int       `json:"order"`
-	Deleted        string    `json:"deleted"`
+	ID             int           `json:"id"`
+	Program        int           `json:"program"`
+	Name           string        `json:"name"`
+	Code           string        `json:"code"`
+	Bind           string        `json:"bind"`
+	Line           int           `json:"line"`
+	Type           string        `json:"type"`
+	Status         string        `json:"status"`
+	Substatus      string        `json:"subStatus"`
+	Desc           string        `json:"desc"`
+	Po             UserMeta      `json:"PO"`
+	Qd             UserMeta      `json:"QD"`
+	Rd             UserMeta      `json:"RD"`
+	ACL            string        `json:"acl"`
+	Whitelist      []interface{} `json:"whitelist"`
+	Reviewer       string        `json:"reviewer"`
+	Createdby      UserMeta      `json:"createdBy"`
+	Createddate    time.Time     `json:"createdDate"`
+	Createdversion string        `json:"createdVersion"`
+	Order          int           `json:"order"`
+	Deleted        string        `json:"deleted"`
 	Stories        struct {
 		Active  int `json:"active"`
 		Draft   int `json:"draft"`

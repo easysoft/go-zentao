@@ -36,8 +36,8 @@ services:
     image: easysoft/quickon-zentao:17.6.1-20220916
     container_name: zentao
     restart: always
-    # ports:
-    #   - '80:80'
+    ports:
+      - '80:80'
     volumes:
       - 'zentao_data:/data'
     depends_on:

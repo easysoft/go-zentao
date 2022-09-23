@@ -27,127 +27,6 @@ type ProgramsService struct {
 	client *Client
 }
 
-type ProgramsList struct {
-	Programs []struct {
-		ID            int    `json:"id"`
-		Project       int    `json:"project"`
-		Model         string `json:"model"`
-		Type          string `json:"type"`
-		Lifetime      string `json:"lifetime"`
-		Budget        string `json:"budget"`
-		Budgetunit    string `json:"budgetUnit"`
-		Attribute     string `json:"attribute"`
-		Percent       int    `json:"percent"`
-		Milestone     string `json:"milestone"`
-		Output        string `json:"output"`
-		Auth          string `json:"auth"`
-		Parent        int    `json:"parent"`
-		Path          string `json:"path"`
-		Grade         int    `json:"grade"`
-		Name          string `json:"name"`
-		Code          string `json:"code"`
-		Begin         string `json:"begin"`
-		End           string `json:"end"`
-		Realbegan     string `json:"realBegan"`
-		Realend       string `json:"realEnd"`
-		Days          int    `json:"days"`
-		Status        string `json:"status"`
-		Substatus     string `json:"subStatus"`
-		Pri           string `json:"pri"`
-		Desc          string `json:"desc"`
-		Version       int    `json:"version"`
-		Parentversion int    `json:"parentVersion"`
-		Planduration  int    `json:"planDuration"`
-		Realduration  int    `json:"realDuration"`
-		Openedby      struct {
-			ID       int    `json:"id"`
-			Account  string `json:"account"`
-			Avatar   string `json:"avatar"`
-			Realname string `json:"realname"`
-		} `json:"openedBy"`
-		Openeddate     time.Time   `json:"openedDate"`
-		Openedversion  string      `json:"openedVersion"`
-		Lasteditedby   string      `json:"lastEditedBy"`
-		Lastediteddate time.Time   `json:"lastEditedDate"`
-		Closedby       interface{} `json:"closedBy"`
-		Closeddate     time.Time   `json:"closedDate"`
-		Canceledby     interface{} `json:"canceledBy"`
-		Canceleddate   time.Time   `json:"canceledDate"`
-		Po             interface{} `json:"PO"`
-		Pm             struct {
-			ID       int    `json:"id"`
-			Account  string `json:"account"`
-			Avatar   string `json:"avatar"`
-			Realname string `json:"realname"`
-		} `json:"PM"`
-		Qd        interface{} `json:"QD"`
-		Rd        interface{} `json:"RD"`
-		Team      string      `json:"team"`
-		ACL       string      `json:"acl"`
-		Whitelist interface{} `json:"whitelist"`
-		Order     int         `json:"order"`
-		Deleted   bool        `json:"deleted"`
-		Progress  int         `json:"progress"`
-	} `json:"programs"`
-}
-
-type ProgramsCreateMsg struct {
-	ProgramsMeta
-	ID            int         `json:"id"`
-	Project       int         `json:"project"`
-	Model         string      `json:"model"`
-	Type          string      `json:"type"`
-	Lifetime      string      `json:"lifetime"`
-	Budget        string      `json:"budget"`
-	Budgetunit    string      `json:"budgetUnit"`
-	Attribute     string      `json:"attribute"`
-	Percent       int         `json:"percent"`
-	Milestone     string      `json:"milestone"`
-	Output        string      `json:"output"`
-	Auth          string      `json:"auth"`
-	Path          string      `json:"path"`
-	Grade         int         `json:"grade"`
-	Code          string      `json:"code"`
-	Realbegan     interface{} `json:"realBegan"`
-	Realend       interface{} `json:"realEnd"`
-	Days          int         `json:"days"`
-	Status        string      `json:"status"`
-	Substatus     string      `json:"subStatus"`
-	Pri           string      `json:"pri"`
-	Version       int         `json:"version"`
-	Parentversion int         `json:"parentVersion"`
-	Planduration  int         `json:"planDuration"`
-	Realduration  int         `json:"realDuration"`
-	Openedby      struct {
-		ID       int    `json:"id"`
-		Account  string `json:"account"`
-		Avatar   string `json:"avatar"`
-		Realname string `json:"realname"`
-	} `json:"openedBy"`
-	Openeddate     time.Time   `json:"openedDate"`
-	Openedversion  string      `json:"openedVersion"`
-	Lasteditedby   string      `json:"lastEditedBy"`
-	Lastediteddate interface{} `json:"lastEditedDate"`
-	Closedby       interface{} `json:"closedBy"`
-	Closeddate     interface{} `json:"closedDate"`
-	Canceledby     interface{} `json:"canceledBy"`
-	Canceleddate   interface{} `json:"canceledDate"`
-	Po             interface{} `json:"PO"`
-	Pm             interface{} `json:"PM"`
-	Qd             interface{} `json:"QD"`
-	Rd             interface{} `json:"RD"`
-	Team           string      `json:"team"`
-	ACL            string      `json:"acl"`
-	Whitelist      []struct {
-		ID       int    `json:"id"`
-		Account  string `json:"account"`
-		Avatar   string `json:"avatar"`
-		Realname string `json:"realname"`
-	} `json:"whitelist"`
-	Order   int  `json:"order"`
-	Deleted bool `json:"deleted"`
-}
-
 type ProgramsMeta struct {
 	Name   string `json:"name"`
 	Parent int    `json:"parent"`
@@ -156,108 +35,65 @@ type ProgramsMeta struct {
 	End    string `json:"end"`
 }
 
-type ProgramsUpdateMsg struct {
-	ProgramsMeta
-	ID             int         `json:"id"`
-	Project        int         `json:"project"`
-	Model          string      `json:"model"`
-	Type           string      `json:"type"`
-	Lifetime       string      `json:"lifetime"`
-	Budget         string      `json:"budget"`
-	Budgetunit     string      `json:"budgetUnit"`
-	Attribute      string      `json:"attribute"`
-	Percent        int         `json:"percent"`
-	Milestone      string      `json:"milestone"`
-	Output         string      `json:"output"`
-	Auth           string      `json:"auth"`
-	Path           string      `json:"path"`
-	Grade          int         `json:"grade"`
-	Code           string      `json:"code"`
-	Realbegan      string      `json:"realBegan"`
-	Realend        string      `json:"realEnd"`
-	Days           int         `json:"days"`
-	Status         string      `json:"status"`
-	Substatus      string      `json:"subStatus"`
-	Pri            string      `json:"pri"`
-	Version        int         `json:"version"`
-	Parentversion  int         `json:"parentVersion"`
-	Planduration   int         `json:"planDuration"`
-	Realduration   int         `json:"realDuration"`
-	Openedby       string      `json:"openedBy"`
-	Openeddate     time.Time   `json:"openedDate"`
-	Openedversion  string      `json:"openedVersion"`
-	Lasteditedby   string      `json:"lastEditedBy"`
-	Lastediteddate time.Time   `json:"lastEditedDate"`
-	Closedby       string      `json:"closedBy"`
-	Closeddate     interface{} `json:"closedDate"`
-	Canceledby     string      `json:"canceledBy"`
-	Canceleddate   interface{} `json:"canceledDate"`
-	Po             string      `json:"PO"`
-	Pm             string      `json:"PM"`
-	Qd             string      `json:"QD"`
-	Rd             string      `json:"RD"`
-	Team           string      `json:"team"`
-	ACL            string      `json:"acl"`
-	Whitelist      string      `json:"whitelist"`
-	Order          int         `json:"order"`
-	Deleted        string      `json:"deleted"`
+type ProgramsBody struct {
+	ID             int        `json:"id"`
+	Project        int        `json:"project"`
+	Model          string     `json:"model"`
+	Type           string     `json:"type"`
+	Lifetime       string     `json:"lifetime"`
+	Budget         string     `json:"budget"`
+	Budgetunit     string     `json:"budgetUnit"`
+	Attribute      string     `json:"attribute"`
+	Percent        int        `json:"percent"`
+	Milestone      string     `json:"milestone"`
+	Output         string     `json:"output"`
+	Auth           string     `json:"auth"`
+	Path           string     `json:"path"`
+	Grade          int        `json:"grade"`
+	Code           string     `json:"code"`
+	Realbegan      string     `json:"realBegan"`
+	Realend        string     `json:"realEnd"`
+	Days           int        `json:"days"`
+	Status         string     `json:"status"`
+	Substatus      string     `json:"subStatus"`
+	Pri            string     `json:"pri"`
+	Version        int        `json:"version"`
+	Parentversion  int        `json:"parentVersion"`
+	Planduration   int        `json:"planDuration"`
+	Realduration   int        `json:"realDuration"`
+	Openedby       UserMeta   `json:"openedBy"`
+	Openeddate     time.Time  `json:"openedDate"`
+	Openedversion  string     `json:"openedVersion"`
+	Lasteditedby   string     `json:"lastEditedBy"`
+	Lastediteddate time.Time  `json:"lastEditedDate"`
+	Closedby       UserMeta   `json:"closedBy"`
+	Closeddate     time.Time  `json:"closedDate"`
+	Canceledby     UserMeta   `json:"canceledBy"`
+	Canceleddate   time.Time  `json:"canceledDate"`
+	Po             UserMeta   `json:"PO"`
+	Pm             UserMeta   `json:"PM"`
+	Qd             UserMeta   `json:"QD"`
+	Rd             UserMeta   `json:"RD"`
+	Team           string     `json:"team"`
+	ACL            string     `json:"acl"`
+	Whitelist      []UserMeta `json:"whitelist"`
+	Order          int        `json:"order"`
+	Deleted        bool       `json:"deleted"`
 }
 
-type ProgramsGetMsg struct {
+type ProgramsListBody struct {
 	ProgramsMeta
-	ID            int         `json:"id"`
-	Project       int         `json:"project"`
-	Model         string      `json:"model"`
-	Type          string      `json:"type"`
-	Lifetime      string      `json:"lifetime"`
-	Budget        string      `json:"budget"`
-	Budgetunit    string      `json:"budgetUnit"`
-	Attribute     string      `json:"attribute"`
-	Milestone     string      `json:"milestone"`
-	Output        string      `json:"output"`
-	Auth          string      `json:"auth"`
-	Parent        int         `json:"parent"`
-	Path          string      `json:"path"`
-	Grade         int         `json:"grade"`
-	Code          string      `json:"code"`
-	Realbegan     interface{} `json:"realBegan"`
-	Realend       interface{} `json:"realEnd"`
-	Days          int         `json:"days"`
-	Status        string      `json:"status"`
-	Substatus     string      `json:"subStatus"`
-	Pri           string      `json:"pri"`
-	Version       int         `json:"version"`
-	Parentversion int         `json:"parentVersion"`
-	Planduration  int         `json:"planDuration"`
-	Realduration  int         `json:"realDuration"`
-	Openedby      struct {
-		ID       int    `json:"id"`
-		Account  string `json:"account"`
-		Avatar   string `json:"avatar"`
-		Realname string `json:"realname"`
-	} `json:"openedBy"`
-	Openeddate     time.Time   `json:"openedDate"`
-	Openedversion  string      `json:"openedVersion"`
-	Lasteditedby   string      `json:"lastEditedBy"`
-	Lastediteddate interface{} `json:"lastEditedDate"`
-	Closedby       interface{} `json:"closedBy"`
-	Closeddate     interface{} `json:"closedDate"`
-	Canceledby     interface{} `json:"canceledBy"`
-	Canceleddate   interface{} `json:"canceledDate"`
-	Po             interface{} `json:"PO"`
-	Pm             struct {
-		ID       int    `json:"id"`
-		Account  string `json:"account"`
-		Avatar   string `json:"avatar"`
-		Realname string `json:"realname"`
-	} `json:"PM"`
-	Qd        interface{}   `json:"QD"`
-	Rd        interface{}   `json:"RD"`
-	Team      string        `json:"team"`
-	ACL       string        `json:"acl"`
-	Whitelist []interface{} `json:"whitelist"`
-	Order     int           `json:"order"`
-	Deleted   bool          `json:"deleted"`
+	ProgramsBody
+	Progress int `json:"progress"`
+}
+
+type ProgramsList struct {
+	Programs []ProgramsListBody `json:"programs"`
+}
+
+type ProgramsMsg struct {
+	ProgramsMeta
+	ProgramsBody
 }
 
 // List 获取项目集列表
@@ -277,8 +113,8 @@ func (s *ProgramsService) List(order string) (*ProgramsList, *req.Response, erro
 }
 
 // Create 创建项目集
-func (s *ProgramsService) Create(program ProgramsMeta) (*ProgramsCreateMsg, *req.Response, error) {
-	var u ProgramsCreateMsg
+func (s *ProgramsService) Create(program ProgramsMeta) (*ProgramsMsg, *req.Response, error) {
+	var u ProgramsMsg
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
 		SetBody(&program).
@@ -298,8 +134,8 @@ func (s *ProgramsService) DeleteByID(id int) (*CustomResp, *req.Response, error)
 }
 
 // UpdateByID 更新项目集
-func (s *ProgramsService) UpdateByID(id int, user ProgramsMeta) (*ProgramsUpdateMsg, *req.Response, error) {
-	var u ProgramsUpdateMsg
+func (s *ProgramsService) UpdateByID(id int, user ProgramsMeta) (*ProgramsMsg, *req.Response, error) {
+	var u ProgramsMsg
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
 		SetBody(&user).
@@ -309,8 +145,8 @@ func (s *ProgramsService) UpdateByID(id int, user ProgramsMeta) (*ProgramsUpdate
 }
 
 // GetByID 获取项目集详情
-func (s *ProgramsService) GetByID(id int) (*ProgramsGetMsg, *req.Response, error) {
-	var u ProgramsGetMsg
+func (s *ProgramsService) GetByID(id int) (*ProgramsMsg, *req.Response, error) {
+	var u ProgramsMsg
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
 		SetResult(&u).

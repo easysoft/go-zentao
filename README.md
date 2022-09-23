@@ -105,3 +105,10 @@ Zentao API client enabling Go programs to interact with Zentao in a simple and u
   - [x] 修改反馈
   - [x] 关闭反馈
   - [x] 指派反馈
+
+## 测试账号
+
+```bash
+地址: https://zentao-ysicing.cloud.okteto.net
+账号: admin/jaege1ugh4ooYip7
+```

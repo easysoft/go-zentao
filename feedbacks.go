@@ -78,27 +78,22 @@ type ListFeedBacksMsg struct {
 }
 
 type FeedBacksGetMsg struct {
-	ID          int    `json:"id"`
-	Product     int    `json:"product"`
-	Module      int    `json:"module"`
-	Title       string `json:"title"`
-	Type        string `json:"type"`
-	Solution    string `json:"solution"`
-	Desc        string `json:"desc"`
-	Status      string `json:"status"`
-	Substatus   string `json:"subStatus"`
-	Public      string `json:"public"`
-	Notify      string `json:"notify"`
-	Notifyemail string `json:"notifyEmail"`
-	Likes       string `json:"likes"`
-	Result      int    `json:"result"`
-	Faq         int    `json:"faq"`
-	Openedby    struct {
-		ID       int    `json:"id"`
-		Account  string `json:"account"`
-		Avatar   string `json:"avatar"`
-		Realname string `json:"realname"`
-	} `json:"openedBy"`
+	ID            int           `json:"id"`
+	Product       int           `json:"product"`
+	Module        int           `json:"module"`
+	Title         string        `json:"title"`
+	Type          string        `json:"type"`
+	Solution      string        `json:"solution"`
+	Desc          string        `json:"desc"`
+	Status        string        `json:"status"`
+	Substatus     string        `json:"subStatus"`
+	Public        string        `json:"public"`
+	Notify        string        `json:"notify"`
+	Notifyemail   string        `json:"notifyEmail"`
+	Likes         string        `json:"likes"`
+	Result        int           `json:"result"`
+	Faq           int           `json:"faq"`
+	Openedby      UserMeta      `json:"openedBy"`
 	Openeddate    time.Time     `json:"openedDate"`
 	Reviewedby    string        `json:"reviewedBy"`
 	Revieweddate  string        `json:"reviewedDate"`

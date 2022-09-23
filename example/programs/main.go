@@ -21,6 +21,7 @@ import (
 	"log"
 	"time"
 
+	"github.com/davecgh/go-spew/spew"
 	"github.com/ysicing/go-zentao"
 )
 
@@ -28,7 +29,7 @@ func main() {
 	zt, err := zentao.NewBasicAuthClient(
 		"admin",
 		"jaege1ugh4ooYip7",
-		zentao.WithBaseURL("http://172.77.77.12"),
+		zentao.WithBaseURL("https://zentao-ysicing.cloud.okteto.net"),
 		zentao.WithDevMode(),
 		zentao.WithDumpAll(),
 		zentao.WithoutProxy(),
@@ -36,11 +37,14 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	pl, _, err := zt.Programs.List("")
+	pgs, _, err := zt.Programs.List("")
 	if err != nil {
 		log.Fatal(err)
 	}
-	log.Printf("program count: %v", len(pl.Programs))
+	log.Printf("program count: %v", len(pgs.Programs))
+	for _, pg := range pgs.Programs {
+		spew.Dump(pg)
+	}
 	cp, _, err := zt.Programs.Create(zentao.ProgramsMeta{
 		Name:   fmt.Sprintf("abc%d%d", time.Now().Minute(), time.Now().Second()),
 		Parent: 0,
@@ -52,6 +56,7 @@ func main() {
 		log.Fatal(err)
 	}
 	log.Printf("program id: %v", cp.ID)
+	spew.Dump(cp)
 	_, _, err = zt.Programs.DeleteByID(cp.ID)
 	if err != nil {
 		log.Fatal(err)

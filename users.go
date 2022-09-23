@@ -28,11 +28,12 @@ type UsersService struct {
 
 type UserMeta struct {
 	ID       int         `json:"id"`
-	Dept     int         `json:"dept"`
+	Dept     int         `json:"dept,omitempty"`
 	Account  string      `json:"account"`
 	Realname string      `json:"realname"`
-	Role     interface{} `json:"role"`
-	Email    string      `json:"email"`
+	Role     interface{} `json:"role,omitempty"` // Role这个字段比较特殊
+	Email    string      `json:"email,omitempty"`
+	Avatar   string      `json:"avatar,omitempty"`
 }
 
 type UserCreateMeta struct {
@@ -73,7 +74,6 @@ type UserSocial struct {
 	Type       UserType   `json:"type"`
 	Nickname   string     `json:"nickname"`
 	Commiter   string     `json:"commiter"`
-	Avatar     string     `json:"avatar"`
 	Birthday   string     `json:"birthday"`
 	Address    string     `json:"address"`
 	Zipcode    string     `json:"zipcode"`

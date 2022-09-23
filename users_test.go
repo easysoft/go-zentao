@@ -22,6 +22,7 @@ func TestUsersGetByID(t *testing.T) {
 			Realname: "admin",
 			Role:     "",
 			Email:    "",
+			Avatar:   "",
 		},
 		UserSocial: UserSocial{
 			Company:    0,
@@ -33,7 +34,6 @@ func TestUsersGetByID(t *testing.T) {
 			Gender:     WomanGender,
 			Address:    "",
 			Birthday:   "0000-00-00",
-			Avatar:     "",
 			IP:         "172.77.77.1",
 			Visits:     1,
 			Join:       "0000-00-00",
