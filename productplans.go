@@ -27,7 +27,7 @@ type ProductPlansService struct {
 }
 
 type ProductPlanMeta struct {
-	Branch string `json:"branch,omitempty"`
+	Branch int    `json:"branch,omitempty"`
 	Title  string `json:"title"`
 	Parent int    `json:"parent,omitempty"`
 	Desc   string `json:"desc,omitempty"`
@@ -35,340 +35,66 @@ type ProductPlanMeta struct {
 	End    string `json:"end,omitempty"`
 }
 
+type ProductPlanBody struct {
+	ID      int    `json:"id"`
+	Product int    `json:"product"`
+	Order   string `json:"order"`
+	Deleted bool   `json:"deleted"`
+	ProductPlanMeta
+}
+
 type ProductPlanCreateMsg struct {
-	ID           int           `json:"id"`
-	Product      int           `json:"product"`
-	Branch       int           `json:"branch"`
-	Parent       int           `json:"parent"`
-	Title        string        `json:"title"`
+	ProductPlanBody
+
 	Status       string        `json:"status"`
-	Desc         string        `json:"desc"`
-	Begin        string        `json:"begin"`
-	End          string        `json:"end"`
-	Order        string        `json:"order"`
 	ClosedReason string        `json:"closedReason"`
-	Deleted      bool          `json:"deleted"`
-	Stories      []interface{} `json:"stories"`
-	Bugs         []interface{} `json:"bugs"`
+	Stories      []StoriesBody `json:"stories"`
+	Bugs         []BugBody     `json:"bugs"`
+}
+
+type ProductPlanListBody struct {
+	ProductPlanBody
+	Status       string `json:"status,omitempty"`
+	ClosedReason string `json:"closedReason"`
+	Stories      int    `json:"stories"`
+	Bugs         int    `json:"bugs"`
+	Hour         int    `json:"hour"`
+	Project      int    `json:"project"`
+	ProjectID    string `json:"projectID"`
+	Expired      bool   `json:"expired"`
 }
 
 type ProductPlanListMsg struct {
-	Page  int `json:"page"`
-	Total int `json:"total"`
-	Limit int `json:"limit"`
-	Plans []struct {
-		ID           int    `json:"id"`
-		Product      int    `json:"product"`
-		Branch       int    `json:"branch"`
-		Parent       int    `json:"parent"`
-		Title        string `json:"title"`
-		Status       string `json:"status"`
-		Desc         string `json:"desc"`
-		Begin        string `json:"begin"`
-		End          string `json:"end"`
-		Order        string `json:"order"`
-		ClosedReason string `json:"closedReason"`
-		Deleted      bool   `json:"deleted"`
-		Stories      int    `json:"stories"`
-		Bugs         int    `json:"bugs"`
-		Hour         int    `json:"hour"`
-		Project      int    `json:"project"`
-		ProjectID    string `json:"projectID"`
-		Expired      bool   `json:"expired"`
-	} `json:"plans"`
+	Page  int                   `json:"page"`
+	Total int                   `json:"total"`
+	Limit int                   `json:"limit"`
+	Plans []ProductPlanListBody `json:"plans"`
 }
 
 type ProductPlanGetMsg struct {
-	ID      int    `json:"id"`
-	Product int    `json:"product"`
-	Branch  int    `json:"branch"`
-	Parent  int    `json:"parent"`
-	Title   string `json:"title"`
-	Desc    string `json:"desc"`
-	Begin   string `json:"begin"`
-	End     string `json:"end"`
-	Order   string `json:"order"`
-	Deleted bool   `json:"deleted"`
-	Stories []struct {
-		Story          int         `json:"story"`
-		Plan           string      `json:"plan"`
-		Order          int         `json:"order"`
-		ID             int         `json:"id"`
-		Parent         int         `json:"parent"`
-		Product        int         `json:"product"`
-		Branch         int         `json:"branch"`
-		Module         int         `json:"module"`
-		Source         string      `json:"source"`
-		Sourcenote     string      `json:"sourceNote"`
-		Frombug        int         `json:"fromBug"`
-		Title          string      `json:"title"`
-		Keywords       string      `json:"keywords"`
-		Type           string      `json:"type"`
-		Category       string      `json:"category"`
-		Pri            int         `json:"pri"`
-		Estimate       int         `json:"estimate"`
-		Status         string      `json:"status"`
-		Substatus      string      `json:"subStatus"`
-		Color          string      `json:"color"`
-		Stage          string      `json:"stage"`
-		Stagedby       string      `json:"stagedBy"`
-		Mailto         interface{} `json:"mailto"`
-		Openedby       string      `json:"openedBy"`
-		Openeddate     string      `json:"openedDate"`
-		Assignedto     string      `json:"assignedTo"`
-		Assigneddate   string      `json:"assignedDate"`
-		Lasteditedby   string      `json:"lastEditedBy"`
-		Lastediteddate string      `json:"lastEditedDate"`
-		Reviewedby     string      `json:"reviewedBy"`
-		Revieweddate   string      `json:"reviewedDate"`
-		Closedby       string      `json:"closedBy"`
-		Closeddate     string      `json:"closedDate"`
-		Closedreason   string      `json:"closedReason"`
-		Tobug          int         `json:"toBug"`
-		Childstories   string      `json:"childStories"`
-		Linkstories    string      `json:"linkStories"`
-		Duplicatestory int         `json:"duplicateStory"`
-		Version        int         `json:"version"`
-		Urchanged      string      `json:"URChanged"`
-		Deleted        string      `json:"deleted"`
-	} `json:"stories"`
-	Bugs []struct {
-		ID             int    `json:"id"`
-		Project        int    `json:"project"`
-		Product        int    `json:"product"`
-		Branch         int    `json:"branch"`
-		Module         int    `json:"module"`
-		Execution      int    `json:"execution"`
-		Plan           int    `json:"plan"`
-		Story          int    `json:"story"`
-		Storyversion   int    `json:"storyVersion"`
-		Task           int    `json:"task"`
-		Totask         int    `json:"toTask"`
-		Tostory        int    `json:"toStory"`
-		Title          string `json:"title"`
-		Keywords       string `json:"keywords"`
-		Severity       int    `json:"severity"`
-		Pri            int    `json:"pri"`
-		Type           string `json:"type"`
-		Os             string `json:"os"`
-		Browser        string `json:"browser"`
-		Hardware       string `json:"hardware"`
-		Found          string `json:"found"`
-		Steps          string `json:"steps"`
-		Status         string `json:"status"`
-		Substatus      string `json:"subStatus"`
-		Color          string `json:"color"`
-		Confirmed      int    `json:"confirmed"`
-		Activatedcount int    `json:"activatedCount"`
-		Activateddate  string `json:"activatedDate"`
-		Mailto         string `json:"mailto"`
-		Openedby       string `json:"openedBy"`
-		Openeddate     string `json:"openedDate"`
-		Openedbuild    string `json:"openedBuild"`
-		Assignedto     string `json:"assignedTo"`
-		Assigneddate   string `json:"assignedDate"`
-		Deadline       string `json:"deadline"`
-		Resolvedby     string `json:"resolvedBy"`
-		Resolution     string `json:"resolution"`
-		Resolvedbuild  string `json:"resolvedBuild"`
-		Resolveddate   string `json:"resolvedDate"`
-		Closedby       string `json:"closedBy"`
-		Closeddate     string `json:"closedDate"`
-		Duplicatebug   int    `json:"duplicateBug"`
-		Linkbug        string `json:"linkBug"`
-		Case           int    `json:"case"`
-		Caseversion    int    `json:"caseVersion"`
-		Result         int    `json:"result"`
-		Repo           int    `json:"repo"`
-		Entry          string `json:"entry"`
-		Lines          string `json:"lines"`
-		V1             string `json:"v1"`
-		V2             string `json:"v2"`
-		Repotype       string `json:"repoType"`
-		Testtask       int    `json:"testtask"`
-		Lasteditedby   string `json:"lastEditedBy"`
-		Lastediteddate string `json:"lastEditedDate"`
-		Deleted        string `json:"deleted"`
-	} `json:"bugs"`
+	ProductPlanBody
+	Stories []StoriesBody `json:"stories"`
+	Bugs    []BugBody     `json:"bugs"`
 }
 
 type ProductPlanUpdateMsg struct {
-	ID      int    `json:"id"`
-	Product int    `json:"product"`
-	Branch  int    `json:"branch"`
-	Parent  int    `json:"parent"`
-	Title   string `json:"title"`
-	Desc    string `json:"desc"`
-	Begin   string `json:"begin"`
-	End     string `json:"end"`
-	Order   string `json:"order"`
-	Deleted bool   `json:"deleted"`
-	Stories []struct {
-		Story          int         `json:"story"`
-		Plan           string      `json:"plan"`
-		Order          int         `json:"order"`
-		ID             int         `json:"id"`
-		Parent         int         `json:"parent"`
-		Product        int         `json:"product"`
-		Branch         int         `json:"branch"`
-		Module         int         `json:"module"`
-		Source         string      `json:"source"`
-		Sourcenote     string      `json:"sourceNote"`
-		Frombug        int         `json:"fromBug"`
-		Title          string      `json:"title"`
-		Keywords       string      `json:"keywords"`
-		Type           string      `json:"type"`
-		Category       string      `json:"category"`
-		Pri            int         `json:"pri"`
-		Estimate       int         `json:"estimate"`
-		Status         string      `json:"status"`
-		Substatus      string      `json:"subStatus"`
-		Color          string      `json:"color"`
-		Stage          string      `json:"stage"`
-		Stagedby       string      `json:"stagedBy"`
-		Mailto         interface{} `json:"mailto"`
-		Openedby       string      `json:"openedBy"`
-		Openeddate     string      `json:"openedDate"`
-		Assignedto     string      `json:"assignedTo"`
-		Assigneddate   string      `json:"assignedDate"`
-		Lasteditedby   string      `json:"lastEditedBy"`
-		Lastediteddate string      `json:"lastEditedDate"`
-		Reviewedby     string      `json:"reviewedBy"`
-		Revieweddate   string      `json:"reviewedDate"`
-		Closedby       string      `json:"closedBy"`
-		Closeddate     string      `json:"closedDate"`
-		Closedreason   string      `json:"closedReason"`
-		Tobug          int         `json:"toBug"`
-		Childstories   string      `json:"childStories"`
-		Linkstories    string      `json:"linkStories"`
-		Duplicatestory int         `json:"duplicateStory"`
-		Version        int         `json:"version"`
-		Urchanged      string      `json:"URChanged"`
-		Deleted        string      `json:"deleted"`
-	} `json:"stories"`
-	Bugs []struct {
-		ID             int    `json:"id"`
-		Project        int    `json:"project"`
-		Product        int    `json:"product"`
-		Branch         int    `json:"branch"`
-		Module         int    `json:"module"`
-		Execution      int    `json:"execution"`
-		Plan           int    `json:"plan"`
-		Story          int    `json:"story"`
-		Storyversion   int    `json:"storyVersion"`
-		Task           int    `json:"task"`
-		Totask         int    `json:"toTask"`
-		Tostory        int    `json:"toStory"`
-		Title          string `json:"title"`
-		Keywords       string `json:"keywords"`
-		Severity       int    `json:"severity"`
-		Pri            int    `json:"pri"`
-		Type           string `json:"type"`
-		Os             string `json:"os"`
-		Browser        string `json:"browser"`
-		Hardware       string `json:"hardware"`
-		Found          string `json:"found"`
-		Steps          string `json:"steps"`
-		Status         string `json:"status"`
-		Substatus      string `json:"subStatus"`
-		Color          string `json:"color"`
-		Confirmed      int    `json:"confirmed"`
-		Activatedcount int    `json:"activatedCount"`
-		Activateddate  string `json:"activatedDate"`
-		Mailto         string `json:"mailto"`
-		Openedby       string `json:"openedBy"`
-		Openeddate     string `json:"openedDate"`
-		Openedbuild    string `json:"openedBuild"`
-		Assignedto     string `json:"assignedTo"`
-		Assigneddate   string `json:"assignedDate"`
-		Deadline       string `json:"deadline"`
-		Resolvedby     string `json:"resolvedBy"`
-		Resolution     string `json:"resolution"`
-		Resolvedbuild  string `json:"resolvedBuild"`
-		Resolveddate   string `json:"resolvedDate"`
-		Closedby       string `json:"closedBy"`
-		Closeddate     string `json:"closedDate"`
-		Duplicatebug   int    `json:"duplicateBug"`
-		Linkbug        string `json:"linkBug"`
-		Case           int    `json:"case"`
-		Caseversion    int    `json:"caseVersion"`
-		Result         int    `json:"result"`
-		Repo           int    `json:"repo"`
-		Entry          string `json:"entry"`
-		Lines          string `json:"lines"`
-		V1             string `json:"v1"`
-		V2             string `json:"v2"`
-		Repotype       string `json:"repoType"`
-		Testtask       int    `json:"testtask"`
-		Lasteditedby   string `json:"lastEditedBy"`
-		Lastediteddate string `json:"lastEditedDate"`
-		Deleted        string `json:"deleted"`
-	} `json:"bugs"`
+	ProductPlanBody
+	Stories []StoriesBody `json:"stories"`
+	Bugs    []BugBody     `json:"bugs"`
 }
 
-type StoriesMeta struct {
+type PlansStoriesIDs struct {
 	Stories []string `json:"stories"`
 }
 
-type BugMeta struct {
+type PlansBugIDs struct {
 	Bugs []string `json:"bugs"`
 }
 
 type LinkStoriesMsg struct {
-	ID      int    `json:"id"`
-	Product int    `json:"product"`
-	Branch  int    `json:"branch"`
-	Parent  int    `json:"parent"`
-	Title   string `json:"title"`
-	Desc    string `json:"desc"`
-	Begin   string `json:"begin"`
-	End     string `json:"end"`
-	Order   string `json:"order"`
-	Deleted bool   `json:"deleted"`
-	Stories []struct {
-		Story          int    `json:"story"`
-		Plan           string `json:"plan"`
-		Order          int    `json:"order"`
-		ID             int    `json:"id"`
-		Parent         int    `json:"parent"`
-		Product        int    `json:"product"`
-		Branch         int    `json:"branch"`
-		Module         int    `json:"module"`
-		Source         string `json:"source"`
-		Sourcenote     string `json:"sourceNote"`
-		Frombug        int    `json:"fromBug"`
-		Title          string `json:"title"`
-		Keywords       string `json:"keywords"`
-		Type           string `json:"type"`
-		Category       string `json:"category"`
-		Pri            int    `json:"pri"`
-		Estimate       int    `json:"estimate"`
-		Status         string `json:"status"`
-		Substatus      string `json:"subStatus"`
-		Color          string `json:"color"`
-		Stage          string `json:"stage"`
-		Stagedby       string `json:"stagedBy"`
-		Mailto         string `json:"mailto"`
-		Openedby       string `json:"openedBy"`
-		Openeddate     string `json:"openedDate"`
-		Assignedto     string `json:"assignedTo"`
-		Assigneddate   string `json:"assignedDate"`
-		Lasteditedby   string `json:"lastEditedBy"`
-		Lastediteddate string `json:"lastEditedDate"`
-		Reviewedby     string `json:"reviewedBy"`
-		Revieweddate   string `json:"reviewedDate"`
-		Closedby       string `json:"closedBy"`
-		Closeddate     string `json:"closedDate"`
-		Closedreason   string `json:"closedReason"`
-		Tobug          int    `json:"toBug"`
-		Childstories   string `json:"childStories"`
-		Linkstories    string `json:"linkStories"`
-		Duplicatestory int    `json:"duplicateStory"`
-		Version        int    `json:"version"`
-		Urchanged      string `json:"URChanged"`
-		Deleted        string `json:"deleted"`
-	} `json:"stories"`
-	Bugs []interface{} `json:"bugs"`
+	ProductPlanBody
+	Stories []StoriesBody `json:"stories"`
+	Bugs    []BugBody     `json:"bugs"`
 }
 
 // Create 创建产品计划
@@ -424,7 +150,7 @@ func (s *ProductPlansService) DeleteByID(id int) (*CustomResp, *req.Response, er
 }
 
 // LinkStories 产品计划关联需求
-func (s *ProductPlansService) LinkStories(id int, story StoriesMeta) (*LinkStoriesMsg, *req.Response, error) {
+func (s *ProductPlansService) LinkStories(id int, story PlansStoriesIDs) (*LinkStoriesMsg, *req.Response, error) {
 	var u LinkStoriesMsg
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
@@ -435,7 +161,7 @@ func (s *ProductPlansService) LinkStories(id int, story StoriesMeta) (*LinkStori
 }
 
 // LinkStories 产品计划关联需求
-func (s *ProductPlansService) UnLinkStories(id int, story StoriesMeta) (*LinkStoriesMsg, *req.Response, error) {
+func (s *ProductPlansService) UnLinkStories(id int, story PlansStoriesIDs) (*LinkStoriesMsg, *req.Response, error) {
 	var u LinkStoriesMsg
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
@@ -446,22 +172,22 @@ func (s *ProductPlansService) UnLinkStories(id int, story StoriesMeta) (*LinkSto
 }
 
 // LinkBugs 产品计划关联Bug
-func (s *ProductPlansService) LinkBugs(id int, story StoriesMeta) (*LinkStoriesMsg, *req.Response, error) {
+func (s *ProductPlansService) LinkBugs(id int, bug PlansBugIDs) (*LinkStoriesMsg, *req.Response, error) {
 	var u LinkStoriesMsg
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
-		SetBody(&story).
+		SetBody(&bug).
 		SetResult(&u).
 		Post(s.client.RequestURL(fmt.Sprintf("/productplans/%d/linkBugs", id)))
 	return &u, resp, err
 }
 
 // UnLinkBugs 产品计划取消关联Bug
-func (s *ProductPlansService) UnLinkBugs(id int, story StoriesMeta) (*LinkStoriesMsg, *req.Response, error) {
+func (s *ProductPlansService) UnLinkBugs(id int, bug PlansBugIDs) (*LinkStoriesMsg, *req.Response, error) {
 	var u LinkStoriesMsg
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
-		SetBody(&story).
+		SetBody(&bug).
 		SetResult(&u).
 		Post(s.client.RequestURL(fmt.Sprintf("/productplans/%d/unlinkbugs", id)))
 	return &u, resp, err

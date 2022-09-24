@@ -27,67 +27,68 @@ type TestCasesService struct {
 	client *Client
 }
 
+type TestCasesMeta struct {
+	ID             int         `json:"id"`
+	Project        int         `json:"project"`
+	Product        int         `json:"product"`
+	Execution      int         `json:"execution"`
+	Branch         int         `json:"branch"`
+	Module         int         `json:"module"`
+	Story          int         `json:"story"`
+	Storyversion   int         `json:"storyVersion"`
+	Title          string      `json:"title"`
+	Keywords       string      `json:"keywords"`
+	Pri            int         `json:"pri"`
+	Type           string      `json:"type"`
+	Status         string      `json:"status"`
+	Substatus      string      `json:"subStatus"`
+	Color          string      `json:"color"`
+	Openedby       UserMeta    `json:"openedBy"`
+	Openeddate     time.Time   `json:"openedDate"`
+	Lasteditedby   interface{} `json:"lastEditedBy"`
+	Lastediteddate interface{} `json:"lastEditedDate"`
+	Deleted        bool        `json:"deleted"`
+	Storytitle     interface{} `json:"storyTitle,omitempty"`
+}
+
+type TestcasesListBody struct {
+	TestCasesMeta
+	Lib             int         `json:"lib"`
+	Path            int         `json:"path"`
+	Precondition    string      `json:"precondition"`
+	Auto            string      `json:"auto"`
+	Frame           string      `json:"frame"`
+	Stage           string      `json:"stage"`
+	Howrun          string      `json:"howRun"`
+	Scriptedby      string      `json:"scriptedBy"`
+	Scripteddate    interface{} `json:"scriptedDate"`
+	Scriptstatus    string      `json:"scriptStatus"`
+	Scriptlocation  string      `json:"scriptLocation"`
+	Frequency       string      `json:"frequency"`
+	Order           int         `json:"order"`
+	Reviewedby      interface{} `json:"reviewedBy"`
+	Revieweddate    interface{} `json:"reviewedDate"`
+	Version         int         `json:"version"`
+	Linkcase        string      `json:"linkCase"`
+	Frombug         int         `json:"fromBug"`
+	Fromcaseid      int         `json:"fromCaseID"`
+	Fromcaseversion int         `json:"fromCaseVersion"`
+	Lastrunner      string      `json:"lastRunner"`
+	Lastrundate     interface{} `json:"lastRunDate"`
+	Lastrunresult   string      `json:"lastRunResult"`
+	Needconfirm     bool        `json:"needconfirm"`
+	Bugs            int         `json:"bugs"`
+	Results         int         `json:"results"`
+	Casefails       int         `json:"caseFails"`
+	Stepnumber      int         `json:"stepNumber"`
+	Statusname      string      `json:"statusName"`
+}
+
 type ListProductsTestCasesMsg struct {
-	Page      int `json:"page"`
-	Total     int `json:"total"`
-	Limit     int `json:"limit"`
-	Testcases []struct {
-		ID             int         `json:"id"`
-		Project        int         `json:"project"`
-		Product        int         `json:"product"`
-		Execution      int         `json:"execution"`
-		Branch         int         `json:"branch"`
-		Lib            int         `json:"lib"`
-		Module         int         `json:"module"`
-		Path           int         `json:"path"`
-		Story          int         `json:"story"`
-		Storyversion   int         `json:"storyVersion"`
-		Title          string      `json:"title"`
-		Precondition   string      `json:"precondition"`
-		Keywords       string      `json:"keywords"`
-		Pri            int         `json:"pri"`
-		Type           string      `json:"type"`
-		Auto           string      `json:"auto"`
-		Frame          string      `json:"frame"`
-		Stage          string      `json:"stage"`
-		Howrun         string      `json:"howRun"`
-		Scriptedby     string      `json:"scriptedBy"`
-		Scripteddate   interface{} `json:"scriptedDate"`
-		Scriptstatus   string      `json:"scriptStatus"`
-		Scriptlocation string      `json:"scriptLocation"`
-		Status         string      `json:"status"`
-		Substatus      string      `json:"subStatus"`
-		Color          string      `json:"color"`
-		Frequency      string      `json:"frequency"`
-		Order          int         `json:"order"`
-		Openedby       struct {
-			ID       int    `json:"id"`
-			Account  string `json:"account"`
-			Avatar   string `json:"avatar"`
-			Realname string `json:"realname"`
-		} `json:"openedBy"`
-		Openeddate      time.Time   `json:"openedDate"`
-		Reviewedby      interface{} `json:"reviewedBy"`
-		Revieweddate    interface{} `json:"reviewedDate"`
-		Lasteditedby    interface{} `json:"lastEditedBy"`
-		Lastediteddate  interface{} `json:"lastEditedDate"`
-		Version         int         `json:"version"`
-		Linkcase        string      `json:"linkCase"`
-		Frombug         int         `json:"fromBug"`
-		Fromcaseid      int         `json:"fromCaseID"`
-		Fromcaseversion int         `json:"fromCaseVersion"`
-		Deleted         bool        `json:"deleted"`
-		Lastrunner      string      `json:"lastRunner"`
-		Lastrundate     interface{} `json:"lastRunDate"`
-		Lastrunresult   string      `json:"lastRunResult"`
-		Storytitle      interface{} `json:"storyTitle"`
-		Needconfirm     bool        `json:"needconfirm"`
-		Bugs            int         `json:"bugs"`
-		Results         int         `json:"results"`
-		Casefails       int         `json:"caseFails"`
-		Stepnumber      int         `json:"stepNumber"`
-		Statusname      string      `json:"statusName"`
-	} `json:"testcases"`
+	Page      int                 `json:"page"`
+	Total     int                 `json:"total"`
+	Limit     int                 `json:"limit"`
+	Testcases []TestcasesListBody `json:"testcases"`
 }
 
 type TestCasesCreateMeta struct {
@@ -103,103 +104,65 @@ type TestCasesCreateMeta struct {
 	Type         string          `json:"type"`
 }
 
-type TestCasesStep struct {
-	Desc   string `json:"json"`
-	Expect string `json:"expect"`
+type TestCasesCreateMsg struct {
+	TestCasesMeta
+	Lib             int             `json:"lib"`
+	Path            int             `json:"path"`
+	Precondition    string          `json:"precondition"`
+	Auto            string          `json:"auto"`
+	Frame           string          `json:"frame"`
+	Stage           string          `json:"stage"`
+	Howrun          string          `json:"howRun"`
+	Scriptedby      string          `json:"scriptedBy"`
+	Scripteddate    interface{}     `json:"scriptedDate"`
+	Scriptstatus    string          `json:"scriptStatus"`
+	Scriptlocation  string          `json:"scriptLocation"`
+	Frequency       string          `json:"frequency"`
+	Order           int             `json:"order"`
+	Reviewedby      string          `json:"reviewedBy"`
+	Revieweddate    interface{}     `json:"reviewedDate"`
+	Version         int             `json:"version"`
+	Linkcase        string          `json:"linkCase"`
+	Frombug         int             `json:"fromBug"`
+	Fromcaseid      int             `json:"fromCaseID"`
+	Fromcaseversion int             `json:"fromCaseVersion"`
+	Lastrunner      string          `json:"lastRunner"`
+	Lastrundate     interface{}     `json:"lastRunDate"`
+	Lastrunresult   string          `json:"lastRunResult"`
+	Tobugs          []interface{}   `json:"toBugs"`
+	Steps           []TestCasesStep `json:"steps"`
+	Files           []interface{}   `json:"files"`
+	Currentversion  int             `json:"currentVersion"`
 }
 
-type TestCasesCreateMsg struct {
-	ID              int           `json:"id"`
-	Project         int           `json:"project"`
-	Product         int           `json:"product"`
-	Execution       int           `json:"execution"`
-	Branch          int           `json:"branch"`
-	Lib             int           `json:"lib"`
-	Module          int           `json:"module"`
-	Path            int           `json:"path"`
-	Story           int           `json:"story"`
-	Storyversion    int           `json:"storyVersion"`
-	Title           string        `json:"title"`
-	Precondition    string        `json:"precondition"`
-	Keywords        string        `json:"keywords"`
-	Pri             int           `json:"pri"`
-	Type            string        `json:"type"`
-	Auto            string        `json:"auto"`
-	Frame           string        `json:"frame"`
-	Stage           string        `json:"stage"`
-	Howrun          string        `json:"howRun"`
-	Scriptedby      string        `json:"scriptedBy"`
-	Scripteddate    interface{}   `json:"scriptedDate"`
-	Scriptstatus    string        `json:"scriptStatus"`
-	Scriptlocation  string        `json:"scriptLocation"`
-	Status          string        `json:"status"`
-	Substatus       string        `json:"subStatus"`
-	Color           string        `json:"color"`
-	Frequency       string        `json:"frequency"`
-	Order           int           `json:"order"`
-	Openedby        string        `json:"openedBy"`
-	Openeddate      time.Time     `json:"openedDate"`
-	Reviewedby      string        `json:"reviewedBy"`
-	Revieweddate    interface{}   `json:"reviewedDate"`
-	Lasteditedby    string        `json:"lastEditedBy"`
-	Lastediteddate  interface{}   `json:"lastEditedDate"`
-	Version         int           `json:"version"`
-	Linkcase        string        `json:"linkCase"`
-	Frombug         int           `json:"fromBug"`
-	Fromcaseid      int           `json:"fromCaseID"`
-	Fromcaseversion int           `json:"fromCaseVersion"`
-	Deleted         bool          `json:"deleted"`
-	Lastrunner      string        `json:"lastRunner"`
-	Lastrundate     interface{}   `json:"lastRunDate"`
-	Lastrunresult   string        `json:"lastRunResult"`
-	Tobugs          []interface{} `json:"toBugs"`
-	Steps           []struct {
-		ID      int    `json:"id"`
-		Parent  int    `json:"parent"`
-		Case    int    `json:"case"`
-		Version int    `json:"version"`
-		Type    string `json:"type"`
-		Desc    string `json:"desc"`
-		Expect  string `json:"expect"`
-	} `json:"steps"`
-	Files          []interface{} `json:"files"`
-	Currentversion int           `json:"currentVersion"`
+type TestCasesStep struct {
+	ID      int    `json:"id"`
+	Parent  int    `json:"parent"`
+	Case    int    `json:"case"`
+	Version int    `json:"version"`
+	Type    string `json:"type"`
+	Desc    string `json:"desc"`
+	Expect  string `json:"expect"`
 }
 
 type TestCasesGetMsg struct {
-	ID                 int           `json:"id"`
-	Project            int           `json:"project"`
-	Product            int           `json:"product"`
-	Branch             int           `json:"branch"`
-	Module             int           `json:"module"`
-	Execution          int           `json:"execution"`
+	TestCasesMeta
 	Plan               int           `json:"plan"`
-	Story              int           `json:"story"`
-	Storyversion       int           `json:"storyVersion"`
 	Task               int           `json:"task"`
 	Totask             int           `json:"toTask"`
 	Tostory            int           `json:"toStory"`
-	Title              string        `json:"title"`
-	Keywords           string        `json:"keywords"`
 	Severity           int           `json:"severity"`
-	Pri                int           `json:"pri"`
-	Type               string        `json:"type"`
 	Os                 string        `json:"os"`
 	Browser            string        `json:"browser"`
 	Hardware           string        `json:"hardware"`
 	Found              string        `json:"found"`
 	Steps              string        `json:"steps"`
-	Status             string        `json:"status"`
-	Substatus          string        `json:"subStatus"`
-	Color              string        `json:"color"`
 	Confirmed          int           `json:"confirmed"`
 	Activatedcount     int           `json:"activatedCount"`
 	Activateddate      time.Time     `json:"activatedDate"`
 	Feedbackby         string        `json:"feedbackBy"`
 	Notifyemail        string        `json:"notifyEmail"`
 	Mailto             []interface{} `json:"mailto"`
-	Openedby           UserMeta      `json:"openedBy"`
-	Openeddate         time.Time     `json:"openedDate"`
 	Openedbuild        string        `json:"openedBuild"`
 	Assignedto         UserMeta      `json:"assignedTo"`
 	Assigneddate       time.Time     `json:"assignedDate"`
@@ -222,11 +185,7 @@ type TestCasesGetMsg struct {
 	V2                 string        `json:"v2"`
 	Repotype           string        `json:"repoType"`
 	Testtask           int           `json:"testtask"`
-	Lasteditedby       UserMeta      `json:"lastEditedBy"`
-	Lastediteddate     time.Time     `json:"lastEditedDate"`
-	Deleted            bool          `json:"deleted"`
 	Executionname      string        `json:"executionName"`
-	Storytitle         string        `json:"storyTitle"`
 	Storystatus        string        `json:"storyStatus"`
 	Lateststoryversion int           `json:"latestStoryVersion"`
 	Taskname           interface{}   `json:"taskName"`

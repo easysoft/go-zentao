@@ -27,38 +27,13 @@ type TestTasksService struct {
 }
 
 type ListTestTasksMsg struct {
-	Page      int `json:"page"`
-	Total     int `json:"total"`
-	Limit     int `json:"limit"`
-	Testtasks []struct {
-		ID               int         `json:"id"`
-		Project          int         `json:"project"`
-		Product          int         `json:"product"`
-		Name             string      `json:"name"`
-		Execution        int         `json:"execution"`
-		Build            string      `json:"build"`
-		Type             string      `json:"type"`
-		Owner            string      `json:"owner"`
-		Pri              int         `json:"pri"`
-		Begin            string      `json:"begin"`
-		End              string      `json:"end"`
-		Realfinisheddate interface{} `json:"realFinishedDate"`
-		Mailto           string      `json:"mailto"`
-		Desc             string      `json:"desc"`
-		Report           string      `json:"report"`
-		Status           string      `json:"status"`
-		Testreport       int         `json:"testreport"`
-		Auto             string      `json:"auto"`
-		Substatus        string      `json:"subStatus"`
-		Deleted          string      `json:"deleted"`
-		Productname      string      `json:"productName"`
-		Executionname    string      `json:"executionName"`
-		Buildname        string      `json:"buildName"`
-		Branch           int         `json:"branch"`
-	} `json:"testtasks"`
+	Page      int            `json:"page"`
+	Total     int            `json:"total"`
+	Limit     int            `json:"limit"`
+	Testtasks []TestTasksMsg `json:"testtasks"`
 }
 
-type TestTasksGetMsg struct {
+type TestTasksMsg struct {
 	ID               int         `json:"id"`
 	Project          int         `json:"project"`
 	Product          int         `json:"product"`
@@ -111,8 +86,8 @@ func (s *TestTasksService) ListByProjects(id int64) (*ListTestTasksMsg, *req.Res
 	return &et, resp, err
 }
 
-func (s *TestTasksService) GetByID(id int) (*TestTasksGetMsg, *req.Response, error) {
-	var u TestTasksGetMsg
+func (s *TestTasksService) GetByID(id int) (*TestTasksMsg, *req.Response, error) {
+	var u TestTasksMsg
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
 		SetResult(&u).

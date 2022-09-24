@@ -34,7 +34,7 @@ Zentao API client enabling Go programs to interact with Zentao in a simple and u
   - [x] 获取产品详情
   - [x] 删除产品
   - [x] 创建产品
-- [x] 产品计划
+- [x] 产品计划(ProductsPlans)
   - [x] 创建计划
   - [x] 获取产品计划列表
   - [x] 获取计划详情
@@ -47,7 +47,7 @@ Zentao API client enabling Go programs to interact with Zentao in a simple and u
 - [x] 发布
   - [x] 获取项目发布列表
   - [x] 获取产品发布列表
-- [x] 需求
+- [x] 需求(Stories)
   - [x] 获取项目需求列表
   - [x] 变更需求
   - [x] 获取产品需求列表
@@ -56,20 +56,20 @@ Zentao API client enabling Go programs to interact with Zentao in a simple and u
   - [x] 获取需求详情
   - [x] 删除需求
   - [x] 修改需求其他字段
-- [x] 项目
+- [x] 项目(Projects)
   - [x] 创建项目
   - [x] 获取项目列表
   - [x] 获取项目详情
   - [x] 修改项目
   - [x] 删除项目
-- [x] 版本
+- [x] 版本(Builds)
   - [x] 获取项目版本列表
   - [x] 获取执行版本详情
   - [x] 修改版本
   - [x] 创建版本
   - [x] 获取版本详情
   - [x] 删除版本
-- [x] 执行
+- [x] 执行(Executions)
   - [x] 获取项目的执行列表
   - [x] 创建执行
   - [x] 修改执行
@@ -112,3 +112,7 @@ Zentao API client enabling Go programs to interact with Zentao in a simple and u
 地址: https://zentao-ysicing.cloud.okteto.net
 账号: admin/jaege1ugh4ooYip7
 ```
+
+### 已知问题
+
+- [ ] 部分字段接口返回有时候是结构体有时候是字符串, 正在协调看能否统一
