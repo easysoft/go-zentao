@@ -50,6 +50,5 @@ func main() {
 			log.Printf("products plans id: %v", pdp.ID)
 			spew.Dump(pdp)
 		}
-		break
 	}
 }

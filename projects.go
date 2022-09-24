@@ -30,34 +30,44 @@ type ProjectsService struct {
 type ProjectsCreateMeta struct {
 	Name     string `json:"name"`
 	Code     string `json:"code"`
-	Begin    string `json:"begin"`
-	End      string `json:"end"`
-	Products []int  `json:"products"`
+	Begin    string `json:"begin"`            // 计划开始时间
+	End      string `json:"end"`              // 计划结束时间
+	Products []int  `json:"products"`         // 关联产品
+	Model    string `json:"model,omitempty"`  // 项目模型, 默认为scrum
+	Parent   int    `json:"parent,omitempty"` // 所属项目集, 默认为0
+}
+
+type ProjectsBody struct {
+	ID         int       `json:"id"`
+	Name       string    `json:"name"`
+	Code       string    `json:"code"`
+	Model      string    `json:"model"`
+	Type       string    `json:"type"`
+	Budget     string    `json:"budget"`
+	Budgetunit string    `json:"budgetUnit"`
+	Parent     int       `json:"parent"`
+	Begin      string    `json:"begin"`
+	End        string    `json:"end"`
+	Status     string    `json:"status"`
+	Openedby   UserMeta  `json:"openedBy"`
+	Openeddate time.Time `json:"openedDate"`
+	Pm         UserMeta  `json:"PM"`
+	Progress   int       `json:"progress,omitempty"`
 }
 
 type ProjectsCreateMsg struct {
-	ID             int         `json:"id"`
-	Model          string      `json:"model"`
-	Type           string      `json:"type"`
+	ProjectsBody
 	Lifetime       string      `json:"lifetime"`
-	Budget         string      `json:"budget"`
-	Budgetunit     string      `json:"budgetUnit"`
 	Attribute      string      `json:"attribute"`
 	Percent        int         `json:"percent"`
 	Milestone      string      `json:"milestone"`
 	Output         string      `json:"output"`
 	Auth           string      `json:"auth"`
-	Parent         int         `json:"parent"`
 	Path           string      `json:"path"`
 	Grade          int         `json:"grade"`
-	Name           string      `json:"name"`
-	Code           string      `json:"code"`
-	Begin          string      `json:"begin"`
-	End            string      `json:"end"`
 	Realbegan      string      `json:"realBegan"`
 	Realend        string      `json:"realEnd"`
 	Days           int         `json:"days"`
-	Status         string      `json:"status"`
 	Substatus      string      `json:"subStatus"`
 	Pri            string      `json:"pri"`
 	Desc           string      `json:"desc"`
@@ -65,47 +75,28 @@ type ProjectsCreateMsg struct {
 	Parentversion  int         `json:"parentVersion"`
 	Planduration   int         `json:"planDuration"`
 	Realduration   int         `json:"realDuration"`
-	Openedby       string      `json:"openedBy"`
-	Openeddate     time.Time   `json:"openedDate"`
 	Openedversion  string      `json:"openedVersion"`
-	Lasteditedby   string      `json:"lastEditedBy"`
+	Lasteditedby   UserMeta    `json:"lastEditedBy"`
 	Lastediteddate time.Time   `json:"lastEditedDate"`
-	Closedby       string      `json:"closedBy"`
-	Closeddate     interface{} `json:"closedDate"`
-	Canceledby     string      `json:"canceledBy"`
-	Canceleddate   interface{} `json:"canceledDate"`
-	Po             string      `json:"PO"`
-	Pm             string      `json:"PM"`
-	Qd             string      `json:"QD"`
-	Rd             string      `json:"RD"`
+	Closedby       UserMeta    `json:"closedBy"`
+	Closeddate     time.Time   `json:"closedDate"`
+	Canceledby     UserMeta    `json:"canceledBy"`
+	Canceleddate   time.Time   `json:"canceledDate"`
+	Po             interface{} `json:"PO"`
+	Qd             interface{} `json:"QD"`
+	Rd             interface{} `json:"RD"`
 	Team           string      `json:"team"`
 	ACL            string      `json:"acl"`
-	Whitelist      string      `json:"whitelist"`
+	Whitelist      []UserMeta  `json:"whitelist"`
 	Order          int         `json:"order"`
-	Deleted        string      `json:"deleted"`
+	Deleted        bool        `json:"deleted"`
 }
 
 type ProjectsListMsg struct {
-	Page     int `json:"page"`
-	Total    int `json:"total"`
-	Limit    int `json:"limit"`
-	Projects []struct {
-		ID         int       `json:"id"`
-		Name       string    `json:"name"`
-		Code       string    `json:"code"`
-		Model      string    `json:"model"`
-		Type       string    `json:"type"`
-		Budget     string    `json:"budget"`
-		Budgetunit string    `json:"budgetUnit"`
-		Parent     int       `json:"parent"`
-		Begin      string    `json:"begin"`
-		End        string    `json:"end"`
-		Status     string    `json:"status"`
-		Openedby   string    `json:"openedBy"`
-		Openeddate time.Time `json:"openedDate"`
-		Pm         string    `json:"PM"`
-		Progress   int       `json:"progress"`
-	} `json:"projects"`
+	Page     int            `json:"page"`
+	Total    int            `json:"total"`
+	Limit    int            `json:"limit"`
+	Projects []ProjectsBody `json:"projects"`
 }
 
 type ProjectsUpdateMeta struct {

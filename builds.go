@@ -27,27 +27,8 @@ type BuildsService struct {
 }
 
 type BuildsListMsg struct {
-	Total  int `json:"total"`
-	Builds []struct {
-		ID            int           `json:"id"`
-		Project       int           `json:"project"`
-		Product       int           `json:"product"`
-		Branch        int           `json:"branch"`
-		Execution     int           `json:"execution"`
-		Name          string        `json:"name"`
-		Scmpath       string        `json:"scmPath"`
-		Filepath      string        `json:"filePath"`
-		Date          string        `json:"date"`
-		Stories       []interface{} `json:"stories"`
-		Bugs          []interface{} `json:"bugs"`
-		Builder       string        `json:"builder"`
-		Desc          string        `json:"desc"`
-		Deleted       bool          `json:"deleted"`
-		Executionname string        `json:"executionName"`
-		Executionid   int           `json:"executionID"`
-		Productname   string        `json:"productName"`
-		Branchname    string        `json:"branchName"`
-	} `json:"builds"`
+	Total  int          `json:"total"`
+	Builds []BuildsBody `json:"builds"`
 }
 
 type BuildsCreateMeta struct {
@@ -63,7 +44,7 @@ type BuildsCreateMeta struct {
 	Desc     string `json:"desc,omitempty"`
 }
 
-type BuildsCreateMsg struct {
+type BuildsBody struct {
 	ID            int           `json:"id"`
 	Project       int           `json:"project"`
 	Product       int           `json:"product"`
@@ -73,15 +54,21 @@ type BuildsCreateMsg struct {
 	Scmpath       string        `json:"scmPath"`
 	Filepath      string        `json:"filePath"`
 	Date          string        `json:"date"`
-	Stories       string        `json:"stories"`
-	Bugs          string        `json:"bugs"`
+	Stories       []StoriesBody `json:"stories"`
+	Bugs          []BugBody     `json:"bugs"`
 	Builder       string        `json:"builder"`
 	Desc          string        `json:"desc"`
 	Deleted       string        `json:"deleted"`
 	Executionname string        `json:"executionName"`
 	Productname   string        `json:"productName"`
-	Producttype   string        `json:"productType"`
-	Files         []interface{} `json:"files"`
+	Executionid   int           `json:"executionID,omitempty"`
+	Branchname    string        `json:"branchName,omitempty"`
+}
+
+type BuildsCreateMsg struct {
+	BuildsBody
+	Producttype string        `json:"productType,omitempty"`
+	Files       []interface{} `json:"files,omitempty"`
 }
 
 // ProjectsList 获取项目版本列表

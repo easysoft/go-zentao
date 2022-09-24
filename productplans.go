@@ -48,7 +48,7 @@ type ProductPlanCreateMsg struct {
 
 	Status       string        `json:"status"`
 	ClosedReason string        `json:"closedReason"`
-	Stories      []interface{} `json:"stories"`
+	Stories      []StoriesBody `json:"stories"`
 	Bugs         []BugBody     `json:"bugs"`
 }
 
@@ -73,98 +73,14 @@ type ProductPlanListMsg struct {
 
 type ProductPlanGetMsg struct {
 	ProductPlanBody
-	Stories []struct {
-		Story          int         `json:"story"`
-		Plan           string      `json:"plan"`
-		Order          int         `json:"order"`
-		ID             int         `json:"id"`
-		Parent         int         `json:"parent"`
-		Product        int         `json:"product"`
-		Branch         int         `json:"branch"`
-		Module         int         `json:"module"`
-		Source         string      `json:"source"`
-		Sourcenote     string      `json:"sourceNote"`
-		Frombug        int         `json:"fromBug"`
-		Title          string      `json:"title"`
-		Keywords       string      `json:"keywords"`
-		Type           string      `json:"type"`
-		Category       string      `json:"category"`
-		Pri            int         `json:"pri"`
-		Estimate       int         `json:"estimate"`
-		Status         string      `json:"status"`
-		Substatus      string      `json:"subStatus"`
-		Color          string      `json:"color"`
-		Stage          string      `json:"stage"`
-		Stagedby       string      `json:"stagedBy"`
-		Mailto         interface{} `json:"mailto"`
-		Openedby       string      `json:"openedBy"`
-		Openeddate     string      `json:"openedDate"`
-		Assignedto     string      `json:"assignedTo"`
-		Assigneddate   string      `json:"assignedDate"`
-		Lasteditedby   string      `json:"lastEditedBy"`
-		Lastediteddate string      `json:"lastEditedDate"`
-		Reviewedby     string      `json:"reviewedBy"`
-		Revieweddate   string      `json:"reviewedDate"`
-		Closedby       string      `json:"closedBy"`
-		Closeddate     string      `json:"closedDate"`
-		Closedreason   string      `json:"closedReason"`
-		Tobug          int         `json:"toBug"`
-		Childstories   string      `json:"childStories"`
-		Linkstories    string      `json:"linkStories"`
-		Duplicatestory int         `json:"duplicateStory"`
-		Version        int         `json:"version"`
-		Urchanged      string      `json:"URChanged"`
-		Deleted        string      `json:"deleted"`
-	} `json:"stories"`
-	Bugs []BugBody `json:"bugs"`
+	Stories []StoriesBody `json:"stories"`
+	Bugs    []BugBody     `json:"bugs"`
 }
 
 type ProductPlanUpdateMsg struct {
 	ProductPlanBody
-	Stories []struct {
-		Story          int         `json:"story"`
-		Plan           string      `json:"plan"`
-		Order          int         `json:"order"`
-		ID             int         `json:"id"`
-		Parent         int         `json:"parent"`
-		Product        int         `json:"product"`
-		Branch         int         `json:"branch"`
-		Module         int         `json:"module"`
-		Source         string      `json:"source"`
-		Sourcenote     string      `json:"sourceNote"`
-		Frombug        int         `json:"fromBug"`
-		Title          string      `json:"title"`
-		Keywords       string      `json:"keywords"`
-		Type           string      `json:"type"`
-		Category       string      `json:"category"`
-		Pri            int         `json:"pri"`
-		Estimate       int         `json:"estimate"`
-		Status         string      `json:"status"`
-		Substatus      string      `json:"subStatus"`
-		Color          string      `json:"color"`
-		Stage          string      `json:"stage"`
-		Stagedby       string      `json:"stagedBy"`
-		Mailto         interface{} `json:"mailto"`
-		Openedby       string      `json:"openedBy"`
-		Openeddate     string      `json:"openedDate"`
-		Assignedto     string      `json:"assignedTo"`
-		Assigneddate   string      `json:"assignedDate"`
-		Lasteditedby   string      `json:"lastEditedBy"`
-		Lastediteddate string      `json:"lastEditedDate"`
-		Reviewedby     string      `json:"reviewedBy"`
-		Revieweddate   string      `json:"reviewedDate"`
-		Closedby       string      `json:"closedBy"`
-		Closeddate     string      `json:"closedDate"`
-		Closedreason   string      `json:"closedReason"`
-		Tobug          int         `json:"toBug"`
-		Childstories   string      `json:"childStories"`
-		Linkstories    string      `json:"linkStories"`
-		Duplicatestory int         `json:"duplicateStory"`
-		Version        int         `json:"version"`
-		Urchanged      string      `json:"URChanged"`
-		Deleted        string      `json:"deleted"`
-	} `json:"stories"`
-	Bugs []BugBody `json:"bugs"`
+	Stories []StoriesBody `json:"stories"`
+	Bugs    []BugBody     `json:"bugs"`
 }
 
 type PlansStoriesIDs struct {
@@ -177,50 +93,8 @@ type PlansBugIDs struct {
 
 type LinkStoriesMsg struct {
 	ProductPlanBody
-	Stories []struct {
-		Story          int    `json:"story"`
-		Plan           string `json:"plan"`
-		Order          int    `json:"order"`
-		ID             int    `json:"id"`
-		Parent         int    `json:"parent"`
-		Product        int    `json:"product"`
-		Branch         int    `json:"branch"`
-		Module         int    `json:"module"`
-		Source         string `json:"source"`
-		Sourcenote     string `json:"sourceNote"`
-		Frombug        int    `json:"fromBug"`
-		Title          string `json:"title"`
-		Keywords       string `json:"keywords"`
-		Type           string `json:"type"`
-		Category       string `json:"category"`
-		Pri            int    `json:"pri"`
-		Estimate       int    `json:"estimate"`
-		Status         string `json:"status"`
-		Substatus      string `json:"subStatus"`
-		Color          string `json:"color"`
-		Stage          string `json:"stage"`
-		Stagedby       string `json:"stagedBy"`
-		Mailto         string `json:"mailto"`
-		Openedby       string `json:"openedBy"`
-		Openeddate     string `json:"openedDate"`
-		Assignedto     string `json:"assignedTo"`
-		Assigneddate   string `json:"assignedDate"`
-		Lasteditedby   string `json:"lastEditedBy"`
-		Lastediteddate string `json:"lastEditedDate"`
-		Reviewedby     string `json:"reviewedBy"`
-		Revieweddate   string `json:"reviewedDate"`
-		Closedby       string `json:"closedBy"`
-		Closeddate     string `json:"closedDate"`
-		Closedreason   string `json:"closedReason"`
-		Tobug          int    `json:"toBug"`
-		Childstories   string `json:"childStories"`
-		Linkstories    string `json:"linkStories"`
-		Duplicatestory int    `json:"duplicateStory"`
-		Version        int    `json:"version"`
-		Urchanged      string `json:"URChanged"`
-		Deleted        string `json:"deleted"`
-	} `json:"stories"`
-	Bugs []BugBody `json:"bugs"`
+	Stories []StoriesBody `json:"stories"`
+	Bugs    []BugBody     `json:"bugs"`
 }
 
 // Create 创建产品计划

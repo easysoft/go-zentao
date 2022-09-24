@@ -26,31 +26,33 @@ type ReleasesService struct {
 	client *Client
 }
 
+type Releases struct {
+	ID          int         `json:"id"`
+	Project     int         `json:"project"`
+	Product     int         `json:"product"`
+	Branch      int         `json:"branch"`
+	Build       int         `json:"build"`
+	Name        string      `json:"name"`
+	Marker      string      `json:"marker"`
+	Date        string      `json:"date"`
+	Stories     string      `json:"stories"`
+	Bugs        string      `json:"bugs"`
+	Leftbugs    string      `json:"leftBugs"`
+	Desc        string      `json:"desc"`
+	Mailto      string      `json:"mailto"`
+	Notify      interface{} `json:"notify"`
+	Status      string      `json:"status"`
+	Substatus   string      `json:"subStatus"`
+	Deleted     bool        `json:"deleted"`
+	Productname string      `json:"productName"`
+	Buildid     int         `json:"buildID"`
+	Buildname   string      `json:"buildName"`
+	Projectname string      `json:"projectName"`
+}
+
 type ReleasesMsg struct {
-	Total    int `json:"total"`
-	Releases []struct {
-		ID          int         `json:"id"`
-		Project     int         `json:"project"`
-		Product     int         `json:"product"`
-		Branch      int         `json:"branch"`
-		Build       int         `json:"build"`
-		Name        string      `json:"name"`
-		Marker      string      `json:"marker"`
-		Date        string      `json:"date"`
-		Stories     string      `json:"stories"`
-		Bugs        string      `json:"bugs"`
-		Leftbugs    string      `json:"leftBugs"`
-		Desc        string      `json:"desc"`
-		Mailto      string      `json:"mailto"`
-		Notify      interface{} `json:"notify"`
-		Status      string      `json:"status"`
-		Substatus   string      `json:"subStatus"`
-		Deleted     bool        `json:"deleted"`
-		Productname string      `json:"productName"`
-		Buildid     int         `json:"buildID"`
-		Buildname   string      `json:"buildName"`
-		Projectname string      `json:"projectName"`
-	} `json:"releases"`
+	Total    int        `json:"total"`
+	Releases []Releases `json:"releases"`
 }
 
 // List 获取项目发布列表
