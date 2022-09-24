@@ -34,7 +34,7 @@ Zentao API client enabling Go programs to interact with Zentao in a simple and u
   - [x] 获取产品详情
   - [x] 删除产品
   - [x] 创建产品
-- [x] 产品计划
+- [x] 产品计划(ProductsPlans)
   - [x] 创建计划
   - [x] 获取产品计划列表
   - [x] 获取计划详情
@@ -112,3 +112,7 @@ Zentao API client enabling Go programs to interact with Zentao in a simple and u
 地址: https://zentao-ysicing.cloud.okteto.net
 账号: admin/jaege1ugh4ooYip7
 ```
+
+### 已知问题
+
+- [ ] 部分字段接口返回有时候是结构体有时候是字符串, 正在协调看能否统一
