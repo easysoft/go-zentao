@@ -10,7 +10,7 @@ Zentao API client enabling Go programs to interact with Zentao in a simple and u
 
 ## NOTE
 
-基于ZenTao最新开源版本 [`17.6.2`](https://github.com/quicklyon/zentao-docker)
+基于ZenTao最新开源版本 [`17.8`](https://github.com/quicklyon/zentao-docker)
 
 ## 支持
 
@@ -97,6 +97,9 @@ Zentao API client enabling Go programs to interact with Zentao in a simple and u
   - [x] 获取测试单列表
   - [x] 获取项目的测试单
   - [x] 获取测试单详情
+  - [x] 创建测试单
+  - [x] 删除测试单
+  - [x] 修改测试单
 - [x] 反馈
   - [x] 获取反馈列表
   - [x] 获取反馈详情

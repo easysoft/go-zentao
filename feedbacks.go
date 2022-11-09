@@ -32,48 +32,38 @@ type ListFeedBacksMsg struct {
 	Total     int `json:"total"`
 	Limit     int `json:"limit"`
 	Feedbacks []struct {
-		ID          int    `json:"id"`
-		Product     int    `json:"product"`
-		Module      int    `json:"module"`
-		Title       string `json:"title"`
-		Type        string `json:"type"`
-		Solution    string `json:"solution"`
-		Desc        string `json:"desc"`
-		Status      string `json:"status"`
-		Substatus   string `json:"subStatus"`
-		Public      string `json:"public"`
-		Notify      string `json:"notify"`
-		Notifyemail string `json:"notifyEmail"`
-		Likes       string `json:"likes"`
-		Result      int    `json:"result"`
-		Faq         int    `json:"faq"`
-		Openedby    struct {
-			ID       int    `json:"id"`
-			Account  string `json:"account"`
-			Avatar   string `json:"avatar"`
-			Realname string `json:"realname"`
-		} `json:"openedBy"`
-		Openeddate    time.Time   `json:"openedDate"`
-		Reviewedby    interface{} `json:"reviewedBy"`
-		Revieweddate  interface{} `json:"reviewedDate"`
-		Processedby   interface{} `json:"processedBy"`
-		Processeddate interface{} `json:"processedDate"`
-		Closedby      interface{} `json:"closedBy"`
-		Closeddate    interface{} `json:"closedDate"`
-		Closedreason  string      `json:"closedReason"`
-		Editedby      struct {
-			ID       int    `json:"id"`
-			Account  string `json:"account"`
-			Avatar   string `json:"avatar"`
-			Realname string `json:"realname"`
-		} `json:"editedBy"`
-		Editeddate   time.Time     `json:"editedDate"`
-		Assignedto   interface{}   `json:"assignedTo"`
-		Assigneddate string        `json:"assignedDate"`
-		Feedbackby   string        `json:"feedbackBy"`
-		Mailto       []interface{} `json:"mailto"`
-		Deleted      bool          `json:"deleted"`
-		Dept         int           `json:"dept"`
+		ID            int           `json:"id"`
+		Product       int           `json:"product"`
+		Module        int           `json:"module"`
+		Title         string        `json:"title"`
+		Type          string        `json:"type"`
+		Solution      string        `json:"solution"`
+		Desc          string        `json:"desc"`
+		Status        string        `json:"status"`
+		Substatus     string        `json:"subStatus"`
+		Public        string        `json:"public"`
+		Notify        string        `json:"notify"`
+		Notifyemail   string        `json:"notifyEmail"`
+		Likes         string        `json:"likes"`
+		Result        int           `json:"result"`
+		Faq           int           `json:"faq"`
+		Openedby      UserMeta      `json:"openedBy"`
+		Openeddate    time.Time     `json:"openedDate"`
+		Reviewedby    interface{}   `json:"reviewedBy"`
+		Revieweddate  interface{}   `json:"reviewedDate"`
+		Processedby   interface{}   `json:"processedBy"`
+		Processeddate interface{}   `json:"processedDate"`
+		Closedby      interface{}   `json:"closedBy"`
+		Closeddate    interface{}   `json:"closedDate"`
+		Closedreason  string        `json:"closedReason"`
+		Editedby      UserMeta      `json:"editedBy"`
+		Editeddate    time.Time     `json:"editedDate"`
+		Assignedto    interface{}   `json:"assignedTo"`
+		Assigneddate  string        `json:"assignedDate"`
+		Feedbackby    string        `json:"feedbackBy"`
+		Mailto        []interface{} `json:"mailto"`
+		Deleted       bool          `json:"deleted"`
+		Dept          int           `json:"dept"`
 	} `json:"feedbacks"`
 }
 

@@ -44,7 +44,7 @@ type Execution struct {
 	Begin      string    `json:"begin"`
 	End        string    `json:"end"`
 	Status     string    `json:"status"`
-	OpenedBy   string    `json:"openedBy"`
+	OpenedBy   UserMeta  `json:"openedBy"`
 	OpenedDate time.Time `json:"openedDate"`
 	Progress   int       `json:"progress"`
 }
@@ -95,7 +95,7 @@ type ExecutionsCreateMsg struct {
 	Parentversion  int         `json:"parentVersion"`
 	Planduration   int         `json:"planDuration"`
 	Realduration   int         `json:"realDuration"`
-	Openedby       string      `json:"openedBy"`
+	Openedby       UserMeta    `json:"openedBy"`
 	Openeddate     time.Time   `json:"openedDate"`
 	Openedversion  string      `json:"openedVersion"`
 	Lasteditedby   string      `json:"lastEditedBy"`
