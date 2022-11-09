@@ -112,6 +112,7 @@ Zentao API client enabling Go programs to interact with Zentao in a simple and u
 ## 测试账号
 
 ```bash
+# 部署方式: okteto up -f hack/okteto.yml --deploy
 地址: https://zentao-ysicing.cloud.okteto.net
 账号: admin/jaege1ugh4ooYip7
 ```
