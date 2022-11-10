@@ -1,4 +1,4 @@
-name: docker
+name: hack
 
 # The build section defines how to build the images of your development environment
 # More info: https://www.okteto.com/docs/reference/manifest/#build
@@ -11,7 +11,10 @@ name: docker
 # More info: https://www.okteto.com/docs/reference/manifest/#deploy
 deploy:
   compose:
-    file: docker-compose.yml
+    file: docker-compose.yaml
+    services:
+      - zentao-mysql
+      - zentao
 
 # The dependencies section defines other git repositories to be deployed as part of your development environment
 # More info: https://www.okteto.com/docs/reference/manifest/#dependencies

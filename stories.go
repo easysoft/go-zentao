@@ -66,7 +66,7 @@ type StoriesBody struct {
 	Stage          string      `json:"stage"`
 	Stagedby       string      `json:"stagedBy"`
 	Mailto         string      `json:"mailto"`
-	Openedby       string      `json:"openedBy"`
+	Openedby       UserMeta    `json:"openedBy"`
 	Openeddate     time.Time   `json:"openedDate"`
 	Assignedto     string      `json:"assignedTo"`
 	Assigneddate   interface{} `json:"assignedDate"`
