@@ -195,7 +195,7 @@ type TestCasesGetMsg struct {
 	Files              []interface{} `json:"files"`
 }
 
-func (s *TestCasesService) ListByProducts(id int64) (*ListProductsTestCasesMsg, *req.Response, error) {
+func (s *TestCasesService) ListByProducts(id int) (*ListProductsTestCasesMsg, *req.Response, error) {
 	var et ListProductsTestCasesMsg
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).

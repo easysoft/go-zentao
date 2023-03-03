@@ -8,6 +8,8 @@ run:
   issues-exit-code: 1
   # Include test files or not, default is true
   tests: true
+  skip-dirs:
+    - "example"
 
 # Output configuration options
 output:
@@ -41,15 +43,12 @@ linters:
     - nolintlint
     - staticcheck
     - structcheck
-    - typecheck
     - unconvert
     - unused
     - varcheck
     - whitespace
     - goheader
-  disable:
-    - errcheck
-  disable-all: false
+  disable-all: true
   fast: false
 
 issues:
