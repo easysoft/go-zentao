@@ -30,7 +30,7 @@ const (
 	apiVersionPath = "api.php/v1"
 )
 
-type Client struct {
+type Client sctruct {
 	client  *req.Client
 	baseURL *url.URL
 
