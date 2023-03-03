@@ -106,6 +106,8 @@ func (s *ProgramsService) List(order string) (*ProgramsList, *req.Response, erro
 		SetHeader("Token", s.client.token).
 		SetQueryParams(map[string]string{
 			"order": order,
+			"page": "1",
+			"limit": "500",
 		}).
 		SetResult(&u).
 		Get(s.client.RequestURL("/programs"))

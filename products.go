@@ -43,7 +43,7 @@ type ProductsListBody struct {
 	Fixedbugs    int             `json:"fixedBugs"`
 	Thisweekbugs int             `json:"thisWeekBugs"`
 	Assigntonull int             `json:"assignToNull"`
-	Progress     int             `json:"progress"`
+	Progress     float64         `json:"progress"`
 }
 
 type ProductsList struct {
