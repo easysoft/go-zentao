@@ -10,7 +10,7 @@ Zentao API client enabling Go programs to interact with Zentao in a simple and u
 
 ## NOTE
 
-基于ZenTao最新开源版本 [`18.1`](https://github.com/quicklyon/zentao-docker)
+基于ZenTao最新开源版本 [`18.3`](https://github.com/quicklyon/zentao-docker), 即将适配最新版本`20.dev`
 
 ## 支持
 
@@ -117,11 +117,8 @@ Zentao API client enabling Go programs to interact with Zentao in a simple and u
 账号: admin/jaege1ugh4ooYip7
 ```
 
-### TODO
-
-- [ ] 精简相关参数返回值，只保留重要参数
-- [ ] 添加二次开发接口
-
 ### 已知问题
 
-- [ ] 部分字段接口返回有时候是结构体有时候是字符串, 正在协调看能否统一(暂无计划,改动较多)
+> 将在`20`版本优化
+
+- [ ] 部分字段接口返回有时候是结构体有时候是字符串
