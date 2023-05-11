@@ -1,5 +1,5 @@
 //
-//  Copyright 2022, ysicing
+//  Copyright 2022, easysoft
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@ package main
 import (
 	"log"
 
-	"github.com/ysicing/go-zentao"
+	"github.com/easysoft/go-zentao"
 )
 
 // This example shows how to create a client with username and password.

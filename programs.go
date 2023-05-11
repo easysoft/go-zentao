@@ -1,5 +1,5 @@
 //
-//  Copyright 2022, ysicing
+//  Copyright 2022, easysoft
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -106,7 +106,7 @@ func (s *ProgramsService) List(order string) (*ProgramsList, *req.Response, erro
 		SetHeader("Token", s.client.token).
 		SetQueryParams(map[string]string{
 			"order": order,
-			"page": "1",
+			"page":  "1",
 			"limit": "500",
 		}).
 		SetResult(&u).

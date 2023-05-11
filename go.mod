@@ -1,4 +1,4 @@
-module github.com/ysicing/go-zentao
+module github.com/easysoft/go-zentao
 
 go 1.20
 

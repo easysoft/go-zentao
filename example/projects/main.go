@@ -5,14 +5,14 @@ import (
 	"log"
 	"time"
 
-	"github.com/ysicing/go-zentao"
+	"github.com/easysoft/go-zentao"
 )
 
 func main() {
 	zt, err := zentao.NewBasicAuthClient(
 		"admin",
 		"jaege1ugh4ooYip7",
-		zentao.WithBaseURL("https://zentao-ysicing.cloud.okteto.net"),
+		zentao.WithBaseURL("https://zentao-easysoft.cloud.okteto.net"),
 		zentao.WithDevMode(),
 		zentao.WithDumpAll(),
 		zentao.WithoutProxy(),

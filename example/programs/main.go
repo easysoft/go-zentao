@@ -1,5 +1,5 @@
 //
-//  Copyright 2022, ysicing
+//  Copyright 2022, easysoft
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -22,14 +22,14 @@ import (
 	"time"
 
 	"github.com/davecgh/go-spew/spew"
-	"github.com/ysicing/go-zentao"
+	"github.com/easysoft/go-zentao"
 )
 
 func main() {
 	zt, err := zentao.NewBasicAuthClient(
 		"admin",
 		"jaege1ugh4ooYip7",
-		zentao.WithBaseURL("https://zentao-ysicing.cloud.okteto.net"),
+		zentao.WithBaseURL("https://zentao-easysoft.cloud.okteto.net"),
 		zentao.WithDevMode(),
 		zentao.WithDumpAll(),
 		zentao.WithoutProxy(),

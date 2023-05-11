@@ -1,10 +1,10 @@
 # go-zentao
 
-[![Go Report Card](https://goreportcard.com/badge/github.com/ysicing/go-zentao)](https://goreportcard.com/report/github.com/ysicing/go-zentao)
-![GitHub](https://img.shields.io/github/license/ysicing/go-zentao?style=flat-square)
-![GitHub go.mod Go version (subdirectory of monorepo)](https://img.shields.io/github/go-mod/go-version/ysicing/go-zentao?filename=go.mod&style=flat-square)
-![GitHub commit activity](https://img.shields.io/github/commit-activity/w/ysicing/go-zentao?style=flat-square)
-![zentao](https://goproxy.cn/stats/github.com/ysicing/go-zentao/badges/download-count.svg)
+[![Go Report Card](https://goreportcard.com/badge/github.com/easysoft/go-zentao)](https://goreportcard.com/report/github.com/easysoft/go-zentao)
+![GitHub](https://img.shields.io/github/license/easysoft/go-zentao?style=flat-square)
+![GitHub go.mod Go version (subdirectory of monorepo)](https://img.shields.io/github/go-mod/go-version/easysoft/go-zentao?filename=go.mod&style=flat-square)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/w/easysoft/go-zentao?style=flat-square)
+![zentao](https://goproxy.cn/stats/github.com/easysoft/go-zentao/badges/download-count.svg)
 
 Zentao API client enabling Go programs to interact with Zentao in a simple and uniform way
 
@@ -113,7 +113,7 @@ Zentao API client enabling Go programs to interact with Zentao in a simple and u
 
 ```bash
 # 部署方式: okteto up -f hack/okteto.yml --deploy
-地址: https://zentao-ysicing.cloud.okteto.net
+地址: https://zentao-easysoft.cloud.okteto.net
 账号: admin/jaege1ugh4ooYip7
 ```
 
