@@ -5,12 +5,7 @@ env:
   GO_VERSION: '1.20'
   TZ: Asia/Shanghai
 
-permissions:
-  contents: read
-  issues: write
-  metadata: read
-  pull-requests: write
-  statuses: write
+permissions: write-all
 
 on:
   pull_request:
