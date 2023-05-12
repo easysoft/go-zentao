@@ -122,7 +122,7 @@ func (s *BugsService) ListByProducts(id int64) (*ListProductsBugsMsg, *req.Respo
 	var et ListProductsBugsMsg
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
-		SetResult(&et).
+		SetSuccessResult(&et).
 		Get(s.client.RequestURL(fmt.Sprintf("/products/%d/bugs", id)))
 	return &et, resp, err
 }
@@ -133,7 +133,7 @@ func (s *BugsService) Create(id int, build BugCreateMeta) (*BugGetMsg, *req.Resp
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
 		SetBody(&build).
-		SetResult(&u).
+		SetSuccessResult(&u).
 		Post(s.client.RequestURL(fmt.Sprintf("/products/%d/bugs", id)))
 	return &u, resp, err
 }
@@ -143,7 +143,7 @@ func (s *BugsService) DeleteByID(id int) (*CustomResp, *req.Response, error) {
 	var u CustomResp
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
-		SetResult(&u).
+		SetSuccessResult(&u).
 		Delete(s.client.RequestURL(fmt.Sprintf("/bugs/%d", id)))
 	return &u, resp, err
 }
@@ -154,7 +154,7 @@ func (s *BugsService) UpdateByID(id int, exec BugCreateMeta) (*BugGetMsg, *req.R
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
 		SetBody(&exec).
-		SetResult(&u).
+		SetSuccessResult(&u).
 		Put(s.client.RequestURL(fmt.Sprintf("/bugs/%d", id)))
 	return &u, resp, err
 }
@@ -164,7 +164,7 @@ func (s *BugsService) GetByID(id int) (*BugGetMsg, *req.Response, error) {
 	var u BugGetMsg
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
-		SetResult(&u).
+		SetSuccessResult(&u).
 		Get(s.client.RequestURL(fmt.Sprintf("/bugs/%d", id)))
 	return &u, resp, err
 }

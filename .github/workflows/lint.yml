@@ -1,33 +1,118 @@
-name: Lint and Test
+name: check
+
+env:
+  # Common versions
+  GO_VERSION: '1.20'
+  TZ: Asia/Shanghai
+
+permissions:
+  contents: read
+  issues: write
+  metadata: read
+  pull-requests: write
+  statuses: write
 
 on:
   pull_request:
+    branches:
+      - *
+    paths:
+      - '**.go'
+      - 'go.mod'
+      - '.github/workflows/**.yml'
   push:
-    branches: [master]
+    branches:
+      - *
+    paths:
+      - '**.go'
+      - 'go.mod'
+      - '.github/workflows/**.yml'
 
 jobs:
-  lint_and_test:
-    name: Lint and Test - ${{ matrix.go-version }}
-    strategy:
-      matrix:
-        go-version: [1.19.x]
-        platform: [ubuntu-latest]
-    runs-on: ${{ matrix.platform }}
+  check-license:
+    runs-on: ubuntu-latest
     steps:
-      - name: Install Go
-        uses: actions/setup-go@v2
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup Go
+        uses: actions/setup-go@v4
         with:
-          go-version: ${{ matrix.go-version }}
+          go-version: ${{ env.GO_VERSION }}
+      - name: install task
+        run: |
+          echo "install task"
+          go install github.com/go-task/task/v3/cmd/task@latest
+      - name: Run Check License
+        run: |
+          task gencopyright
+          modifyCode=$(git status  -s | grep M | wc -l)
+          git status  -s
+          if [ $modifyCode -eq 0 ] ; then
+             echo "Lic check ok"
+          else
+             echo "Failed git modify files num is $modifyCode. Lic check error,please exec 'task gencopyright' in your code "
+             exit -1
+          fi
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+      - name: Setup Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: ${{ env.GO_VERSION }}
+      - name: install task
+        run: |
+          echo "install task"
+          go install github.com/go-task/task/v3/cmd/task@latest
+      - name: Run Linter
+        run: |
+          task lint
+          modifyCode=$(git status  -s | grep M | wc -l)
+          git status  -s
+          if [ $modifyCode -eq 0 ] ; then
+              echo "Lic check ok"
+          else
+              echo "Failed git modify files num is $modifyCode. Lic check error,please exec 'task gencopyright' in your code "
+              exit -1
+          fi
 
-      - name: Checkout code
-        uses: actions/checkout@v2
-
+  lint_and_test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+      - name: Setup Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: ${{ env.GO_VERSION }}
       - name: Lint package
-        uses: golangci/golangci-lint-action@v2
+        uses: golangci/golangci-lint-action@v3
         with:
           version: latest
+          args: --issues-exit-code=1
 
+  coverage:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+      - name: Setup Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: ${{ env.GO_VERSION }}
       - name: Test package
         run: |
           go test -v ./... -coverprofile=coverage.txt -covermode count
           go tool cover -func coverage.txt
+      - name: Go Coverage Badge
+        uses: tj-actions/coverage-badge-go@v2
+        with:
+          filename: coverage.txt

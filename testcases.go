@@ -199,7 +199,7 @@ func (s *TestCasesService) ListByProducts(id int) (*ListProductsTestCasesMsg, *r
 	var et ListProductsTestCasesMsg
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
-		SetResult(&et).
+		SetSuccessResult(&et).
 		Get(s.client.RequestURL(fmt.Sprintf("/products/%d/testcases", id)))
 	return &et, resp, err
 }
@@ -210,7 +210,7 @@ func (s *TestCasesService) Create(id int, build TestCasesCreateMeta) (*TestCases
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
 		SetBody(&build).
-		SetResult(&u).
+		SetSuccessResult(&u).
 		Post(s.client.RequestURL(fmt.Sprintf("/products/%d/testcases", id)))
 	return &u, resp, err
 }
@@ -220,7 +220,7 @@ func (s *TestCasesService) DeleteByID(id int) (*CustomResp, *req.Response, error
 	var u CustomResp
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
-		SetResult(&u).
+		SetSuccessResult(&u).
 		Delete(s.client.RequestURL(fmt.Sprintf("/testcases/%d", id)))
 	return &u, resp, err
 }
@@ -231,7 +231,7 @@ func (s *TestCasesService) UpdateByID(id int, tc TestCasesCreateMeta) (*TestCase
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
 		SetBody(&tc).
-		SetResult(&u).
+		SetSuccessResult(&u).
 		Put(s.client.RequestURL(fmt.Sprintf("/testcases/%d", id)))
 	return &u, resp, err
 }
@@ -241,7 +241,7 @@ func (s *TestCasesService) GetByID(id int) (*TestCasesCreateMsg, *req.Response, 
 	var u TestCasesCreateMsg
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
-		SetResult(&u).
+		SetSuccessResult(&u).
 		Get(s.client.RequestURL(fmt.Sprintf("/testcases/%d", id)))
 	return &u, resp, err
 }

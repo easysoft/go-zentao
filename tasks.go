@@ -163,7 +163,7 @@ func (s *TasksService) ListByExecution(id int64) (*ExecutionTasks, *req.Response
 	var et ExecutionTasks
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
-		SetResult(&et).
+		SetSuccessResult(&et).
 		Get(s.client.RequestURL(fmt.Sprintf("/executions/%d/tasks", id)))
 	return &et, resp, err
 }
@@ -174,7 +174,7 @@ func (s *TasksService) Create(id int, build TaskCreateMeta) (*TaskCreateMsg, *re
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
 		SetBody(&build).
-		SetResult(&u).
+		SetSuccessResult(&u).
 		Post(s.client.RequestURL(fmt.Sprintf("/executions/%d/tasks", id)))
 	return &u, resp, err
 }
@@ -184,7 +184,7 @@ func (s *TasksService) DeleteByID(id int) (*CustomResp, *req.Response, error) {
 	var u CustomResp
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
-		SetResult(&u).
+		SetSuccessResult(&u).
 		Delete(s.client.RequestURL(fmt.Sprintf("/tasks/%d", id)))
 	return &u, resp, err
 }
@@ -195,7 +195,7 @@ func (s *TasksService) UpdateByID(id int, exec TaskCreateMeta) (*TaskCreateMsg, 
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
 		SetBody(&exec).
-		SetResult(&u).
+		SetSuccessResult(&u).
 		Put(s.client.RequestURL(fmt.Sprintf("/tasks/%d", id)))
 	return &u, resp, err
 }
@@ -205,7 +205,7 @@ func (s *TasksService) GetByID(id int) (*TaskGetMsg, *req.Response, error) {
 	var u TaskGetMsg
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
-		SetResult(&u).
+		SetSuccessResult(&u).
 		Get(s.client.RequestURL(fmt.Sprintf("/tasks/%d", id)))
 	return &u, resp, err
 }

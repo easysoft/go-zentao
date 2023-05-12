@@ -111,11 +111,18 @@ Zentao API client enabling Go programs to interact with Zentao in a simple and u
 
 ## 测试账号
 
+> 推荐本地部署
+
 ```bash
 # 部署方式: okteto up -f hack/okteto.yml --deploy
 地址: https://zentao-easysoft.cloud.okteto.net
 账号: admin/jaege1ugh4ooYip7
 ```
+
+## TODO
+
+- [ ] 优化代码 & 添加单元测试
+- [ ] 支持二次开发API
 
 ### 已知问题
 

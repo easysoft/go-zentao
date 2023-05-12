@@ -37,7 +37,7 @@ func (s *TokenService) GetAccessToken() (*AccessToken, *req.Response, error) {
 	var result AccessToken
 	resp, err := s.client.client.R().
 		SetBody(&BasicAuth{Account: s.client.username, Password: s.client.password}).
-		SetResult(&result).
+		SetSuccessResult(&result).
 		Post(s.client.RequestURL("/tokens"))
 
 	return &result, resp, err

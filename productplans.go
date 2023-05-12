@@ -103,7 +103,7 @@ func (s *ProductPlansService) Create(id int, plan ProductPlanMeta) (*ProductPlan
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
 		SetBody(&plan).
-		SetResult(&u).
+		SetSuccessResult(&u).
 		Post(s.client.RequestURL(fmt.Sprintf("/products/%d/plans", id)))
 	return &u, resp, err
 }
@@ -113,7 +113,7 @@ func (s *ProductPlansService) List(id int) (*ProductPlanListMsg, *req.Response, 
 	var u ProductPlanListMsg
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
-		SetResult(&u).
+		SetSuccessResult(&u).
 		Get(s.client.RequestURL(fmt.Sprintf("/products/%d/plans", id)))
 	return &u, resp, err
 }
@@ -123,7 +123,7 @@ func (s *ProductPlansService) GetByID(id int) (*ProductPlanGetMsg, *req.Response
 	var u ProductPlanGetMsg
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
-		SetResult(&u).
+		SetSuccessResult(&u).
 		Get(s.client.RequestURL(fmt.Sprintf("/productplans/%d", id)))
 	return &u, resp, err
 }
@@ -134,7 +134,7 @@ func (s *ProductPlansService) UpdateByID(id int, plan ProductPlanMeta) (*Product
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
 		SetBody(&plan).
-		SetResult(&u).
+		SetSuccessResult(&u).
 		Put(s.client.RequestURL(fmt.Sprintf("/productplans/%d", id)))
 	return &u, resp, err
 }
@@ -144,7 +144,7 @@ func (s *ProductPlansService) DeleteByID(id int) (*CustomResp, *req.Response, er
 	var u CustomResp
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
-		SetResult(&u).
+		SetSuccessResult(&u).
 		Delete(s.client.RequestURL(fmt.Sprintf("/productplans/%d", id)))
 	return &u, resp, err
 }
@@ -155,18 +155,18 @@ func (s *ProductPlansService) LinkStories(id int, story PlansStoriesIDs) (*LinkS
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
 		SetBody(&story).
-		SetResult(&u).
+		SetSuccessResult(&u).
 		Post(s.client.RequestURL(fmt.Sprintf("/productplans/%d/linkstories", id)))
 	return &u, resp, err
 }
 
-// LinkStories 产品计划关联需求
+// UnLinkStories 产品计划关联需求
 func (s *ProductPlansService) UnLinkStories(id int, story PlansStoriesIDs) (*LinkStoriesMsg, *req.Response, error) {
 	var u LinkStoriesMsg
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
 		SetBody(&story).
-		SetResult(&u).
+		SetSuccessResult(&u).
 		Post(s.client.RequestURL(fmt.Sprintf("/productplans/%d/unlinkstories", id)))
 	return &u, resp, err
 }
@@ -177,7 +177,7 @@ func (s *ProductPlansService) LinkBugs(id int, bug PlansBugIDs) (*LinkStoriesMsg
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
 		SetBody(&bug).
-		SetResult(&u).
+		SetSuccessResult(&u).
 		Post(s.client.RequestURL(fmt.Sprintf("/productplans/%d/linkBugs", id)))
 	return &u, resp, err
 }
@@ -188,7 +188,7 @@ func (s *ProductPlansService) UnLinkBugs(id int, bug PlansBugIDs) (*LinkStoriesM
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
 		SetBody(&bug).
-		SetResult(&u).
+		SetSuccessResult(&u).
 		Post(s.client.RequestURL(fmt.Sprintf("/productplans/%d/unlinkbugs", id)))
 	return &u, resp, err
 }

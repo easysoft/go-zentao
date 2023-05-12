@@ -76,7 +76,7 @@ func (s *BuildsService) ProjectsList(id int) (*BuildsListMsg, *req.Response, err
 	var u BuildsListMsg
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
-		SetResult(&u).
+		SetSuccessResult(&u).
 		Get(s.client.RequestURL(fmt.Sprintf("/projects/%d/builds", id)))
 	return &u, resp, err
 }
@@ -86,7 +86,7 @@ func (s *BuildsService) ExecutionsList(id int) (*BuildsListMsg, *req.Response, e
 	var u BuildsListMsg
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
-		SetResult(&u).
+		SetSuccessResult(&u).
 		Get(s.client.RequestURL(fmt.Sprintf("/executions/%d/builds", id)))
 	return &u, resp, err
 }
@@ -97,7 +97,7 @@ func (s *BuildsService) Create(id int, build BuildsCreateMeta) (*BuildsCreateMsg
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
 		SetBody(&build).
-		SetResult(&u).
+		SetSuccessResult(&u).
 		Post(s.client.RequestURL(fmt.Sprintf("/projects/%d/builds", id)))
 	return &u, resp, err
 }
@@ -107,7 +107,7 @@ func (s *BuildsService) DeleteByID(id int) (*CustomResp, *req.Response, error) {
 	var u CustomResp
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
-		SetResult(&u).
+		SetSuccessResult(&u).
 		Delete(s.client.RequestURL(fmt.Sprintf("/builds/%d", id)))
 	return &u, resp, err
 }
@@ -118,7 +118,7 @@ func (s *BuildsService) UpdateByID(id int, build BuildsCreateMeta) (*BuildsCreat
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
 		SetBody(&build).
-		SetResult(&u).
+		SetSuccessResult(&u).
 		Put(s.client.RequestURL(fmt.Sprintf("/builds/%d", id)))
 	return &u, resp, err
 }
@@ -128,7 +128,7 @@ func (s *BuildsService) GetByID(id int) (*BuildsCreateMsg, *req.Response, error)
 	var u BuildsCreateMsg
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
-		SetResult(&u).
+		SetSuccessResult(&u).
 		Get(s.client.RequestURL(fmt.Sprintf("/builds/%d", id)))
 	return &u, resp, err
 }

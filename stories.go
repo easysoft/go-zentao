@@ -113,7 +113,7 @@ func (s *StoriesService) ProjectsList(id int) (*StoriesListMeta, *req.Response, 
 	var u StoriesListMeta
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
-		SetResult(&u).
+		SetSuccessResult(&u).
 		Get(s.client.RequestURL(fmt.Sprintf("/projects/%d/stories", id)))
 	return &u, resp, err
 }
@@ -123,7 +123,7 @@ func (s *StoriesService) ProductsList(id int) (*StoriesListMeta, *req.Response, 
 	var u StoriesListMeta
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
-		SetResult(&u).
+		SetSuccessResult(&u).
 		Get(s.client.RequestURL(fmt.Sprintf("/products/%d/stories", id)))
 	return &u, resp, err
 }
@@ -134,7 +134,7 @@ func (s *StoriesService) Create(story StoriesCreateMeta) (*StoriesMsg, *req.Resp
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
 		SetBody(&story).
-		SetResult(&u).
+		SetSuccessResult(&u).
 		Post(s.client.RequestURL("/stories"))
 	return &u, resp, err
 }
@@ -144,7 +144,7 @@ func (s *StoriesService) DeleteByID(id int) (*CustomResp, *req.Response, error) 
 	var u CustomResp
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
-		SetResult(&u).
+		SetSuccessResult(&u).
 		Delete(s.client.RequestURL(fmt.Sprintf("/stories/%d", id)))
 	return &u, resp, err
 }
@@ -155,7 +155,7 @@ func (s *StoriesService) UpdateByID(id int, story StoriesMeta) (*StoriesMsg, *re
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
 		SetBody(&story).
-		SetResult(&u).
+		SetSuccessResult(&u).
 		Post(s.client.RequestURL(fmt.Sprintf("/stories/%d/change", id)))
 	return &u, resp, err
 }
@@ -165,7 +165,7 @@ func (s *StoriesService) GetByID(id int) (*StoriesMsg, *req.Response, error) {
 	var u StoriesMsg
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
-		SetResult(&u).
+		SetSuccessResult(&u).
 		Get(s.client.RequestURL(fmt.Sprintf("/stories/%d", id)))
 	return &u, resp, err
 }
@@ -175,7 +175,7 @@ func (s *StoriesService) ExecutionsList(id int) (*StoriesListMeta, *req.Response
 	var u StoriesListMeta
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
-		SetResult(&u).
+		SetSuccessResult(&u).
 		Get(s.client.RequestURL(fmt.Sprintf("/executions/%d/stories", id)))
 	return &u, resp, err
 }
@@ -186,7 +186,7 @@ func (s *StoriesService) UpdateFieldByID(id int, uf StoriesUpdateFieldMeta) (*St
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
 		SetBody(&uf).
-		SetResult(&u).
+		SetSuccessResult(&u).
 		Put(s.client.RequestURL(fmt.Sprintf("/stories/%d", id)))
 	return &u, resp, err
 }

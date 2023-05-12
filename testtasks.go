@@ -120,7 +120,7 @@ func (s *TestTasksService) List(page, limit, order, product, branch string) (*Li
 			"product": product,
 			"branch":  branch,
 		}).
-		SetResult(&et).
+		SetSuccessResult(&et).
 		Get(s.client.RequestURL("/testtasks"))
 	return &et, resp, err
 }
@@ -129,7 +129,7 @@ func (s *TestTasksService) ListByProjects(id int64) (*ListTestTasksMsg, *req.Res
 	var et ListTestTasksMsg
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
-		SetResult(&et).
+		SetSuccessResult(&et).
 		Get(s.client.RequestURL(fmt.Sprintf("/projects/%d/testtasks", id)))
 	return &et, resp, err
 }
@@ -138,7 +138,7 @@ func (s *TestTasksService) GetByID(id int) (*TestTasksBody, *req.Response, error
 	var u TestTasksBody
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
-		SetResult(&u).
+		SetSuccessResult(&u).
 		Get(s.client.RequestURL(fmt.Sprintf("/testtasks/%d", id)))
 	return &u, resp, err
 }
@@ -149,7 +149,7 @@ func (s *TestTasksService) Create(testtask TestTaskCreateMeta) (*TestTasksMsg, *
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
 		SetBody(&testtask).
-		SetResult(&u).
+		SetSuccessResult(&u).
 		Post(s.client.RequestURL("/testtasks"))
 	return &u, resp, err
 }
@@ -159,7 +159,7 @@ func (s *TestTasksService) DeleteByID(id int) (*CustomResp, *req.Response, error
 	var u CustomResp
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
-		SetResult(&u).
+		SetSuccessResult(&u).
 		Delete(s.client.RequestURL(fmt.Sprintf("/testtasks/%d", id)))
 	return &u, resp, err
 }
@@ -170,7 +170,7 @@ func (s *TestTasksService) UpdateByID(id int, testtask TestTaskCreateMeta) (*Tes
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
 		SetBody(&testtask).
-		SetResult(&u).
+		SetSuccessResult(&u).
 		Put(s.client.RequestURL(fmt.Sprintf("/testtasks/%d", id)))
 	return &u, resp, err
 }

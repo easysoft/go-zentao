@@ -135,7 +135,7 @@ func (s *ProductsService) List() (*ProductsList, *req.Response, error) {
 	var u ProductsList
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
-		SetResult(&u).
+		SetSuccessResult(&u).
 		Get(s.client.RequestURL("/products"))
 	return &u, resp, err
 }
@@ -146,7 +146,7 @@ func (s *ProductsService) Create(program ProductsMeta) (*ProductsCreateMsg, *req
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
 		SetBody(&program).
-		SetResult(&u).
+		SetSuccessResult(&u).
 		Post(s.client.RequestURL("/products"))
 	return &u, resp, err
 }
@@ -156,7 +156,7 @@ func (s *ProductsService) DeleteByID(id int) (*CustomResp, *req.Response, error)
 	var u CustomResp
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
-		SetResult(&u).
+		SetSuccessResult(&u).
 		Delete(s.client.RequestURL(fmt.Sprintf("/products/%d", id)))
 	return &u, resp, err
 }
@@ -167,7 +167,7 @@ func (s *ProductsService) UpdateByID(id int, user ProductsMeta) (*ProductsUpdate
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
 		SetBody(&user).
-		SetResult(&u).
+		SetSuccessResult(&u).
 		Put(s.client.RequestURL(fmt.Sprintf("/products/%d", id)))
 	return &u, resp, err
 }
@@ -177,7 +177,7 @@ func (s *ProductsService) GetByID(id int) (*ProductsGetMsg, *req.Response, error
 	var u ProductsGetMsg
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
-		SetResult(&u).
+		SetSuccessResult(&u).
 		Get(s.client.RequestURL(fmt.Sprintf("/products/%d", id)))
 	return &u, resp, err
 }

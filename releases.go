@@ -55,22 +55,22 @@ type ReleasesMsg struct {
 	Releases []Releases `json:"releases"`
 }
 
-// List 获取项目发布列表
+// ProjectsList 获取项目发布列表
 func (s *ReleasesService) ProjectsList(id int) (*ReleasesMsg, *req.Response, error) {
 	var u ReleasesMsg
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
-		SetResult(&u).
+		SetSuccessResult(&u).
 		Get(s.client.RequestURL(fmt.Sprintf("/projects/%d/releases", id)))
 	return &u, resp, err
 }
 
-// List 获取产品发布列表
+// ProductsList 获取产品发布列表
 func (s *ReleasesService) ProductsList(id int) (*ReleasesMsg, *req.Response, error) {
 	var u ReleasesMsg
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
-		SetResult(&u).
+		SetSuccessResult(&u).
 		Get(s.client.RequestURL(fmt.Sprintf("/products/%d/releases", id)))
 	return &u, resp, err
 }

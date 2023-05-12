@@ -112,7 +112,7 @@ func (s *UsersService) Self() (*SelfMsg, *req.Response, error) {
 	var u SelfMsg
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
-		SetResult(&u).
+		SetSuccessResult(&u).
 		Get(s.client.RequestURL("/user"))
 	return &u, resp, err
 }
@@ -122,7 +122,7 @@ func (s *UsersService) GetByID(id int) (*UserProfile, *req.Response, error) {
 	var u UserProfile
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
-		SetResult(&u).
+		SetSuccessResult(&u).
 		Get(s.client.RequestURL(fmt.Sprintf("/users/%d", id)))
 	return &u, resp, err
 }
@@ -132,7 +132,7 @@ func (s *UsersService) DeleteByID(id int) (*CustomResp, *req.Response, error) {
 	var u CustomResp
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
-		SetResult(&u).
+		SetSuccessResult(&u).
 		Delete(s.client.RequestURL(fmt.Sprintf("/users/%d", id)))
 	return &u, resp, err
 }
@@ -143,7 +143,7 @@ func (s *UsersService) Create(user UserCreateMeta) (*UserProfile, *req.Response,
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
 		SetBody(&user).
-		SetResult(&u).
+		SetSuccessResult(&u).
 		Post(s.client.RequestURL("/users"))
 	return &u, resp, err
 }
@@ -154,7 +154,7 @@ func (s *UsersService) UpdateByID(id int, user UserUpdateMeta) (*UserProfile, *r
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
 		SetBody(&user).
-		SetResult(&u).
+		SetSuccessResult(&u).
 		Put(s.client.RequestURL(fmt.Sprintf("/users/%d", id)))
 	return &u, resp, err
 }
@@ -168,7 +168,7 @@ func (s *UsersService) List(limit, page string) (*UserList, *req.Response, error
 			"page":  page,
 			"limit": limit,
 		}).
-		SetResult(&u).
+		SetSuccessResult(&u).
 		Get(s.client.RequestURL("/users"))
 	return &u, resp, err
 }

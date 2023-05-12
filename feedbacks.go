@@ -159,7 +159,7 @@ func (s *FeedBacksService) List(solution, orderBy, page, limit string) (*ListFee
 			"page":     page,
 			"limit":    limit,
 		}).
-		SetResult(&et).
+		SetSuccessResult(&et).
 		Get(s.client.RequestURL("/feedbacks"))
 	return &et, resp, err
 }
@@ -170,7 +170,7 @@ func (s *FeedBacksService) Create(fb FeedBacksCreateMeta) (*FeedBacksGetMsg, *re
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
 		SetBody(&fb).
-		SetResult(&u).
+		SetSuccessResult(&u).
 		Post(s.client.RequestURL("/feedbacks"))
 	return &u, resp, err
 }
@@ -180,7 +180,7 @@ func (s *FeedBacksService) DeleteByID(id int) (*CustomResp, *req.Response, error
 	var u CustomResp
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
-		SetResult(&u).
+		SetSuccessResult(&u).
 		Delete(s.client.RequestURL(fmt.Sprintf("/feedbacks/%d", id)))
 	return &u, resp, err
 }
@@ -191,7 +191,7 @@ func (s *FeedBacksService) UpdateByID(id int, exec FeedBacksCreateMeta) (*FeedBa
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
 		SetBody(&exec).
-		SetResult(&u).
+		SetSuccessResult(&u).
 		Put(s.client.RequestURL(fmt.Sprintf("/feedbacks/%d", id)))
 	return &u, resp, err
 }
@@ -201,7 +201,7 @@ func (s *FeedBacksService) GetByID(id int) (*FeedBacksGetMsg, *req.Response, err
 	var u FeedBacksGetMsg
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
-		SetResult(&u).
+		SetSuccessResult(&u).
 		Get(s.client.RequestURL(fmt.Sprintf("/feedbacks/%d", id)))
 	return &u, resp, err
 }
@@ -212,7 +212,7 @@ func (s *FeedBacksService) Assign(id int, assign FeedBacksAssign) (*BugGetMsg, *
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
 		SetBody(&assign).
-		SetResult(&u).
+		SetSuccessResult(&u).
 		Post(s.client.RequestURL(fmt.Sprintf("/feedbacks/%d/assign", id)))
 	return &u, resp, err
 }
@@ -223,7 +223,7 @@ func (s *FeedBacksService) CloseByID(id int, close FeedBacksClose) (*BugGetMsg, 
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
 		SetBody(&close).
-		SetResult(&u).
+		SetSuccessResult(&u).
 		Post(s.client.RequestURL(fmt.Sprintf("/feedbacks/%d/close", id)))
 	return &u, resp, err
 }
