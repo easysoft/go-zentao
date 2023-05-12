@@ -15,14 +15,14 @@ permissions:
 on:
   pull_request:
     branches:
-      - *
+      - '*'
     paths:
       - '**.go'
       - 'go.mod'
       - '.github/workflows/**.yml'
   push:
     branches:
-      - *
+      - '*'
     paths:
       - '**.go'
       - 'go.mod'
