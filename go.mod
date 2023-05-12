@@ -5,7 +5,7 @@ go 1.20
 require (
 	github.com/davecgh/go-spew v1.1.1
 	github.com/imroc/req/v3 v3.34.0
-	github.com/stretchr/testify v1.6.1
+	github.com/stretchr/testify v1.8.2
 )
 
 require (
