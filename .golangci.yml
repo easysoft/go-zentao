@@ -10,6 +10,7 @@ run:
   tests: true
   skip-dirs:
     - "example"
+    - "hack"
 
 # Output configuration options
 output:
@@ -28,12 +29,11 @@ linters-settings:
 linters:
   enable:
     - asciicheck
-    - deadcode
     - dogsled
     - errorlint
     - exportloopref
     - goconst
-    - golint
+    - revive
     - gosimple
     - govet
     - ineffassign
@@ -42,10 +42,8 @@ linters:
     - nakedret
     - nolintlint
     - staticcheck
-    - structcheck
     - unconvert
     - unused
-    - varcheck
     - whitespace
     - goheader
   disable-all: true

@@ -19,21 +19,20 @@ services:
 
 # mysql service for zentao
   zentao-mysql:
-    image: mysql:5.7
-    restart: always
+    image: bitnami/mysql:8.0
     container_name: zentao-mysql
+    restart: always
     volumes:
-      - 'zentao_db:/var/lib/mysql'
+      - 'zentao_db:/bitnami/mysql/data'
     environment:
-      - MYSQL_ROOT_PASSWORD=pass4Zentao
+      - ALLOW_EMPTY_PASSWORD=yes
+      - MYSQL_PASSWORD=pass4Zentao
+      - MYSQL_USER=zentao
       - MYSQL_DATABASE=zentao
-    networks:
-      zentao-net:
-        ipv4_address: 172.77.77.11
 
 # zentao service
   zentao:
-    image: easysoft/quickon-zentao:18.1-20230216
+    image: easysoft/quickon-zentao
     container_name: zentao
     restart: always
     ports:
@@ -45,22 +44,12 @@ services:
     environment:
       - MYSQL_HOST=zentao-mysql
       - MYSQL_PORT=3306
-      - MYSQL_USER=root
+      - MYSQL_USER=zentao
       - MYSQL_PASSWORD=pass4Zentao
       - MYSQL_DB=zentao
       - EASYSOFT_DEBUG=true
       - DEBUG=1
       - IS_CONTAINER=true
-    networks:
-      zentao-net:
-        ipv4_address: 172.77.77.12
-
-networks:
-  zentao-net:
-    ipam:
-      driver: default
-      config:
-        - subnet: 172.77.77.0/24
 
 # persistence for mysql and zentao
 volumes:
