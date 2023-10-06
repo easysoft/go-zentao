@@ -22,8 +22,8 @@ github.com/hashicorp/errwrap v1.1.0 h1:OxrOeh75EUXMY8TBjag2fzXGZ40LB6IKw45YeGUDY
 github.com/hashicorp/errwrap v1.1.0/go.mod h1:YH+1FKiLXxHSkmPseP+kNlulaMuP3n2brvKWEqk/Jc4=
 github.com/hashicorp/go-multierror v1.1.1 h1:H5DkEtf6CXdFp0N0Em5UCwQpXMWke8IA0+lD48awMYo=
 github.com/hashicorp/go-multierror v1.1.1/go.mod h1:iw975J/qwKPdAO1clOe2L8331t/9/fmwbPZ6JB6eMoM=
-github.com/imroc/req/v3 v3.42.0 h1:g7wWva3aIJI02mrnqmXe0N5SVkXHQPsYN3Tmw2ZHn3U=
-github.com/imroc/req/v3 v3.42.0/go.mod h1:W7dOrfQORA9nFoj+CafIZ6P5iyk+rWdbp2sffOAvABU=
+github.com/imroc/req/v3 v3.42.1 h1:g82SouLvX7pqwqJjpQJYrVvuI+LOycWhyuwxtLlyQJk=
+github.com/imroc/req/v3 v3.42.1/go.mod h1:W7dOrfQORA9nFoj+CafIZ6P5iyk+rWdbp2sffOAvABU=
 github.com/klauspost/compress v1.16.7 h1:2mk3MPGNzKyxErAw8YaohYh69+pa4sIQSC0fPGCFR9I=
 github.com/klauspost/compress v1.16.7/go.mod h1:ntbaceVETuRiXiv4DpjP66DpAtAGkEQskQzEyD//IeE=
 github.com/kr/pretty v0.3.1 h1:flRD4NNwYAUpkphVc1HcthR4KEIFJ65n8Mw5qdRn3LE=
