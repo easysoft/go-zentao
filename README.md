@@ -109,6 +109,12 @@ Zentao API client enabling Go programs to interact with Zentao in a simple and u
   - [x] 关闭反馈
   - [x] 指派反馈
 
+## 使用
+
+```go
+import "github.com/easysoft/go-zentao/v20/zentao"
+```
+
 ## 测试账号
 
 > 推荐本地部署

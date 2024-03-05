@@ -19,7 +19,7 @@ package main
 import (
 	"log"
 
-	"github.com/easysoft/go-zentao"
+	"github.com/easysoft/go-zentao/v20/zentao"
 )
 
 // This example shows how to create a client with username and password.
