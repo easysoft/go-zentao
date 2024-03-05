@@ -2,7 +2,7 @@ name: check
 
 env:
   # Common versions
-  GO_VERSION: '1.20'
+  GO_VERSION: '1.21'
   TZ: Asia/Shanghai
 
 permissions: write-all
@@ -32,11 +32,10 @@ jobs:
       - name: Setup Go
         uses: actions/setup-go@v5
         with:
+          check-latest: true
           go-version: ${{ env.GO_VERSION }}
-      - name: install task
-        run: |
-          echo "install task"
-          go install github.com/go-task/task/v3/cmd/task@latest
+      - name: Install Task
+        uses: arduino/setup-task@v2
       - name: Run Check License
         run: |
           task gencopyright
@@ -59,10 +58,9 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version: ${{ env.GO_VERSION }}
-      - name: install task
-        run: |
-          echo "install task"
-          go install github.com/go-task/task/v3/cmd/task@latest
+          check-latest: true
+      - name: Install Task
+        uses: arduino/setup-task@v2
       - name: Run Linter
         run: |
           task lint
@@ -86,6 +84,7 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version: ${{ env.GO_VERSION }}
+          check-latest: true
       - name: Lint package
         uses: golangci/golangci-lint-action@v4
         with:
@@ -103,6 +102,7 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version: ${{ env.GO_VERSION }}
+          check-latest: true
       - name: Test package
         run: |
           go test -v ./... -coverprofile=coverage.txt -covermode count

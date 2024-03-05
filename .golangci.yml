@@ -21,10 +21,10 @@ linters-settings:
   misspell:
     locale: US
     ignore-words:
-    - noteable
-  unused:
-    # Treat code as a program (not a library) and report unused exported identifiers
-    check-exported: false
+      - noteable
+
+  goheader:
+    template-path: .go-header.txt
 
 linters:
   enable:
@@ -33,9 +33,10 @@ linters:
     - errorlint
     - exportloopref
     - goconst
-    - revive
     - gosimple
     - govet
+    - goheader
+    - gomnd
     - ineffassign
     - megacheck
     - misspell
@@ -45,13 +46,11 @@ linters:
     - unconvert
     - unused
     - whitespace
-    - goheader
   disable-all: true
   fast: false
 
 issues:
-  # Maximum issues count per one linter (set to 0 to disable)
-  max-issues-per-linter: 0
-
-  # Maximum count of issues with the same text (set to 0 to disable)
-  max-same-issues: 0
+  exclude-rules:
+    - linters:
+        - goheader
+      text: "Copyright"

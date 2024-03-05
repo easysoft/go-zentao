@@ -10,7 +10,7 @@ Zentao API client enabling Go programs to interact with Zentao in a simple and u
 
 ## NOTE
 
-基于ZenTao最新开源版本 [`18.3`](https://github.com/quicklyon/zentao-docker), 即将适配最新版本`20.dev`
+基于ZenTao最新开源版本 [`18.11`](https://github.com/quicklyon/zentao-docker), 即将适配最新版本`20`
 
 ## 支持
 
@@ -114,9 +114,9 @@ Zentao API client enabling Go programs to interact with Zentao in a simple and u
 > 推荐本地部署
 
 ```bash
-# 部署方式: okteto up -f hack/okteto.yml --deploy
-地址: https://zentao-easysoft.cloud.okteto.net
-账号: admin/jaege1ugh4ooYip7
+# 部署方式: docker compose -f hack/zentao.yml up -d
+地址: https://zentao.demo.qucheng.cc
+账号: demo/quickon4You
 ```
 
 ## TODO
@@ -124,8 +124,3 @@ Zentao API client enabling Go programs to interact with Zentao in a simple and u
 - [ ] 优化代码 & 添加单元测试
 - [ ] 支持二次开发API
 
-### 已知问题
-
-> 将在`20`版本优化
-
-- [ ] 部分字段接口返回有时候是结构体有时候是字符串

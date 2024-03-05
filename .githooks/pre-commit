@@ -1,0 +1,29 @@
+#!/usr/bin/env sh
+
+set -e
+
+command_exists() {
+	command -v "$@" > /dev/null 2>&1
+}
+
+echo Running pre-commit hook
+
+if ! command_exists task
+then
+    echo "task could not be found - install task before running pre-commit: https://taskfile.dev/installation/"
+    exit 1
+fi
+
+# Run pre-commit, this checks if we changed any golang files and runs the checks.
+# The files are then git-added
+FILES=$(git diff --cached --name-only --diff-filter=ACMR | grep .go | sed 's| |\\ |g')
+if [ -n "$FILES" ]; then
+    if ! task fmt; then
+        echo "Error running make check - please fix before committing"
+        echo "if this is a mistake you can skip the checks with 'git commit --no-verify'"
+        exit 1
+    fi
+    echo "$FILES" | xargs git add
+fi
+
+exit 0

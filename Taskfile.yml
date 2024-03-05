@@ -1,9 +1,9 @@
 # https://taskfile.dev
 
-version: '3'
+version: "3"
 
 vars:
-  GOPROXY: 'https://goproxy.cn,direct'
+  GOPROXY: "https://goproxy.cn,direct"
   GOSUMDB: sum.golang.google.cn
 
 tasks:
@@ -41,8 +41,25 @@ tasks:
       - task: gofmt
       - task: golint
 
+  initgithooks:
+    desc: pre dev init githooks
+    run: once
+    cmds:
+      - git config core.hooksPath .githooks
+
+  dev:
+    desc: dev
+    cmds:
+      - docker compose -f hack/docker-compose.yml up -d
+
+  clean:
+    desc: clean
+    cmds:
+      - docker compose -f hack/docker-compose.yml down -v
+
   fmt:
     cmds:
+      - task: initgithooks
       - task: gomod
       - task: gencopyright
       - task: gofmt
@@ -50,4 +67,5 @@ tasks:
 
   default:
     cmds:
+      - task: initgithooks
       - task: fmt
