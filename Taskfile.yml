@@ -35,11 +35,18 @@ tasks:
       - go test -v ./... -coverprofile=coverage.txt -covermode count
       - go tool cover -func=coverage.txt
 
+  gci:
+    cmds:
+      - go install github.com/daixiang0/gci@latest
+      - gci write --skip-generated --custom-order -s standard -s "prefix(github.com/easysoft/go-zentao)" -s default -s blank -s dot .
+
   lint:
     desc: lint package
     cmds:
+      - task: gomod
       - task: gofmt
       - task: golint
+      - task: gci
 
   initgithooks:
     desc: pre dev init githooks

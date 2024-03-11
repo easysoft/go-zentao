@@ -1,22 +1,14 @@
-# This file contains all available configuration options
-# with their default values.
-
-# Options for analysis running
 run:
-  concurrency: 4
   timeout: 10m
   issues-exit-code: 1
-  # Include test files or not, default is true
   tests: true
   skip-dirs:
     - "example"
     - "hack"
 
-# Output configuration options
 output:
   format: line-number
 
-# All available settings of specific linters
 linters-settings:
   misspell:
     locale: US

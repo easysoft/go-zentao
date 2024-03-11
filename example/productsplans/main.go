@@ -19,8 +19,9 @@ package main
 import (
 	"log"
 
-	"github.com/davecgh/go-spew/spew"
 	"github.com/easysoft/go-zentao/v20/zentao"
+
+	"github.com/davecgh/go-spew/spew"
 )
 
 func main() {
