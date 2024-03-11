@@ -33,7 +33,7 @@ services:
 
 # zentao service
   zentao:
-    image: easysoft/zentao:18.11
+    image: easysoft/zentao:20.0.beta1
     container_name: zentao
     restart: always
     ports:
