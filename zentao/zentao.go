@@ -24,8 +24,16 @@ import (
 	"github.com/imroc/req/v3"
 )
 
+// @title Zentao Go SDK
+// @version v20.0
+// @description This is a Go SDK for Zentao API.
+
+// @schemes https
+// @host zentao.demo.qucheng.cc
+// @BasePath /api.php/v1
+
 const (
-	defaultBaseURL = "https://demo16.zentao.net/"
+	defaultBaseURL = "https://zentao.demo.qucheng.cc/"
 	userAgent      = "go-zentao"
 	apiVersionPath = "api.php/v1"
 )

@@ -12,6 +12,12 @@ tasks:
       - go install github.com/google/addlicense@latest
       - ./gencopyright.sh
 
+  tools:
+    run: once
+    cmds:
+      - go install github.com/go-swagger/go-swagger/cmd/swagger@latest
+      - go install github.com/swaggo/swag/cmd/swag@latest
+
   gomod:
     desc: update go mod
     cmds:
@@ -58,6 +64,12 @@ tasks:
     desc: dev
     cmds:
       - docker compose -f hack/docker-compose.yml up -d
+
+  swag:
+    desc: generate swagger
+    cmds:
+      - task: tools
+      - swag init -d zentao -g zentao.go
 
   clean:
     desc: clean

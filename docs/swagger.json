@@ -1,0 +1,15 @@
+{
+    "schemes": [
+        "https"
+    ],
+    "swagger": "2.0",
+    "info": {
+        "description": "This is a Go SDK for Zentao API.",
+        "title": "Zentao Go SDK",
+        "contact": {},
+        "version": "v20.0"
+    },
+    "host": "zentao.demo.qucheng.cc",
+    "basePath": "/api.php/v1",
+    "paths": {}
+}
