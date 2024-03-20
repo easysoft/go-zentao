@@ -67,6 +67,7 @@ tasks:
 
   swag:
     desc: generate swagger
+    run: once
     cmds:
       - task: tools
       - swag init -d zentao -g zentao.go
@@ -75,6 +76,14 @@ tasks:
     desc: clean
     cmds:
       - docker compose -f hack/docker-compose.yml down -v
+
+  codegpt:
+    desc: generate code commit message
+    deps:
+      - swag
+    cmds:
+      - git add .
+      - codegpt commit --diff_unified 5 --exclude_list docs
 
   fmt:
     cmds:
@@ -88,3 +97,4 @@ tasks:
     cmds:
       - task: initgithooks
       - task: fmt
+      - task: codegpt
