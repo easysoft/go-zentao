@@ -18,4 +18,4 @@
 
 set -xe
 
-addlicense -f .go-header.txt -ignore -ignore "**/*.md" -ignore vendor/** -ignore "**/*.sh" ./**
+addlicense -f .go-header.txt -ignore docs/** -ignore "**/*.md" -ignore vendor/** -ignore "**/*.sh" ./**

@@ -70,7 +70,7 @@ tasks:
     run: once
     cmds:
       - task: tools
-      - swag init -d zentao -g zentao.go --generatedTime --packageName main
+      - swag init -d zentao -g zentao.go --packageName main
 
   clean:
     desc: clean
@@ -81,13 +81,13 @@ tasks:
     desc: generate code commit message
     deps:
       - swag
+      - fmt
     cmds:
       - git add .
       - codegpt commit --diff_unified 5 --exclude_list docs
 
   fmt:
     cmds:
-      - task: initgithooks
       - task: gomod
       - task: gencopyright
       - task: gofmt
@@ -97,4 +97,3 @@ tasks:
     cmds:
       - task: initgithooks
       - task: fmt
-      - task: codegpt
