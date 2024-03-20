@@ -2,3 +2,4 @@ example/example
 coverage.txt
 *.out
 .idea
+report.xml
