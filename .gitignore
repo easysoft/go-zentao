@@ -3,3 +3,4 @@ coverage.txt
 *.out
 .idea
 report.xml
+.vscode
