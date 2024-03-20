@@ -70,7 +70,7 @@ tasks:
     run: once
     cmds:
       - task: tools
-      - swag init -d zentao -g zentao.go
+      - swag init -d zentao -g zentao.go --generatedTime --packageName main
 
   clean:
     desc: clean
