@@ -103,11 +103,16 @@ jobs:
         with:
           go-version: ${{ env.GO_VERSION }}
           check-latest: true
+      - name: Install Task
+        uses: arduino/setup-task@v2
       - name: Test package
         run: |
-          go test -v ./... -coverprofile=coverage.txt -covermode count
-          go tool cover -func coverage.txt
-      - name: Go Coverage Badge
-        uses: tj-actions/coverage-badge-go@v2
+          task coverage
+      - name: Update coverage report
+        uses: ncruces/go-coverage-report@v0.2.3
         with:
-          filename: coverage.txt
+          report: 'true'
+          amend: 'true'
+          reuse-go: 'true'
+        continue-on-error: true
+        if: github.event_name == 'push'

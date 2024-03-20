@@ -37,9 +37,10 @@ tasks:
 
   coverage:
     desc: test package
+    dir: zentao
     cmds:
-      - go test -v ./... -coverprofile=coverage.txt -covermode count
-      - go tool cover -func=coverage.txt
+      - go test -v ./... -coverprofile=../coverage.txt -covermode count
+      - go tool cover -func=../coverage.txt
 
   gci:
     cmds:
