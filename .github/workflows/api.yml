@@ -37,6 +37,8 @@ jobs:
       - name: Build and push docs api
         uses: docker/build-push-action@v5
         with:
+          platforms: linux/amd64,linux/arm64
+          pull: true
           push: true
           tags: ttl.sh/easysoft/zentaoapi
           context: docs
