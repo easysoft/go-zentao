@@ -81,7 +81,6 @@ tasks:
   codegpt:
     desc: generate code commit message
     deps:
-      - swag
       - fmt
     cmds:
       - git add .
@@ -89,6 +88,7 @@ tasks:
 
   fmt:
     cmds:
+      - task: swag
       - task: gomod
       - task: gencopyright
       - task: gofmt

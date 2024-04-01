@@ -1,0 +1,42 @@
+name: api
+
+env:
+  # Common versions
+  GO_VERSION: '1.22'
+  TZ: Asia/Shanghai
+
+on:
+  push:
+    branches:
+      - '*'
+
+jobs:
+  buildapi:
+    name: "api"
+    timeout-minutes: 20
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: ${{ env.GO_VERSION }}
+          check-latest: true
+      - name: install task
+        run: |
+          echo "install task"
+          go install github.com/go-task/task/v3/cmd/task@latest
+      - name: build api
+        run: |
+          task swag
+      - name: Build and push docs api
+        uses: docker/build-push-action@v5
+        with:
+          push: true
+          tags: ttl.sh/easysoft/zentaoapi
+          context: docs

@@ -24,6 +24,7 @@ import (
 func main() {
 	app := fiber.New()
 	app.Use(swagger.New(swagger.Config{
+		Title:    "Zentao API documentation",
 		Path:     "swagger",
 		BasePath: "/",
 		FilePath: "./swagger.json",
