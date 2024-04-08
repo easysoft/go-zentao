@@ -16,7 +16,75 @@
 
 package main
 
+import (
+	"log"
+
+	"github.com/davecgh/go-spew/spew"
+	"github.com/easysoft/go-zentao/v20/zentao"
+
+	buildinClient "github.com/easysoft/go-zentao/v20/buildin"
+)
+
 func main() {
-	basicAuthExample()
-	userExample()
+	loadSessionID()
+	// basicAuthExample()
+	// userExample()
+}
+
+// This example shows how to create a client with username and password.
+func basicAuthExample() {
+	zt, err := zentao.NewBasicAuthClient(
+		"demo",
+		"quickon4You",
+		zentao.WithDevMode(),
+		zentao.WithDumpAll(),
+	)
+	if err != nil {
+		log.Fatal(err)
+	}
+	u, _, err := zt.Users.Self()
+	if err != nil {
+		log.Fatal(err)
+	}
+	log.Printf("account: %s", u.Profile.Account)
+}
+
+func userExample() {
+	zt, err := zentao.NewBasicAuthClient(
+		"demo",
+		"quickon4You",
+		zentao.WithDevMode(),
+		zentao.WithDumpAll(),
+	)
+	if err != nil {
+		log.Fatal(err)
+	}
+	u, _, err := zt.Users.GetByID(2)
+	if err != nil {
+		log.Fatal(err)
+	}
+	log.Printf("account: %s", u.Account)
+}
+
+func loadSessionID() {
+	zt, err := buildinClient.NewBasicAuthClient(
+		"demo",
+		"quickon4You",
+		buildinClient.WithDevMode(),
+		buildinClient.WithDumpAll(),
+	)
+	if err != nil {
+		log.Fatal(err)
+	}
+	u, _, err := zt.Login.GetSessionID()
+	if err != nil {
+		log.Fatal(err)
+	}
+	log.Printf("session id: %s", *u)
+	loginStatus, loginUser, _, err := zt.Login.Login()
+	if err != nil {
+		log.Fatal(err)
+	}
+	log.Printf("login status: %v", loginStatus)
+	spew.Dump(loginUser)
 }

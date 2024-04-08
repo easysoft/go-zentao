@@ -14,7 +14,7 @@
 //  limitations under the License.
 //
 
-package zentao
+package buildin
 
 import (
 	"fmt"
@@ -30,12 +30,23 @@ import (
 
 // @schemes https
 // @host zentao.demo.qucheng.cc
-// @BasePath /api.php/v1
+// @BasePath /
 
 const (
-	defaultBaseURL = "https://zentao.demo.qucheng.cc/"
+	defaultBaseURL = "https://zentao.demo.qucheng.cc"
 	userAgent      = "go-zentao"
 	apiVersionPath = "api.php/v1"
+)
+
+type ZentaoMode string
+
+func (z ZentaoMode) String() string {
+	return string(z)
+}
+
+const (
+	ZentaoDefultMode ZentaoMode = "PATH_INFO"
+	ZentaoGetMode    ZentaoMode = "GET"
 )
 
 type Client struct {
@@ -45,34 +56,13 @@ type Client struct {
 	// Username and password used for basic authentication.
 	username, password string
 
-	// Token used to make authenticated API calls.
-	token string
+	// zentao session id
+	zentaosid string
 
-	// restful api
-	Token        *TokenService
-	Users        *UsersService
-	Executions   *ExecutionsService
-	Tasks        *TasksService
-	Programs     *ProgramsService
-	Products     *ProductsService
-	ProductPlans *ProductPlansService
-	Releases     *ReleasesService
-	Stories      *StoriesService
-	Projects     *ProjectsService
-	Builds       *BuildsService
-	Bugs         *BugsService
-	TestCases    *TestCasesService
-	TestTasks    *TestTasksService
-	FeedBacks    *FeedBacksService
-}
+	zentaomode ZentaoMode
 
-func NewClient(token string, options ...ClientOptionFunc) (*Client, error) {
-	client, err := newClient(options...)
-	if err != nil {
-		return nil, err
-	}
-	client.token = token
-	return client, nil
+	// build-in
+	Login *LoginService
 }
 
 func NewBasicAuthClient(username, password string, options ...ClientOptionFunc) (*Client, error) {
@@ -80,17 +70,18 @@ func NewBasicAuthClient(username, password string, options ...ClientOptionFunc) 
 	if err != nil {
 		return nil, err
 	}
-	client.username = username
-	client.password = password
-	accesstoken, _, err := client.Token.GetAccessToken()
+	sessionID, _, err := client.Login.GetSessionID()
 	if err != nil {
 		return nil, err
 	}
-	if accesstoken != nil {
-		client.token = accesstoken.Token
-		return client, nil
+	if sessionID == nil {
+		return nil, fmt.Errorf("token not valid")
 	}
-	return nil, fmt.Errorf("token not valid")
+	client.zentaosid = *sessionID
+	// auth password
+	client.username = username
+	client.password = password
+	return client, nil
 }
 
 func newClient(options ...ClientOptionFunc) (*Client, error) {
@@ -98,6 +89,7 @@ func newClient(options ...ClientOptionFunc) (*Client, error) {
 	c.client = req.C().SetLogger(nil)
 	c.setBaseURL(defaultBaseURL)
 	c.setReqUserAgent(userAgent)
+	c.setZenTaoMode(ZentaoDefultMode)
 	for _, fn := range options {
 		if fn == nil {
 			continue
@@ -106,38 +98,21 @@ func newClient(options ...ClientOptionFunc) (*Client, error) {
 			return nil, err
 		}
 	}
-	c.Token = &TokenService{client: c}
-	c.Users = &UsersService{client: c}
-	c.Executions = &ExecutionsService{client: c}
-	c.Tasks = &TasksService{client: c}
-	c.Programs = &ProgramsService{client: c}
-	c.Products = &ProductsService{client: c}
-	c.ProductPlans = &ProductPlansService{client: c}
-	c.Releases = &ReleasesService{client: c}
-	c.Stories = &StoriesService{client: c}
-	c.Projects = &ProjectsService{client: c}
-	c.Builds = &BuildsService{client: c}
-	c.Bugs = &BugsService{client: c}
-	c.TestCases = &TestCasesService{client: c}
-	c.TestTasks = &TestTasksService{client: c}
-	c.FeedBacks = &FeedBacksService{client: c}
+	c.Login = &LoginService{client: c}
 	return c, nil
 }
 
 func (c *Client) setBaseURL(urlStr string) error {
 	// Make sure the given URL end with a slash
-	if !strings.HasSuffix(urlStr, "/") {
-		urlStr += "/"
-	}
+
+	urlStr = strings.TrimSuffix(urlStr, "/")
 
 	baseURL, err := url.Parse(urlStr)
 	if err != nil {
 		return err
 	}
 
-	if !strings.HasSuffix(baseURL.Path, apiVersionPath) {
-		baseURL.Path += apiVersionPath
-	}
+	baseURL.Path = strings.TrimSuffix(baseURL.Path, apiVersionPath)
 
 	// Update the base URL of the client.
 	c.baseURL = baseURL
@@ -147,6 +122,11 @@ func (c *Client) setBaseURL(urlStr string) error {
 
 func (c *Client) setDebug() error {
 	c.client.EnableDebugLog()
+	return nil
+}
+
+func (c *Client) setZenTaoMode(m ZentaoMode) error {
+	c.zentaomode = m
 	return nil
 }
 
@@ -169,5 +149,11 @@ func (c *Client) setReqUserAgent(ua string) error {
 func (c *Client) RequestURL(path string) string {
 	u := *c.baseURL
 	u.Path = c.baseURL.Path + path
+	return u.String()
+}
+
+func (c *Client) RequestURLFmt(f string, v ...any) string {
+	u := *c.baseURL
+	u.Path = c.baseURL.Path + fmt.Sprintf(f, v...)
 	return u.String()
 }
