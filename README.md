@@ -121,7 +121,7 @@ import "github.com/easysoft/go-zentao/v20/zentao"
 
 ```bash
 # 部署方式: docker compose -f hack/zentao.yml up -d
-地址: https://zentao.demo.qucheng.cc
+地址: https://zentao20.demo.qucheng.cc
 账号: demo/quickon4You
 ```
 
