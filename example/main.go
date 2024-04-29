@@ -19,10 +19,10 @@ package main
 import (
 	"log"
 
-	"github.com/davecgh/go-spew/spew"
+	buildinClient "github.com/easysoft/go-zentao/v20/buildin"
 	"github.com/easysoft/go-zentao/v20/zentao"
 
-	buildinClient "github.com/easysoft/go-zentao/v20/buildin"
+	"github.com/davecgh/go-spew/spew"
 )
 
 func main() {
