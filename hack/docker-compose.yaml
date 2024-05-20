@@ -14,13 +14,13 @@
 #  limitations under the License.
 #
 
-version: '3.8'
 services:
 
 # db service for zentao
   zentao-db:
     image: bitnami/mariadb:10.6
     container_name: zentao-db
+    pull_policy: if_not_present
     restart: always
     volumes:
       - 'zentao_db:/bitnami/mariadb'
@@ -33,8 +33,9 @@ services:
 
 # zentao service
   zentao:
-    image: easysoft/zentao:20.0.beta2
+    image: easysoft/zentao:20.0
     container_name: zentao
+    pull_policy: always
     restart: always
     ports:
       - '80:80'
@@ -48,9 +49,6 @@ services:
       - ZT_MYSQL_USER=root
       - ZT_MYSQL_PASSWORD=pass4Zentao
       - ZT_MYSQL_DB=zentao
-      - EASYSOFT_DEBUG=true
-      - DEBUG=1
-      - IS_CONTAINER=true
 
 # persistence for mysql and zentao
 volumes:
