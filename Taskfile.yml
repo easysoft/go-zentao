@@ -89,10 +89,8 @@ tasks:
   fmt:
     cmds:
       - task: swag
-      - task: gomod
       - task: gencopyright
-      - task: gofmt
-      - task: golint
+      - task: lint
 
   default:
     cmds:

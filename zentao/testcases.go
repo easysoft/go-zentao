@@ -295,7 +295,6 @@ func (s *TestCasesService) GetByID(id int) (*TestCasesCreateMsg, *req.Response, 
 // GetByID 获取用例详情
 func (s *TestCasesService) GetResultByID(id any) (*TestCasesResultResp, *req.Response, error) {
 	var u TestCasesResultResp
-	// 判断id的类型，如果是string，就是用例id，如果是int，就是结果id
 	if _, ok := id.(string); ok {
 		if strings.HasPrefix(id.(string), "case_") {
 			id = strings.TrimPrefix(id.(string), "case_")
