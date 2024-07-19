@@ -18,6 +18,7 @@ package zentao
 
 import (
 	"fmt"
+	"strings"
 	"time"
 
 	"github.com/imroc/req/v3"
@@ -28,7 +29,7 @@ type TestCasesService struct {
 }
 
 type TestCasesMeta struct {
-	ID             int         `json:"id"`
+	ID             any         `json:"id"` // 老版本int, 新版本string
 	Project        int         `json:"project"`
 	Product        int         `json:"product"`
 	Execution      int         `json:"execution"`
@@ -53,35 +54,35 @@ type TestCasesMeta struct {
 
 type TestcasesListBody struct {
 	TestCasesMeta
-	Lib             int         `json:"lib"`
-	Path            int         `json:"path"`
-	Precondition    string      `json:"precondition"`
-	Auto            string      `json:"auto"`
-	Frame           string      `json:"frame"`
-	Stage           string      `json:"stage"`
-	Howrun          string      `json:"howRun"`
-	Scriptedby      string      `json:"scriptedBy"`
-	Scripteddate    interface{} `json:"scriptedDate"`
-	Scriptstatus    string      `json:"scriptStatus"`
-	Scriptlocation  string      `json:"scriptLocation"`
-	Frequency       string      `json:"frequency"`
-	Order           int         `json:"order"`
-	Reviewedby      interface{} `json:"reviewedBy"`
-	Revieweddate    interface{} `json:"reviewedDate"`
-	Version         int         `json:"version"`
-	Linkcase        string      `json:"linkCase"`
-	Frombug         int         `json:"fromBug"`
-	Fromcaseid      int         `json:"fromCaseID"`
-	Fromcaseversion int         `json:"fromCaseVersion"`
-	Lastrunner      string      `json:"lastRunner"`
-	Lastrundate     interface{} `json:"lastRunDate"`
-	Lastrunresult   string      `json:"lastRunResult"`
-	Needconfirm     bool        `json:"needconfirm"`
-	Bugs            int         `json:"bugs"`
-	Results         int         `json:"results"`
-	Casefails       int         `json:"caseFails"`
-	Stepnumber      int         `json:"stepNumber"`
-	Statusname      string      `json:"statusName"`
+	Lib             int    `json:"lib"`
+	Path            int    `json:"path"`
+	Precondition    string `json:"precondition"`
+	Auto            string `json:"auto"`
+	Frame           string `json:"frame"`
+	Stage           string `json:"stage"`
+	Howrun          string `json:"howRun"`
+	Scriptedby      string `json:"scriptedBy"`
+	Scripteddate    any    `json:"scriptedDate"`
+	Scriptstatus    string `json:"scriptStatus"`
+	Scriptlocation  string `json:"scriptLocation"`
+	Frequency       string `json:"frequency"`
+	Order           int    `json:"order"`
+	Reviewedby      any    `json:"reviewedBy"`
+	Revieweddate    any    `json:"reviewedDate"`
+	Version         int    `json:"version"`
+	Linkcase        string `json:"linkCase"`
+	Frombug         int    `json:"fromBug"`
+	Fromcaseid      int    `json:"fromCaseID"`
+	Fromcaseversion int    `json:"fromCaseVersion"`
+	Lastrunner      string `json:"lastRunner"`
+	Lastrundate     any    `json:"lastRunDate"`
+	Lastrunresult   string `json:"lastRunResult"`
+	Needconfirm     bool   `json:"needconfirm"`
+	Bugs            int    `json:"bugs"`
+	Results         int    `json:"results"`
+	Casefails       int    `json:"caseFails"`
+	Stepnumber      int    `json:"stepNumber"`
+	Statusname      string `json:"statusName"`
 }
 
 type ListProductsTestCasesMsg struct {
@@ -114,20 +115,20 @@ type TestCasesCreateMsg struct {
 	Stage           string          `json:"stage"`
 	Howrun          string          `json:"howRun"`
 	Scriptedby      string          `json:"scriptedBy"`
-	Scripteddate    interface{}     `json:"scriptedDate"`
+	Scripteddate    any             `json:"scriptedDate"`
 	Scriptstatus    string          `json:"scriptStatus"`
 	Scriptlocation  string          `json:"scriptLocation"`
 	Frequency       string          `json:"frequency"`
 	Order           int             `json:"order"`
 	Reviewedby      string          `json:"reviewedBy"`
-	Revieweddate    interface{}     `json:"reviewedDate"`
+	Revieweddate    any             `json:"reviewedDate"`
 	Version         int             `json:"version"`
 	Linkcase        string          `json:"linkCase"`
 	Frombug         int             `json:"fromBug"`
 	Fromcaseid      int             `json:"fromCaseID"`
 	Fromcaseversion int             `json:"fromCaseVersion"`
 	Lastrunner      string          `json:"lastRunner"`
-	Lastrundate     interface{}     `json:"lastRunDate"`
+	Lastrundate     any             `json:"lastRunDate"`
 	Lastrunresult   string          `json:"lastRunResult"`
 	Tobugs          []interface{}   `json:"toBugs"`
 	Steps           []TestCasesStep `json:"steps"`
@@ -166,11 +167,11 @@ type TestCasesGetMsg struct {
 	Openedbuild        string        `json:"openedBuild"`
 	Assignedto         UserMeta      `json:"assignedTo"`
 	Assigneddate       time.Time     `json:"assignedDate"`
-	Deadline           interface{}   `json:"deadline"`
+	Deadline           any           `json:"deadline"`
 	Resolvedby         UserMeta      `json:"resolvedBy"`
 	Resolution         string        `json:"resolution"`
 	Resolvedbuild      string        `json:"resolvedBuild"`
-	Resolveddate       interface{}   `json:"resolvedDate"`
+	Resolveddate       any           `json:"resolvedDate"`
 	Closedby           UserMeta      `json:"closedBy"`
 	Closeddate         time.Time     `json:"closedDate"`
 	Duplicatebug       int           `json:"duplicateBug"`
@@ -188,17 +189,62 @@ type TestCasesGetMsg struct {
 	Executionname      string        `json:"executionName"`
 	Storystatus        string        `json:"storyStatus"`
 	Lateststoryversion int           `json:"latestStoryVersion"`
-	Taskname           interface{}   `json:"taskName"`
-	Planname           interface{}   `json:"planName"`
+	Taskname           any           `json:"taskName"`
+	Planname           any           `json:"planName"`
 	Projectname        string        `json:"projectName"`
-	Tocases            []interface{} `json:"toCases"`
-	Files              []interface{} `json:"files"`
+	Tocases            []any         `json:"toCases"`
+	Files              []any         `json:"files"`
 }
 
-func (s *TestCasesService) ListByProducts(id int) (*ListProductsTestCasesMsg, *req.Response, error) {
+type TestCasesResult struct {
+	ID          int                   `json:"id"`
+	Run         int                   `json:"run"`
+	Case        int                   `json:"case"`
+	Version     int                   `json:"version"`
+	Job         int                   `json:"job"`
+	Compile     int                   `json:"compile"`
+	CaseResult  string                `json:"caseResult"` // 用例结果 pass
+	StepResults []TestCasesStepResult `json:"stepResults"`
+	ZTFResult   string                `json:"ZTFResult"`
+	Node        int                   `json:"node"`
+	Lastrunner  string                `json:"lastRunner"`
+	Date        string                `json:"date"`
+	Duration    int                   `json:"duration"`
+	Xml         any                   `json:"xml"`
+	Deploy      int                   `json:"deploy"`
+	Build       any                   `json:"build"`
+	Task        int                   `json:"task"`
+	NodeName    string                `json:"nodeName"`
+	Files       []any                 `json:"files"`
+}
+
+type TestCasesStepResult struct {
+	ID      int    `json:"id"`
+	Parent  int    `json:"parent"`
+	Case    int    `json:"case"`
+	Version int    `json:"version"`
+	Type    string `json:"type"` // 步骤类型 step
+	Desc    string `json:"desc"`
+	Expect  string `json:"expect"`
+	Result  string `json:"result"`
+	Name    string `json:"name"`
+	Grade   int    `json:"grade"`
+	Real    string `json:"real"`
+	Files   []any  `json:"files"`
+}
+
+type TestCasesResultResp struct {
+	Results []TestCasesResult `json:"results"`
+}
+
+func (s *TestCasesService) ListByProducts(id int, parms ...any) (*ListProductsTestCasesMsg, *req.Response, error) {
 	var et ListProductsTestCasesMsg
-	resp, err := s.client.client.R().
-		SetHeader("Token", s.client.token).
+	req := s.client.client.R().
+		SetHeader("Token", s.client.token)
+	if len(parms) > 0 {
+		req = req.SetQueryParams(parms[0].(map[string]string))
+	}
+	resp, err := req.
 		SetSuccessResult(&et).
 		Get(s.client.RequestURL(fmt.Sprintf("/products/%d/testcases", id)))
 	return &et, resp, err
@@ -243,5 +289,21 @@ func (s *TestCasesService) GetByID(id int) (*TestCasesCreateMsg, *req.Response, 
 		SetHeader("Token", s.client.token).
 		SetSuccessResult(&u).
 		Get(s.client.RequestURL(fmt.Sprintf("/testcases/%d", id)))
+	return &u, resp, err
+}
+
+// GetByID 获取用例详情
+func (s *TestCasesService) GetResultByID(id any) (*TestCasesResultResp, *req.Response, error) {
+	var u TestCasesResultResp
+	// 判断id的类型，如果是string，就是用例id，如果是int，就是结果id
+	if _, ok := id.(string); ok {
+		if strings.HasPrefix(id.(string), "case_") {
+			id = strings.TrimPrefix(id.(string), "case_")
+		}
+	}
+	resp, err := s.client.client.R().
+		SetHeader("Token", s.client.token).
+		SetSuccessResult(&u).
+		Get(s.client.RequestURL(fmt.Sprintf("/testcases/%v/results", id)))
 	return &u, resp, err
 }
