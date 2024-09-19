@@ -40,50 +40,55 @@ type StoriesMeta struct {
 }
 
 type StoriesExtMeta struct {
-	Source     string  `json:"source,omitempty"`
-	SourceNote string  `json:"sourceNote,omitempty"`
-	Pri        int     `json:"pri,omitempty"`
-	Category   string  `json:"category,omitempty"`
-	Estimate   float64 `json:"estimate,omitempty"`
-	Keywords   string  `json:"keywords,omitempty"`
+	Source     StoriesSource   `json:"source,omitempty"`
+	SourceNote string          `json:"sourceNote,omitempty"` // 来源备注
+	Pri        int             `json:"pri,omitempty"`
+	Category   StoriesCategory `json:"category,omitempty"`
+	Estimate   float64         `json:"estimate,omitempty"` // 预估工时
+	Keywords   string          `json:"keywords,omitempty"`
+	Parent     any             `json:"parent,omitempty"` // 可能是数组, 产品计划时是数组
+	Reviewer   []string        `json:"reviewer,omitempty"`
 }
 
 type StoriesBody struct {
 	StoriesExtMeta
-	ID             int    `json:"id"`
-	Parent         any    `json:"parent"` // 可能是数组, 产品计划时是数组
-	Product        int    `json:"product"`
-	Branch         int    `json:"branch"`
-	Module         int    `json:"module"`
-	Plan           string `json:"plan"`
-	Frombug        int    `json:"fromBug"`
-	Title          string `json:"title"`
-	Type           string `json:"type"`
-	Status         string `json:"status"`
-	Substatus      string `json:"subStatus"`
-	Color          string `json:"color"`
-	Stage          string `json:"stage"`
-	Stagedby       string `json:"stagedBy"`
-	Mailto         string `json:"mailto"`
-	Openedby       any    `json:"openedBy"` // 产品计划是string, 其他可能是UserMeta
-	Openeddate     string `json:"openedDate"`
-	Assignedto     string `json:"assignedTo"`
-	Assigneddate   any    `json:"assignedDate"`
-	Lasteditedby   string `json:"lastEditedBy"`
-	Lastediteddate string `json:"lastEditedDate"`
-	Reviewedby     string `json:"reviewedBy"`
-	Revieweddate   any    `json:"reviewedDate"`
-	Closedby       string `json:"closedBy"`
-	Closeddate     any    `json:"closedDate"`
-	Closedreason   string `json:"closedReason"`
-	Tobug          int    `json:"toBug"`
-	Childstories   string `json:"childStories"`
-	Linkstories    string `json:"linkStories"`
-	Duplicatestory int    `json:"duplicateStory"`
-	Version        int    `json:"version"`
-	Urchanged      string `json:"URChanged"`
-	Deleted        string `json:"deleted"`
-	Plantitle      string `json:"planTitle,omitempty"`
+	ID                  int           `json:"id"`
+	Product             int           `json:"product"`
+	Project             int           `json:"project,omitempty"`
+	Branch              int           `json:"branch"`
+	Module              int           `json:"module"`
+	Plan                string        `json:"plan"`
+	Frombug             int           `json:"fromBug"`
+	Title               string        `json:"title"`
+	Type                string        `json:"type"`
+	Status              StoriesStatus `json:"status"`
+	Substatus           string        `json:"subStatus"`
+	Color               string        `json:"color"`
+	Stage               StoriesStage  `json:"stage"`
+	Stagedby            any           `json:"stagedBy"`
+	Mailto              any           `json:"mailto"`   // 概率数组
+	Openedby            any           `json:"openedBy"` // 产品计划是string, 其他可能是UserMeta
+	Openeddate          string        `json:"openedDate"`
+	Assignedto          any           `json:"assignedTo"`
+	Assigneddate        string        `json:"assignedDate"`
+	Lasteditedby        any           `json:"lastEditedBy"`
+	Lastediteddate      string        `json:"lastEditedDate"`
+	Reviewedby          any           `json:"reviewedBy"`
+	Revieweddate        string        `json:"reviewedDate"`
+	Closedby            any           `json:"closedBy"`
+	Closeddate          string        `json:"closedDate"`
+	Closedreason        string        `json:"closedReason"`
+	Tobug               int           `json:"toBug"`
+	Childstories        string        `json:"childStories"`
+	Linkstories         string        `json:"linkStories"`
+	Duplicatestory      int           `json:"duplicateStory"`
+	Version             int           `json:"version"`
+	Urchanged           string        `json:"URChanged"`
+	Deleted             any           `json:"deleted"` // 需求返回时是bool, 产品计划是string
+	Plantitle           string        `json:"planTitle,omitempty"`
+	NotReview           []string      `json:"notReview,omitempty"`
+	NeedSummaryEstimate bool          `json:"needSummaryEstimate,omitempty"`
+	ProductStatus       string        `json:"productStatus,omitempty"`
 }
 
 type StoriesCreateMeta struct {
@@ -104,7 +109,18 @@ type StoriesMsg struct {
 	Executions []interface{} `json:"executions"`
 	Tasks      []interface{} `json:"tasks"`
 	Stages     []interface{} `json:"stages"`
-	Children   []interface{} `json:"children"`
+	Children   []interface{} `json:"children,omitempty"`
+}
+
+type StoriesClose struct {
+	Closedreason   StoriesCloseReason `json:"closedReason,omitempty"`
+	Duplicatestory int                `json:"duplicateStory,omitempty"`
+	Comment        string             `json:"comment,omitempty"`
+}
+
+type StoriesActive struct {
+	AssignedTo string `json:"assignedTo,omitempty"`
+	Comment    string `json:"comment,omitempty"`
 }
 
 // ProjectsList 获取项目需求列表
@@ -148,17 +164,6 @@ func (s *StoriesService) DeleteByID(id int) (*CustomResp, *req.Response, error) 
 	return &u, resp, err
 }
 
-// UpdateByID 变更需求
-func (s *StoriesService) UpdateByID(id int, story StoriesMeta) (*StoriesMsg, *req.Response, error) {
-	var u StoriesMsg
-	resp, err := s.client.client.R().
-		SetHeader("Token", s.client.token).
-		SetBody(&story).
-		SetSuccessResult(&u).
-		Post(s.client.RequestURL(fmt.Sprintf("/stories/%d/change", id)))
-	return &u, resp, err
-}
-
 // GetByID 获取需求详情
 func (s *StoriesService) GetByID(id int) (*StoriesMsg, *req.Response, error) {
 	var u StoriesMsg
@@ -187,5 +192,93 @@ func (s *StoriesService) UpdateFieldByID(id int, uf StoriesUpdateFieldMeta) (*St
 		SetBody(&uf).
 		SetSuccessResult(&u).
 		Put(s.client.RequestURL(fmt.Sprintf("/stories/%d", id)))
+	return &u, resp, err
+}
+
+// UpdateByID 变更需求
+func (s *StoriesService) UpdateByID(id int, story StoriesMeta) (*StoriesMsg, *req.Response, error) {
+	var u StoriesMsg
+	resp, err := s.client.client.R().
+		SetHeader("Token", s.client.token).
+		SetBody(&story).
+		SetSuccessResult(&u).
+		Post(s.client.RequestURL(fmt.Sprintf("/stories/%d/change", id)))
+	return &u, resp, err
+}
+
+// CloseByID 关闭需求
+func (s *StoriesService) CloseByID(id int, story StoriesClose) (*StoriesMsg, *req.Response, error) {
+	var u StoriesMsg
+	resp, err := s.client.client.R().
+		SetHeader("Token", s.client.token).
+		SetBody(&story).
+		SetSuccessResult(&u).
+		Post(s.client.RequestURL(fmt.Sprintf("/stories/%d/close", id)))
+	return &u, resp, err
+}
+
+// ActiveByID 激活需求
+func (s *StoriesService) ActiveByID(id int, story StoriesActive) (*StoriesMsg, *req.Response, error) {
+	var u StoriesMsg
+	resp, err := s.client.client.R().
+		SetHeader("Token", s.client.token).
+		SetBody(&story).
+		SetSuccessResult(&u).
+		Post(s.client.RequestURL(fmt.Sprintf("/stories/%d/active", id)))
+	return &u, resp, err
+}
+
+// AssignByID 指派需求
+func (s *StoriesService) AssignByID(id int, story StoriesActive) (*StoriesMsg, *req.Response, error) {
+	var u StoriesMsg
+	resp, err := s.client.client.R().
+		SetHeader("Token", s.client.token).
+		SetBody(&story).
+		SetSuccessResult(&u).
+		Post(s.client.RequestURL(fmt.Sprintf("/stories/%d/assign", id)))
+	return &u, resp, err
+}
+
+// EstimateByID 预估工时
+func (s *StoriesService) EstimateByID(id int, story StoriesMeta) (*StoriesMsg, *req.Response, error) {
+	var u StoriesMsg
+	resp, err := s.client.client.R().
+		SetHeader("Token", s.client.token).
+		SetBody(&story).
+		SetSuccessResult(&u).
+		Post(s.client.RequestURL(fmt.Sprintf("/stories/%d/estimate", id)))
+	return &u, resp, err
+}
+
+// ChildByID 子需求
+func (s *StoriesService) ChildByID(id int, story StoriesMeta) (*StoriesMsg, *req.Response, error) {
+	var u StoriesMsg
+	resp, err := s.client.client.R().
+		SetHeader("Token", s.client.token).
+		SetBody(&story).
+		SetSuccessResult(&u).
+		Post(s.client.RequestURL(fmt.Sprintf("/stories/%d/child", id)))
+	return &u, resp, err
+}
+
+// RecallByID 撤回评审
+func (s *StoriesService) RecallByID(id int, story StoriesMeta) (*StoriesMsg, *req.Response, error) {
+	var u StoriesMsg
+	resp, err := s.client.client.R().
+		SetHeader("Token", s.client.token).
+		SetBody(&story).
+		SetSuccessResult(&u).
+		Post(s.client.RequestURL(fmt.Sprintf("/stories/%d/recall", id)))
+	return &u, resp, err
+}
+
+// ReviewByID 审核需求
+func (s *StoriesService) ReviewByID(id int, story StoriesMeta) (*StoriesMsg, *req.Response, error) {
+	var u StoriesMsg
+	resp, err := s.client.client.R().
+		SetHeader("Token", s.client.token).
+		SetBody(&story).
+		SetSuccessResult(&u).
+		Post(s.client.RequestURL(fmt.Sprintf("/stories/%d/review", id)))
 	return &u, resp, err
 }

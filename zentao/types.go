@@ -38,6 +38,62 @@ var (
 	ACLOpen    ACL = "open"    // 公开
 )
 
+type StoriesSource string // 需求来源
+
+var (
+	SourceCustomer StoriesSource = "customer" // 客户
+	SourceMarket   StoriesSource = "market"   // 市场
+	SourceProduct  StoriesSource = "po"       // 产品
+	SourceUser     StoriesSource = "user"     // 用户
+)
+
+type StoriesStage string // 需求状态
+
+var (
+	StageWait       StoriesStage = "wait"       // 未开始
+	StagePlanned    StoriesStage = "planned"    // 已计划
+	StageProjected  StoriesStage = "projected"  // 已立项
+	StageDeveloping StoriesStage = "developing" // 开发中
+	StageDeveloped  StoriesStage = "developed"  // 研发完毕
+	StageTesting    StoriesStage = "testing"    // 测试中
+	StageTested     StoriesStage = "tested"     // 测试完毕
+	StageVerified   StoriesStage = "verified"   // 已验收
+	StageReleased   StoriesStage = "released"   // 已发布
+	StageClosed     StoriesStage = "closed"     // 已关闭
+)
+
+type StoriesCategory string // 需求分类
+
+var (
+	CategoryFeature     StoriesCategory = "feature"     // 功能
+	CategoryInterface   StoriesCategory = "interface"   // 接口
+	CategoryPerformance StoriesCategory = "performance" // 性能
+	CategorySafe        StoriesCategory = "safe"        // 安全
+	CategoryExperience  StoriesCategory = "experience"  // 体验
+	CategoryImprove     StoriesCategory = "improve"     // 改进
+	CategoryOther       StoriesCategory = "other"       // 其他
+)
+
+type StoriesStatus string // 需求状态
+
+var (
+	StatusDraft   StoriesStatus = "draft"   // 草稿
+	StatusActive  StoriesStatus = "active"  // 激活
+	StatusClosed  StoriesStatus = "closed"  // 关闭
+	StatusChanged StoriesStatus = "changed" // 已变更
+)
+
+type StoriesCloseReason string // 需求关闭原因
+
+var (
+	CloseReasonDone      StoriesCloseReason = "done"      // 完成
+	CloseReasonDuplicate StoriesCloseReason = "duplicate" // 重复
+	CloseReasonPostponed StoriesCloseReason = "postponed" // 延期
+	CloseReasonwillnotdo StoriesCloseReason = "willnotdo" // 不做
+	CloseReasonCancel    StoriesCloseReason = "cancel"    // 取消
+	CloseReasonBydesign  StoriesCloseReason = "bydesign"  // 设计如此
+)
+
 // CustomResp 通用Resp
 type CustomResp struct {
 	Message string `json:"message,omitempty"`

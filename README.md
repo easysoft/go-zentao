@@ -53,13 +53,20 @@ Zentao API client enabling Go programs to interact with Zentao in a simple and u
   - [x] 获取产品发布列表
 - [x] 需求(Stories)
   - [x] 获取项目需求列表
-  - [x] 变更需求
   - [x] 获取产品需求列表
-  - [x] 创建需求
   - [x] 获取执行需求列表
+  - [x] 变更需求
+  - [x] 创建需求
   - [x] 获取需求详情
   - [x] 删除需求
   - [x] 修改需求其他字段
+  - [x] 激活需求
+  - [x] 关闭需求
+  - [x] 指派需求
+  - [ ] 预估工时
+  - [ ] 子需求
+  - [ ] 撤回评审
+  - [ ] 评审需求
 - [x] 项目(Projects)
   - [x] 创建项目
   - [x] 获取项目列表
