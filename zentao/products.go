@@ -34,7 +34,7 @@ type ProductsListBody struct {
 	Linename     string          `json:"lineName"`
 	Programname  string          `json:"programName"`
 	Stories      ProductsStories `json:"stories"`
-	Requirements ProductsStories `json:"requirements"`
+	Requirements ProductsStories `json:"requirements,omitempty"`
 	Plans        int             `json:"plans"`
 	Releases     int             `json:"releases"`
 	Bugs         int             `json:"bugs"`
@@ -54,28 +54,28 @@ type ProductsList struct {
 }
 
 type ProductsMeta struct {
-	Name string `json:"name"`
-	Code string `json:"code"`
+	Name    string `json:"name,omitempty"`
+	Code    string `json:"code,omitempty"`
+	Type    string `json:"type,omitempty"`
+	Line    int    `json:"line,omitempty"`
+	Program int    `json:"program,omitempty"`
+	Status  string `json:"status,omitempty"`
+	Desc    string `json:"desc,omitempty"`
 }
 
 type ProductsBody struct {
 	ID             int        `json:"id"`
-	Program        int        `json:"program"`
 	Bind           string     `json:"bind"`
-	Line           int        `json:"line"`
-	Type           string     `json:"type"`
-	Status         string     `json:"status"`
-	Substatus      string     `json:"subStatus"`
-	Desc           string     `json:"desc"`
-	Po             UserMeta   `json:"PO"`
-	Qd             UserMeta   `json:"QD"`
-	Rd             UserMeta   `json:"RD"`
-	ACL            string     `json:"acl"`
+	Substatus      string     `json:"subStatus,omitempty"`
+	Po             UserMeta   `json:"PO,omitempty"`
+	Qd             UserMeta   `json:"QD,omitempty"`
+	Rd             UserMeta   `json:"RD,omitempty"`
+	ACL            ACL        `json:"acl"`
 	Whitelist      []UserMeta `json:"whitelist"`
-	Reviewer       string     `json:"reviewer"`
+	Reviewer       string     `json:"reviewer,omitempty"`
 	Createdby      UserMeta   `json:"createdBy"`
 	Createddate    time.Time  `json:"createdDate"`
-	Createdversion string     `json:"createdVersion"`
+	Createdversion string     `json:"createdVersion,omitempty"`
 	Order          int        `json:"order"`
 	Deleted        string     `json:"deleted"`
 }
@@ -92,7 +92,7 @@ type ProductsGetMsg struct {
 	Feedback string `json:"feedback,omitempty"`
 	Vision   string `json:"vision,omitempty"`
 
-	Stories ProductsStories `json:"stories"`
+	Stories ProductsStories `json:"stories,omitempty"`
 	ProductsExtMsg
 }
 
@@ -105,16 +105,16 @@ type ProductsUpdateMsg struct {
 }
 
 type ProductsExtMsg struct {
-	Plans      int  `json:"plans"`
-	Releases   int  `json:"releases"`
-	Builds     int  `json:"builds"`
-	Cases      int  `json:"cases"`
-	Projects   int  `json:"projects"`
-	Executions int  `json:"executions"`
-	Bugs       int  `json:"bugs"`
-	Docs       int  `json:"docs"`
-	Progress   int  `json:"progress"`
-	Casereview bool `json:"caseReview"`
+	Plans      int  `json:"plans,omitempty"`
+	Releases   int  `json:"releases,omitempty"`
+	Builds     int  `json:"builds,omitempty"`
+	Cases      int  `json:"cases,omitempty"`
+	Projects   int  `json:"projects,omitempty"`
+	Executions int  `json:"executions,omitempty"`
+	Bugs       int  `json:"bugs,omitempty"`
+	Docs       int  `json:"docs,omitempty"`
+	Progress   int  `json:"progress,omitempty"`
+	Casereview bool `json:"caseReview,omitempty"`
 }
 
 type ProductsStories struct {

@@ -19,7 +19,6 @@ package main
 import (
 	"fmt"
 	"log"
-	"time"
 
 	"github.com/easysoft/go-zentao/v20/zentao"
 
@@ -36,33 +35,35 @@ func main() {
 		zentao.WithoutProxy(),
 	)
 	if err != nil {
-		log.Fatal(err)
+		panic(err)
 	}
 	pl, _, err := zt.Products.List()
 	if err != nil {
-		log.Fatal(err)
+		panic(err)
 	}
 	log.Printf("Products count: %v", len(pl.Products))
-	cp, _, err := zt.Products.Create(zentao.ProductsMeta{
-		Name: fmt.Sprintf("gosdk_%d%d", time.Now().Minute(), time.Now().Second()),
-		Code: fmt.Sprintf("gosdk_%d%d", time.Now().Minute(), time.Now().Second()),
+	p1, _, err := zt.Products.Create(zentao.ProductsMeta{
+		Name: "gosdk_2",
+		Code: "gosdk_2",
 	})
 	if err != nil {
-		log.Fatal(err)
+		panic(err)
 	}
-	log.Printf("program id: %v", cp.ID)
-	getmsg, _, err := zt.Products.GetByID(cp.ID)
+	log.Printf("product id: %v", p1.ID)
+	p2, _, err := zt.Products.GetByID(p1.ID)
 	if err != nil {
-		log.Fatal(err)
+		panic(err)
 	}
-	spew.Dump(getmsg)
-	// _, _, err = zt.Products.DeleteByID(cp.ID)
-	// _, _, err = zt.ProductPlans.Create(cp.ID, zentao.ProductPlanMeta{
-	// 	Title: fmt.Sprintf("abc%d%d", time.Now().Minute(), time.Now().Second()),
-	// })
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
-	// zt.ProductPlans.List(cp.ID)
-	// zt.ProductPlans.GetByID(5)
+	spew.Dump(p2)
+	p3, _, err := zt.Products.UpdateByID(p1.ID, zentao.ProductsMeta{
+		Name: fmt.Sprintf("gosdk_22"),
+	})
+	if err != nil {
+		panic(err)
+	}
+	spew.Dump(p3)
+	_, _, err = zt.Products.DeleteByID(p1.ID)
+	if err != nil {
+		panic(err)
+	}
 }
