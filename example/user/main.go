@@ -28,7 +28,7 @@ func main() {
 	zt, err := zentao.NewBasicAuthClient(
 		"admin",
 		"jaege1ugh4ooYip7",
-		zentao.WithBaseURL("http://172.77.77.12"),
+		zentao.WithBaseURL("http://127.0.0.1"),
 		zentao.WithDevMode(),
 		zentao.WithDumpAll(),
 		zentao.WithoutProxy(),
@@ -45,6 +45,7 @@ func main() {
 		Account:  fmt.Sprintf("abc%d%d", time.Now().Minute(), time.Now().Second()), // 不超过30位且字母、数字或下划线
 		Password: "demo11111111x.x",
 		Realname: fmt.Sprintf("abc%d%d", time.Now().Minute(), time.Now().Second()),
+		Gender:   zentao.ManGender,
 	})
 	if err != nil {
 		log.Fatal(err)

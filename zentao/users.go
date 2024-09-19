@@ -37,10 +37,11 @@ type UserMeta struct {
 }
 
 type UserCreateMeta struct {
-	Account  string `json:"account"`
-	Password string `json:"password"`
-	Realname string `json:"realname,omitempty"`
-	Visions  string `json:"visions,omitempty"`
+	Account  string     `json:"account"`
+	Password string     `json:"password"`
+	Realname string     `json:"realname,omitempty"`
+	Visions  string     `json:"visions,omitempty"` // 研发综合界面 rnd, 运营管理界面 lite) 默认是rnd
+	Gender   UserGender `json:"gender"`
 }
 
 type SelfMsg struct {

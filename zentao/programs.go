@@ -38,11 +38,11 @@ type ProgramsMeta struct {
 type ProgramsBody struct {
 	ID             int        `json:"id"`
 	Project        int        `json:"project"`
-	Model          string     `json:"model"`
+	Model          string     `json:"model,omitempty"`
 	Type           string     `json:"type"`
 	Lifetime       string     `json:"lifetime"`
-	Budget         string     `json:"budget"`
-	Budgetunit     string     `json:"budgetUnit"`
+	Budget         string     `json:"budget"`     // 预算
+	Budgetunit     string     `json:"budgetUnit"` //预算币种(CNY/USD)
 	Attribute      string     `json:"attribute"`
 	Percent        int        `json:"percent"`
 	Milestone      string     `json:"milestone"`

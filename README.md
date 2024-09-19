@@ -18,12 +18,12 @@ Zentao API client enabling Go programs to interact with Zentao in a simple and u
 
 - [x] Token
 - [x] 用户(User)
-  - [x] 获取我的个人信息(Token)
+  - [x] 获取用户信息
+  - [x] 获取我的个人信息
   - [x] 删除用户
   - [x] 创建用户
   - [x] 修改用户信息
   - [x] 获取用户列表
-  - [x] 获取用户信息
 - [x] 项目集(Programs)
   - [x] 获取项目集列表
   - [x] 修改项目集
@@ -126,12 +126,11 @@ import "github.com/easysoft/go-zentao/v20/zentao"
 > 推荐本地部署
 
 ```bash
-# 部署方式: docker compose -f hack/zentao.yml up -d
-地址: https://zentao20.demo.qucheng.cc
-账号: demo/quickon4You
+#部署方式:
+docker compose -f hack/docker-compose.yml up -d
 ```
 
 ## TODO
 
 - [ ] 优化代码 & 添加单元测试
-- [ ] 支持内置页面接口
+

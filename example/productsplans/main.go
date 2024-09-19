@@ -28,7 +28,7 @@ func main() {
 	zt, err := zentao.NewBasicAuthClient(
 		"admin",
 		"jaege1ugh4ooYip7",
-		zentao.WithBaseURL("https://zentao-easysoft.cloud.okteto.net"),
+		zentao.WithBaseURL("http://127.0.0.1"),
 		zentao.WithDevMode(),
 		zentao.WithDumpAll(),
 		zentao.WithoutProxy(),
