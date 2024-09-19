@@ -31,6 +31,13 @@ var (
 	WomanGender UserGender = "f" // 女
 )
 
+type ACL string // 访问控制
+
+var (
+	ACLPrivate ACL = "private" // 私有
+	ACLOpen    ACL = "open"    // 公开
+)
+
 // CustomResp 通用Resp
 type CustomResp struct {
 	Message string `json:"message,omitempty"`

@@ -28,63 +28,65 @@ type ProgramsService struct {
 }
 
 type ProgramsMeta struct {
-	Name   string `json:"name"`
-	Parent int    `json:"parent"`
-	Desc   string `json:"desc"`
-	Begin  string `json:"begin"`
-	End    string `json:"end"`
+	Name       string `json:"name,omitempty"`
+	Parent     int    `json:"parent,omitempty"`
+	Desc       string `json:"desc,omitempty"`
+	Begin      string `json:"begin,omitempty"`
+	End        string `json:"end,omitempty"`
+	Pm         any    `json:"PM,omitempty"`         // 请求是字符串, 返回是UserMeta
+	Budget     string `json:"budget,omitempty"`     // 预算
+	Budgetunit string `json:"budgetUnit,omitempty"` //预算币种(CNY/USD)
+	ACL        ACL    `json:"acl,omitempty"`
+	Whitelist  any    `json:"whitelist,omitempty"` // 白名单, 请求和返回([]UserMeta)不一样, 请注意
 }
 
 type ProgramsBody struct {
-	ID             int        `json:"id"`
-	Project        int        `json:"project"`
-	Model          string     `json:"model,omitempty"`
-	Type           string     `json:"type"`
-	Lifetime       string     `json:"lifetime"`
-	Budget         string     `json:"budget"`     // 预算
-	Budgetunit     string     `json:"budgetUnit"` //预算币种(CNY/USD)
-	Attribute      string     `json:"attribute"`
-	Percent        int        `json:"percent"`
-	Milestone      string     `json:"milestone"`
-	Output         string     `json:"output"`
-	Auth           string     `json:"auth"`
-	Path           string     `json:"path"`
-	Grade          int        `json:"grade"`
-	Code           string     `json:"code"`
-	Realbegan      string     `json:"realBegan"`
-	Realend        string     `json:"realEnd"`
-	Days           int        `json:"days"`
-	Status         string     `json:"status"`
-	Substatus      string     `json:"subStatus"`
-	Pri            string     `json:"pri"`
-	Version        int        `json:"version"`
-	Parentversion  int        `json:"parentVersion"`
-	Planduration   int        `json:"planDuration"`
-	Realduration   int        `json:"realDuration"`
-	Openedby       UserMeta   `json:"openedBy"`
-	Openeddate     time.Time  `json:"openedDate"`
-	Openedversion  string     `json:"openedVersion"`
-	Lasteditedby   string     `json:"lastEditedBy"`
-	Lastediteddate time.Time  `json:"lastEditedDate"`
-	Closedby       UserMeta   `json:"closedBy"`
-	Closeddate     time.Time  `json:"closedDate"`
-	Canceledby     UserMeta   `json:"canceledBy"`
-	Canceleddate   time.Time  `json:"canceledDate"`
-	Po             UserMeta   `json:"PO"`
-	Pm             UserMeta   `json:"PM"`
-	Qd             UserMeta   `json:"QD"`
-	Rd             UserMeta   `json:"RD"`
-	Team           string     `json:"team"`
-	ACL            string     `json:"acl"`
-	Whitelist      []UserMeta `json:"whitelist"`
-	Order          int        `json:"order"`
-	Deleted        bool       `json:"deleted"`
+	ID             int       `json:"id"`
+	Project        int       `json:"project"`
+	Model          string    `json:"model,omitempty"`
+	Type           string    `json:"type"`
+	Lifetime       string    `json:"lifetime,omitempty"`
+	Attribute      string    `json:"attribute,omitempty"`
+	Percent        int       `json:"percent"`
+	Milestone      string    `json:"milestone"`
+	Output         string    `json:"output,omitempty"`
+	Auth           string    `json:"auth,omitempty"`
+	Path           string    `json:"path"`
+	Grade          int       `json:"grade"`
+	Code           string    `json:"code"`
+	HasProduct     int       `json:"hasProduct"`
+	FirstEnd       string    `json:"firstEnd,omitempty"`
+	Realbegan      string    `json:"realBegan,omitempty"`
+	Realend        string    `json:"realEnd,omitempty"`
+	Days           int       `json:"days"`
+	Status         string    `json:"status"`
+	Substatus      string    `json:"subStatus"`
+	Pri            string    `json:"pri"`
+	Version        int       `json:"version"`
+	Parentversion  int       `json:"parentVersion"`
+	Planduration   int       `json:"planDuration"`
+	Realduration   int       `json:"realDuration"`
+	Openedby       UserMeta  `json:"openedBy"`
+	Openeddate     time.Time `json:"openedDate"`
+	Openedversion  string    `json:"openedVersion"`
+	Lasteditedby   string    `json:"lastEditedBy"`
+	Lastediteddate time.Time `json:"lastEditedDate"`
+	Closedby       UserMeta  `json:"closedBy"`
+	Closeddate     time.Time `json:"closedDate"`
+	Canceledby     UserMeta  `json:"canceledBy"`
+	Canceleddate   time.Time `json:"canceledDate"`
+	Po             UserMeta  `json:"PO,omitempty"`
+	Qd             UserMeta  `json:"QD,omitempty"`
+	Rd             UserMeta  `json:"RD,omitempty"`
+	Team           string    `json:"team,omitempty"`
+	Order          int       `json:"order"`
+	Deleted        bool      `json:"deleted"`
 }
 
 type ProgramsListBody struct {
 	ProgramsMeta
 	ProgramsBody
-	Progress int `json:"progress"`
+	Progress string `json:"progress"`
 }
 
 type ProgramsList struct {

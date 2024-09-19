@@ -44,8 +44,8 @@ func main() {
 	}
 	log.Printf("Products count: %v", len(pl.Products))
 	cp, _, err := zt.Products.Create(zentao.ProductsMeta{
-		Name: fmt.Sprintf("abc%d%d", time.Now().Minute(), time.Now().Second()),
-		Code: fmt.Sprintf("abc%d%d", time.Now().Minute(), time.Now().Second()),
+		Name: fmt.Sprintf("gosdk_%d%d", time.Now().Minute(), time.Now().Second()),
+		Code: fmt.Sprintf("gosdk_%d%d", time.Now().Minute(), time.Now().Second()),
 	})
 	if err != nil {
 		log.Fatal(err)

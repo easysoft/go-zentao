@@ -36,31 +36,38 @@ func main() {
 		zentao.WithoutProxy(),
 	)
 	if err != nil {
-		log.Fatal(err)
+		panic(err)
 	}
 	pgs, _, err := zt.Programs.List("")
 	if err != nil {
-		log.Fatal(err)
+		panic(err)
 	}
-	log.Printf("program count: %v", len(pgs.Programs))
-	for _, pg := range pgs.Programs {
-		spew.Dump(pg)
-	}
-	cp, _, err := zt.Programs.Create(zentao.ProgramsMeta{
-		Name:   fmt.Sprintf("abc%d%d", time.Now().Minute(), time.Now().Second()),
+	log.Printf("list all programs, count: %v", len(pgs.Programs))
+	p1, _, err := zt.Programs.Create(zentao.ProgramsMeta{
+		Name:   fmt.Sprintf("gosdk_%d%d", time.Now().Minute(), time.Now().Second()),
 		Parent: 0,
-		Desc:   fmt.Sprintf("abc%d%d", time.Now().Minute(), time.Now().Second()),
+		Desc:   fmt.Sprintf("gosdk_%d%d", time.Now().Minute(), time.Now().Second()),
 		Begin:  time.Now().Format("2006-01-02"),
 		End:    time.Now().AddDate(0, 0, 7).Format("2006-01-02"),
 	})
 	if err != nil {
-		log.Fatal(err)
+		panic(err)
 	}
-	log.Printf("program id: %v", cp.ID)
-	spew.Dump(cp)
-	_, _, err = zt.Programs.DeleteByID(cp.ID)
+	log.Printf("program id: %v", p1.ID)
+	p2, _, err := zt.Programs.GetByID(p1.ID)
 	if err != nil {
-		log.Fatal(err)
+		panic(err)
 	}
-	zt.Programs.GetByID(cp.ID)
+	spew.Dump(p2)
+	p3, _, err := zt.Programs.UpdateByID(p1.ID, zentao.ProgramsMeta{
+		Name: fmt.Sprintf("gosdk_%d%d", time.Now().Minute(), time.Now().Second()),
+	})
+	if err != nil {
+		panic(err)
+	}
+	spew.Dump(p3)
+	_, _, err = zt.Programs.DeleteByID(p1.ID)
+	if err != nil {
+		panic(err)
+	}
 }
