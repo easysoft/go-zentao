@@ -17,23 +17,31 @@
 package main
 
 import (
-	"log"
-
 	"github.com/easysoft/go-zentao/v20/zentao"
+
+	"github.com/davecgh/go-spew/spew"
 )
 
 func main() {
 	zt, err := zentao.NewBasicAuthClient(
 		"admin",
 		"jaege1ugh4ooYip7",
-		zentao.WithBaseURL("http://172.77.77.12"),
+		zentao.WithBaseURL("http://127.0.0.1"),
 		zentao.WithDevMode(),
 		zentao.WithDumpAll(),
 		zentao.WithoutProxy(),
 	)
 	if err != nil {
-		log.Fatal(err)
+		panic(err)
 	}
-	zt.Releases.ProjectsList(7)
-	zt.Releases.ProductsList(1)
+	p1, _, err := zt.Releases.ProjectsList(2)
+	if err != nil {
+		panic(err)
+	}
+	spew.Dump(p1)
+	p2, _, err := zt.Releases.ProductsList(1)
+	if err != nil {
+		panic(err)
+	}
+	spew.Dump(p2)
 }
