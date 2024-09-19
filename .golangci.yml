@@ -5,8 +5,6 @@ run:
 
 output:
   formats:
-    - format: github-actions
-      path: stderr
     - format: checkstyle
       path: report.xml
     - format: colored-line-number
@@ -26,14 +24,11 @@ linters:
     - asciicheck
     - dogsled
     - errorlint
-    - exportloopref
     - goconst
     - gosimple
     - govet
     - goheader
-    - gomnd
     - ineffassign
-    - megacheck
     - misspell
     - nakedret
     - nolintlint
