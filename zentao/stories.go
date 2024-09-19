@@ -18,7 +18,6 @@ package zentao
 
 import (
 	"fmt"
-	"time"
 
 	"github.com/imroc/req/v3"
 )
@@ -51,40 +50,40 @@ type StoriesExtMeta struct {
 
 type StoriesBody struct {
 	StoriesExtMeta
-	ID             int         `json:"id"`
-	Parent         int         `json:"parent"`
-	Product        int         `json:"product"`
-	Branch         int         `json:"branch"`
-	Module         int         `json:"module"`
-	Plan           string      `json:"plan"`
-	Frombug        int         `json:"fromBug"`
-	Title          string      `json:"title"`
-	Type           string      `json:"type"`
-	Status         string      `json:"status"`
-	Substatus      string      `json:"subStatus"`
-	Color          string      `json:"color"`
-	Stage          string      `json:"stage"`
-	Stagedby       string      `json:"stagedBy"`
-	Mailto         string      `json:"mailto"`
-	Openedby       UserMeta    `json:"openedBy"`
-	Openeddate     time.Time   `json:"openedDate"`
-	Assignedto     string      `json:"assignedTo"`
-	Assigneddate   interface{} `json:"assignedDate"`
-	Lasteditedby   string      `json:"lastEditedBy"`
-	Lastediteddate time.Time   `json:"lastEditedDate"`
-	Reviewedby     string      `json:"reviewedBy"`
-	Revieweddate   interface{} `json:"reviewedDate"`
-	Closedby       string      `json:"closedBy"`
-	Closeddate     interface{} `json:"closedDate"`
-	Closedreason   string      `json:"closedReason"`
-	Tobug          int         `json:"toBug"`
-	Childstories   string      `json:"childStories"`
-	Linkstories    string      `json:"linkStories"`
-	Duplicatestory int         `json:"duplicateStory"`
-	Version        int         `json:"version"`
-	Urchanged      string      `json:"URChanged"`
-	Deleted        string      `json:"deleted"`
-	Plantitle      string      `json:"planTitle,omitempty"`
+	ID             int    `json:"id"`
+	Parent         any    `json:"parent"` // 可能是数组, 产品计划时是数组
+	Product        int    `json:"product"`
+	Branch         int    `json:"branch"`
+	Module         int    `json:"module"`
+	Plan           string `json:"plan"`
+	Frombug        int    `json:"fromBug"`
+	Title          string `json:"title"`
+	Type           string `json:"type"`
+	Status         string `json:"status"`
+	Substatus      string `json:"subStatus"`
+	Color          string `json:"color"`
+	Stage          string `json:"stage"`
+	Stagedby       string `json:"stagedBy"`
+	Mailto         string `json:"mailto"`
+	Openedby       any    `json:"openedBy"` // 产品计划是string, 其他可能是UserMeta
+	Openeddate     string `json:"openedDate"`
+	Assignedto     string `json:"assignedTo"`
+	Assigneddate   any    `json:"assignedDate"`
+	Lasteditedby   string `json:"lastEditedBy"`
+	Lastediteddate string `json:"lastEditedDate"`
+	Reviewedby     string `json:"reviewedBy"`
+	Revieweddate   any    `json:"reviewedDate"`
+	Closedby       string `json:"closedBy"`
+	Closeddate     any    `json:"closedDate"`
+	Closedreason   string `json:"closedReason"`
+	Tobug          int    `json:"toBug"`
+	Childstories   string `json:"childStories"`
+	Linkstories    string `json:"linkStories"`
+	Duplicatestory int    `json:"duplicateStory"`
+	Version        int    `json:"version"`
+	Urchanged      string `json:"URChanged"`
+	Deleted        string `json:"deleted"`
+	Plantitle      string `json:"planTitle,omitempty"`
 }
 
 type StoriesCreateMeta struct {

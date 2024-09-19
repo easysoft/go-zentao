@@ -27,7 +27,7 @@ type ProductPlansService struct {
 }
 
 type ProductPlanMeta struct {
-	Branch int    `json:"branch,omitempty"`
+	Branch any    `json:"branch,omitempty"` // 创建时是int, List时是string
 	Title  string `json:"title"`
 	Parent int    `json:"parent,omitempty"`
 	Desc   string `json:"desc,omitempty"`
@@ -54,14 +54,16 @@ type ProductPlanCreateMsg struct {
 
 type ProductPlanListBody struct {
 	ProductPlanBody
-	Status       string `json:"status,omitempty"`
-	ClosedReason string `json:"closedReason"`
-	Stories      int    `json:"stories"`
-	Bugs         int    `json:"bugs"`
-	Hour         int    `json:"hour"`
-	Project      int    `json:"project"`
-	ProjectID    string `json:"projectID"`
-	Expired      bool   `json:"expired"`
+	BranchName   string   `json:"branchName,omitempty"`
+	Status       string   `json:"status,omitempty"`
+	ClosedReason string   `json:"closedReason,omitempty"`
+	Stories      int      `json:"stories"`
+	Bugs         int      `json:"bugs"`
+	Hour         int      `json:"hour"`
+	Project      int      `json:"project"`
+	ProjectID    string   `json:"projectID"`
+	Expired      bool     `json:"expired"`
+	Actions      []string `json:"actions,omitempty"`
 }
 
 type ProductPlanListMsg struct {
@@ -73,8 +75,8 @@ type ProductPlanListMsg struct {
 
 type ProductPlanGetMsg struct {
 	ProductPlanBody
-	Stories []StoriesBody `json:"stories"`
-	Bugs    []BugBody     `json:"bugs"`
+	Stories []StoriesBody `json:"stories,omitempty"`
+	Bugs    []BugBody     `json:"bugs,omitempty"`
 }
 
 type ProductPlanUpdateMsg struct {
@@ -84,11 +86,11 @@ type ProductPlanUpdateMsg struct {
 }
 
 type PlansStoriesIDs struct {
-	Stories []string `json:"stories"`
+	Stories []int `json:"stories"`
 }
 
 type PlansBugIDs struct {
-	Bugs []string `json:"bugs"`
+	Bugs []int `json:"bugs"`
 }
 
 type LinkStoriesMsg struct {
@@ -100,6 +102,18 @@ type LinkStoriesMsg struct {
 // Create 创建产品计划
 func (s *ProductPlansService) Create(id int, plan ProductPlanMeta) (*ProductPlanCreateMsg, *req.Response, error) {
 	var u ProductPlanCreateMsg
+	resp, err := s.client.client.R().
+		SetHeader("Token", s.client.token).
+		SetBody(&plan).
+		SetSuccessResult(&u).
+		Post(s.client.RequestURL(fmt.Sprintf("/products/%d/plans", id)))
+	return &u, resp, err
+}
+
+// CreateSub 创建产品子计划
+func (s *ProductPlansService) CreateSub(id, planID int, plan ProductPlanMeta) (*ProductPlanCreateMsg, *req.Response, error) {
+	var u ProductPlanCreateMsg
+	plan.Parent = planID
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
 		SetBody(&plan).
@@ -178,7 +192,7 @@ func (s *ProductPlansService) LinkBugs(id int, bug PlansBugIDs) (*LinkStoriesMsg
 		SetHeader("Token", s.client.token).
 		SetBody(&bug).
 		SetSuccessResult(&u).
-		Post(s.client.RequestURL(fmt.Sprintf("/productplans/%d/linkBugs", id)))
+		Post(s.client.RequestURL(fmt.Sprintf("/productplans/%d/linkbugs", id)))
 	return &u, resp, err
 }
 

@@ -38,6 +38,7 @@ Zentao API client enabling Go programs to interact with Zentao in a simple and u
   - [x] 创建产品
 - [x] 产品计划(ProductsPlans)
   - [x] 创建计划
+  - [x] 创建子计划
   - [x] 获取产品计划列表
   - [x] 获取计划详情
   - [x] 修改计划
@@ -46,6 +47,7 @@ Zentao API client enabling Go programs to interact with Zentao in a simple and u
   - [x] 产品计划取消关联需求
   - [x] 产品计划关联Bug
   - [x] 产品计划取消关联Bug
+  - [ ] 操作计划(开启、关闭、完成)
 - [x] 发布
   - [x] 获取项目发布列表
   - [x] 获取产品发布列表

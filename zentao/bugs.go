@@ -18,7 +18,6 @@ package zentao
 
 import (
 	"fmt"
-	"time"
 
 	"github.com/imroc/req/v3"
 )
@@ -52,52 +51,52 @@ type BugMeta struct {
 
 type BugBody struct {
 	BugMeta
-	ID             int           `json:"id"`
-	Project        int           `json:"project"`
-	Product        int           `json:"product"`
-	Plan           int           `json:"plan"`
-	Storyversion   int           `json:"storyVersion"`
-	Totask         int           `json:"toTask"`
-	Tostory        int           `json:"toStory"`
-	Keywords       string        `json:"keywords"`
-	Hardware       string        `json:"hardware"`
-	Found          string        `json:"found"`
-	Status         interface{}   `json:"status,omitempty"` // 列表返回结构体, 详情返回字符串
-	Substatus      string        `json:"subStatus"`
-	Color          string        `json:"color"`
-	Confirmed      int           `json:"confirmed"`
-	Activatedcount int           `json:"activatedCount"`
-	Entry          string        `json:"entry"`
-	Lines          string        `json:"lines"`
-	V1             string        `json:"v1"`
-	V2             string        `json:"v2"`
-	Duplicatebug   int           `json:"duplicateBug"`
-	Linkbug        string        `json:"linkBug"`
-	Case           int           `json:"case"`
-	Caseversion    int           `json:"caseVersion"`
-	Result         int           `json:"result"`
-	Repo           int           `json:"repo"`
-	Repotype       string        `json:"repoType"`
-	Testtask       int           `json:"testtask"`
-	Deleted        bool          `json:"deleted"`
-	Activateddate  time.Time     `json:"activatedDate"`
-	Feedbackby     string        `json:"feedbackBy,omitempty"`  // 仅bug接口
-	Notifyemail    string        `json:"notifyEmail,omitempty"` // 仅bug接口
-	Mailto         []interface{} `json:"mailto"`
-	Openedby       UserMeta      `json:"openedBy"`
-	Openeddate     time.Time     `json:"openedDate"`
-	Openedbuild    string        `json:"openedBuild"`
-	Assignedto     UserMeta      `json:"assignedTo"`
-	Assigneddate   time.Time     `json:"assignedDate"`
-	Resolvedby     interface{}   `json:"resolvedBy"`
-	Resolution     string        `json:"resolution"`
-	Resolvedbuild  string        `json:"resolvedBuild"`
-	Resolveddate   interface{}   `json:"resolvedDate"`
-	Closedby       interface{}   `json:"closedBy"`
-	Closeddate     time.Time     `json:"closedDate"`
-	Lasteditedby   UserMeta      `json:"lastEditedBy"`
-	Lastediteddate time.Time     `json:"lastEditedDate"`
-	Needconfirm    bool          `json:"needconfirm,omitempty"` // 仅列表返回
+	ID             int    `json:"id"`
+	Project        int    `json:"project"`
+	Product        int    `json:"product"`
+	Plan           int    `json:"plan"`
+	Storyversion   int    `json:"storyVersion"`
+	Totask         int    `json:"toTask"`
+	Tostory        int    `json:"toStory"`
+	Keywords       string `json:"keywords"`
+	Hardware       string `json:"hardware"`
+	Found          string `json:"found"`
+	Status         any    `json:"status,omitempty"` // 列表返回结构体, 详情返回字符串
+	Substatus      string `json:"subStatus"`
+	Color          string `json:"color"`
+	Confirmed      int    `json:"confirmed"`
+	Activatedcount int    `json:"activatedCount"`
+	Entry          string `json:"entry"`
+	Lines          string `json:"lines"`
+	V1             string `json:"v1"`
+	V2             string `json:"v2"`
+	Duplicatebug   int    `json:"duplicateBug"`
+	Linkbug        string `json:"linkBug"`
+	Case           int    `json:"case"`
+	Caseversion    int    `json:"caseVersion"`
+	Result         int    `json:"result"`
+	Repo           int    `json:"repo"`
+	Repotype       string `json:"repoType"`
+	Testtask       int    `json:"testtask"`
+	Deleted        string `json:"deleted"`
+	Activateddate  string `json:"activatedDate"`
+	Feedbackby     string `json:"feedbackBy,omitempty"`  // 仅bug接口
+	Notifyemail    string `json:"notifyEmail,omitempty"` // 仅bug接口
+	Mailto         any    `json:"mailto"`
+	Openedby       any    `json:"openedBy"`
+	Openeddate     string `json:"openedDate"`
+	Openedbuild    string `json:"openedBuild"`
+	Assignedto     any    `json:"assignedTo"`
+	Assigneddate   any    `json:"assignedDate"`
+	Resolvedby     any    `json:"resolvedBy"`
+	Resolution     string `json:"resolution"`
+	Resolvedbuild  string `json:"resolvedBuild"`
+	Resolveddate   any    `json:"resolvedDate"`
+	Closedby       any    `json:"closedBy"`
+	Closeddate     string `json:"closedDate"`
+	Lasteditedby   any    `json:"lastEditedBy"`
+	Lastediteddate string `json:"lastEditedDate"`
+	Needconfirm    bool   `json:"needconfirm,omitempty"` // 仅列表返回
 }
 
 type BugCreateMeta struct {
