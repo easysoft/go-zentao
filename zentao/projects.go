@@ -18,7 +18,6 @@ package zentao
 
 import (
 	"fmt"
-	"time"
 
 	"github.com/imroc/req/v3"
 )
@@ -38,58 +37,76 @@ type ProjectsCreateMeta struct {
 }
 
 type ProjectsBody struct {
-	ID         int       `json:"id"`
-	Name       string    `json:"name"`
-	Code       string    `json:"code"`
-	Model      string    `json:"model"`
-	Type       string    `json:"type"`
-	Budget     string    `json:"budget"`
-	Budgetunit string    `json:"budgetUnit"`
-	Parent     int       `json:"parent"`
-	Begin      string    `json:"begin"`
-	End        string    `json:"end"`
-	Status     string    `json:"status"`
-	Openedby   UserMeta  `json:"openedBy"`
-	Openeddate time.Time `json:"openedDate"`
-	Pm         UserMeta  `json:"PM"`
-	Progress   int       `json:"progress,omitempty"`
-}
-
-type ProjectsCreateMsg struct {
-	ProjectsBody
+	ID             int         `json:"id"`
+	Project        int         `json:"project"`
+	Charter        int         `json:"charter"`
+	Name           string      `json:"name,omitempty"`
+	Code           string      `json:"code,omitempty"`
+	Model          string      `json:"model"`
+	Type           string      `json:"type"`
+	Category       string      `json:"category"`
+	Budget         string      `json:"budget"`
+	Budgetunit     string      `json:"budgetUnit"`
+	Parent         int         `json:"parent"`
+	Begin          string      `json:"begin"`
+	End            string      `json:"end"`
+	Status         string      `json:"status"`
+	SubStatus      string      `json:"subStatus"`
+	Openedby       any         `json:"openedBy"`
+	Openeddate     string      `json:"openedDate"`
+	Pm             any         `json:"PM"`
+	Po             any         `json:"PO"`
+	Qd             any         `json:"QD"`
+	Rd             any         `json:"RD"`
+	Progress       any         `json:"progress,omitempty"`
+	Auth           ProjectAuth `json:"auth"`
+	StoryType      string      `json:"storyType"`
+	HasProduct     int         `json:"hasProduct"`
+	Days           int         `json:"days"`
+	Pri            string      `json:"pri"`
+	Desc           string      `json:"desc"`
+	Estimate       any         `json:"estimate"` // 列表是字符串, 其他是float64
+	Left           int         `json:"left"`
+	Consumed       int         `json:"consumed"`
+	TeamCount      int         `json:"teamCount"`
+	LastEditedBy   any         `json:"lastEditedBy"`
+	LastEditedDate string      `json:"lastEditedDate"`
+	ClosedBy       any         `json:"closedBy"`
+	ClosedDate     string      `json:"closedDate"`
+	ClosedReason   string      `json:"closedReason"`
+	CanceledBy     any         `json:"canceledBy"`
+	CanceledDate   string      `json:"canceledDate"`
+	SuspendedDate  string      `json:"suspendedDate"`
+	Team           string      `json:"team"`
+	Acl            ACL         `json:"acl"`
+	Whitelist      any         `json:"whitelist"`
+	Vision         string      `json:"vision"`
+	Deleted        bool        `json:"deleted"`
+	TeamMembers    any         `json:"teamMembers"`
+	LeftTasks      string      `json:"leftTasks"`
+	StatusTitle    string      `json:"statusTitle"`
+	Consume        string      `json:"consume"`
+	Surplus        string      `json:"surplus"`
+	Invested       float64     `json:"invested"`
+	StoryCount     int         `json:"storyCount"`
+	StoryPoints    string      `json:"storyPoints"`
+	ExecutionCount int         `json:"executionCount"`
+	From           string      `json:"from"`
+	Actions        []string    `json:"actions"`
+	Version        int         `json:"version"`
+	Parentversion  int         `json:"parentVersion"`
+	Order          int         `json:"order"`
 	Lifetime       string      `json:"lifetime"`
 	Attribute      string      `json:"attribute"`
 	Percent        int         `json:"percent"`
 	Milestone      string      `json:"milestone"`
 	Output         string      `json:"output"`
-	Auth           string      `json:"auth"`
-	Path           string      `json:"path"`
 	Grade          int         `json:"grade"`
 	Realbegan      string      `json:"realBegan"`
 	Realend        string      `json:"realEnd"`
-	Days           int         `json:"days"`
-	Substatus      string      `json:"subStatus"`
-	Pri            string      `json:"pri"`
-	Desc           string      `json:"desc"`
-	Version        int         `json:"version"`
-	Parentversion  int         `json:"parentVersion"`
 	Planduration   int         `json:"planDuration"`
 	Realduration   int         `json:"realDuration"`
 	Openedversion  string      `json:"openedVersion"`
-	Lasteditedby   UserMeta    `json:"lastEditedBy"`
-	Lastediteddate time.Time   `json:"lastEditedDate"`
-	Closedby       UserMeta    `json:"closedBy"`
-	Closeddate     time.Time   `json:"closedDate"`
-	Canceledby     UserMeta    `json:"canceledBy"`
-	Canceleddate   time.Time   `json:"canceledDate"`
-	Po             interface{} `json:"PO"`
-	Qd             interface{} `json:"QD"`
-	Rd             interface{} `json:"RD"`
-	Team           string      `json:"team"`
-	ACL            string      `json:"acl"`
-	Whitelist      []UserMeta  `json:"whitelist"`
-	Order          int         `json:"order"`
-	Deleted        bool        `json:"deleted"`
 }
 
 type ProjectsListMsg struct {
@@ -100,14 +117,17 @@ type ProjectsListMsg struct {
 }
 
 type ProjectsUpdateMeta struct {
-	Name      string   `json:"name,omitempty"`
-	Code      string   `json:"code,omitempty"`
-	Parent    int      `json:"parent,omitempty"`
-	Days      int      `json:"days,omitempty"`
-	Desc      string   `json:"desc,omitempty"`
-	ACL       string   `json:"acl,omitempty"`
-	Auth      string   `json:"auth,omitempty"`
-	Whitelist []string `json:"whitelist,omitempty"`
+	Name       string      `json:"name,omitempty"`
+	Code       string      `json:"code,omitempty"`
+	Parent     int         `json:"parent,omitempty"`
+	Budget     int         `json:"budget,omitempty"`
+	BudgetUnit string      `json:"budgetUnit,omitempty"`
+	PM         int         `json:"PM,omitempty"`
+	Days       int         `json:"days,omitempty"`
+	Desc       string      `json:"desc,omitempty"`
+	ACL        ACL         `json:"acl,omitempty"`
+	Auth       ProjectAuth `json:"auth,omitempty"`
+	Whitelist  any         `json:"whitelist,omitempty"`
 }
 
 // List 获取项目列表
@@ -125,8 +145,8 @@ func (s *ProjectsService) List(limit, page string) (*ProjectsListMsg, *req.Respo
 }
 
 // Create 创建项目
-func (s *ProjectsService) Create(program ProjectsCreateMeta) (*ProjectsCreateMsg, *req.Response, error) {
-	var u ProjectsCreateMsg
+func (s *ProjectsService) Create(program ProjectsCreateMeta) (*ProjectsBody, *req.Response, error) {
+	var u ProjectsBody
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
 		SetBody(&program).
@@ -146,8 +166,8 @@ func (s *ProjectsService) DeleteByID(id int) (*CustomResp, *req.Response, error)
 }
 
 // UpdateByID 修改项目
-func (s *ProjectsService) UpdateByID(id int, pum ProjectsUpdateMeta) (*ProjectsCreateMsg, *req.Response, error) {
-	var u ProjectsCreateMsg
+func (s *ProjectsService) UpdateByID(id int, pum ProjectsUpdateMeta) (*ProjectsBody, *req.Response, error) {
+	var u ProjectsBody
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
 		SetBody(&pum).
@@ -157,8 +177,8 @@ func (s *ProjectsService) UpdateByID(id int, pum ProjectsUpdateMeta) (*ProjectsC
 }
 
 // GetByID 获取项目详情
-func (s *ProjectsService) GetByID(id int) (*ProjectsCreateMsg, *req.Response, error) {
-	var u ProjectsCreateMsg
+func (s *ProjectsService) GetByID(id int) (*ProjectsBody, *req.Response, error) {
+	var u ProjectsBody
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
 		SetSuccessResult(&u).

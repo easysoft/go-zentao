@@ -102,6 +102,13 @@ var (
 	ReviewResultClarify StoriesReviewResult = "clarify" // 有待明确
 )
 
+type ProjectAuth string // 项目权限
+
+var (
+	ProjectExtend ProjectAuth = "extend" // 继承
+	ProjectReset  ProjectAuth = "reset"  // 重新定义
+)
+
 // CustomResp 通用Resp
 type CustomResp struct {
 	Message string `json:"message,omitempty"`

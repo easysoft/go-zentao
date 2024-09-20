@@ -34,40 +34,38 @@ func main() {
 		zentao.WithoutProxy(),
 	)
 	if err != nil {
-		log.Fatal(err)
+		panic(err)
 	}
-	pds, _, err := zt.Products.List()
+	p1, _, err := zt.Projects.List("100", "1")
 	if err != nil {
 		panic(err)
 	}
-	id := 0
-	if len(pds.Products) == 0 {
-		pd, _, err := zt.Products.Create(zentao.ProductsMeta{
-			Name: fmt.Sprintf("abc%d%d", time.Now().Minute(), time.Now().Second()),
-			Code: fmt.Sprintf("abc%d%d", time.Now().Minute(), time.Now().Second()),
-		})
-		if err != nil {
-			panic(err)
-		}
-		id = pd.ID
-	} else {
-		id = pds.Products[0].ID
-	}
-	pjs, _, err := zt.Projects.List("100", "1")
-	if err != nil {
-		log.Fatal(err)
-	}
-	log.Printf("Projects count: %v", len(pjs.Projects))
-	pj, _, err := zt.Projects.Create(zentao.ProjectsCreateMeta{
-		Name:     fmt.Sprintf("abc%d%d", time.Now().Minute(), time.Now().Second()),
-		Code:     fmt.Sprintf("abc%d%d", time.Now().Minute(), time.Now().Second()),
+	log.Printf("projects count: %v", len(p1.Projects))
+	p2, _, err := zt.Projects.Create(zentao.ProjectsCreateMeta{
+		Name:     fmt.Sprintf("gosdk_p1_%s", time.Now().Format("20060102150405")),
+		Code:     fmt.Sprintf("gosdk_p1_%s", time.Now().Format("20060102150405")),
 		Begin:    time.Now().Format("2006-01-02"),
-		End:      time.Now().Add(72 * time.Hour).Format("2006-01-02"),
-		Products: []int{id},
-		Parent:   0,
+		End:      time.Now().AddDate(0, 0, 7).Format("2006-01-02"),
+		Products: []int{1},
 	})
 	if err != nil {
 		panic(err)
 	}
-	log.Printf("Create Projects: %v", pj.ID)
+	log.Printf("created project: %v", p2.ID)
+	p3, _, err := zt.Projects.GetByID(p2.ID)
+	if err != nil {
+		panic(err)
+	}
+	log.Printf("get project: %v", p3.ID)
+	p4, _, err := zt.Projects.UpdateByID(p2.ID, zentao.ProjectsUpdateMeta{
+		Name: fmt.Sprintf("gosdk_p4_%s", time.Now().Format("20060102150405")),
+	})
+	if err != nil {
+		panic(err)
+	}
+	log.Printf("updated project: %v", p4.ID)
+	_, _, err = zt.Projects.DeleteByID(p2.ID)
+	if err != nil {
+		panic(err)
+	}
 }
