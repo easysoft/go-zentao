@@ -123,6 +123,18 @@ type StoriesActive struct {
 	Comment    string `json:"comment,omitempty"`
 }
 
+type StoriesEstimate struct {
+}
+
+type StoriesReview struct {
+	ReviewedDate string              `json:"reviewedDate,omitempty"`
+	Result       StoriesReviewResult `json:"result,omitempty"`
+	ClosedReason StoriesCloseReason  `json:"closedReason,omitempty"`
+	Pri          int                 `json:"pri,omitempty"`
+	Estimate     float64             `json:"estimate"`
+	Comment      string              `json:"comment,omitempty"`
+}
+
 // ProjectsList 获取项目需求列表
 func (s *StoriesService) ProjectsList(id int) (*StoriesListMeta, *req.Response, error) {
 	var u StoriesListMeta
@@ -239,8 +251,18 @@ func (s *StoriesService) AssignByID(id int, story StoriesActive) (*StoriesMsg, *
 	return &u, resp, err
 }
 
-// EstimateByID 预估工时
-func (s *StoriesService) EstimateByID(id int, story StoriesMeta) (*StoriesMsg, *req.Response, error) {
+// GetEstimateByID 获取工时, 开源版不支持
+func (s *StoriesService) GetEstimateByID(id int) (*StoriesMsg, *req.Response, error) {
+	var u StoriesMsg
+	resp, err := s.client.client.R().
+		SetHeader("Token", s.client.token).
+		SetSuccessResult(&u).
+		Get(s.client.RequestURL(fmt.Sprintf("/stories/%d/estimate", id)))
+	return &u, resp, err
+}
+
+// UpdateEstimateByID 更新工时
+func (s *StoriesService) UpdateEstimateByID(id int, story StoriesEstimate) (*StoriesMsg, *req.Response, error) {
 	var u StoriesMsg
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
@@ -262,19 +284,22 @@ func (s *StoriesService) ChildByID(id int, story StoriesMeta) (*StoriesMsg, *req
 }
 
 // RecallByID 撤回评审
-func (s *StoriesService) RecallByID(id int, story StoriesMeta) (*StoriesMsg, *req.Response, error) {
+func (s *StoriesService) RecallByID(id int) (*StoriesMsg, *req.Response, error) {
 	var u StoriesMsg
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
-		SetBody(&story).
 		SetSuccessResult(&u).
-		Post(s.client.RequestURL(fmt.Sprintf("/stories/%d/recall", id)))
+		Delete(s.client.RequestURL(fmt.Sprintf("/stories/%d/recall", id)))
 	return &u, resp, err
 }
 
 // ReviewByID 审核需求
-func (s *StoriesService) ReviewByID(id int, story StoriesMeta) (*StoriesMsg, *req.Response, error) {
+func (s *StoriesService) ReviewByID(id int, story StoriesReview) (*StoriesMsg, *req.Response, error) {
 	var u StoriesMsg
+	story.ClosedReason = CloseReasonDone
+	if story.Estimate <= 0 {
+		story.Estimate = 1.0
+	}
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
 		SetBody(&story).

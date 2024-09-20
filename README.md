@@ -63,10 +63,11 @@ Zentao API client enabling Go programs to interact with Zentao in a simple and u
   - [x] 激活需求
   - [x] 关闭需求
   - [x] 指派需求
-  - [ ] 预估工时
+  - [ ] 获取工时(开源版不支持)
+  - [ ] 预估工时(开源版不支持)
   - [ ] 子需求
-  - [ ] 撤回评审
-  - [ ] 评审需求
+  - [x] 撤回评审
+  - [x] 评审需求
 - [x] 项目(Projects)
   - [x] 创建项目
   - [x] 获取项目列表

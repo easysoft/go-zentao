@@ -104,4 +104,32 @@ func main() {
 		panic(err)
 	}
 	log.Printf("assign story id: %v", p9.ID)
+	// p10, _, err := zt.Stories.GetEstimateByID(p9.ID)
+	// if err != nil {
+	// 	panic(err)
+	// }
+	// log.Printf("assign story id: %v", p10.ID)
+	// p10, _, err := zt.Stories.UpdateEstimateByID(p9.ID, zentao.StoriesEstimate{})
+	// if err != nil {
+	// 	panic(err)
+	// }
+	// log.Printf("assign story id: %v", p10.ID)
+	_, _, err = zt.Stories.RecallByID(p9.ID)
+	if err != nil {
+		panic(err)
+	}
+	log.Printf("recall story id: %v", p9.ID)
+	p11, _, err := zt.Stories.ReviewByID(p9.ID, zentao.StoriesReview{
+		Result:   zentao.ReviewResultPass,
+		Estimate: 1.1,
+		Comment:  "test review",
+	})
+	if err != nil {
+		panic(err)
+	}
+	log.Printf("review story id: %v", p11.ID)
+	_, _, err = zt.Stories.DeleteByID(p9.ID)
+	if err != nil {
+		panic(err)
+	}
 }

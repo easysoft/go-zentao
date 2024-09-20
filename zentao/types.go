@@ -94,6 +94,14 @@ var (
 	CloseReasonBydesign  StoriesCloseReason = "bydesign"  // 设计如此
 )
 
+type StoriesReviewResult string // 需求评审结果
+
+var (
+	ReviewResultPass    StoriesReviewResult = "pass"    // 通过
+	ReviewResultRevert  StoriesReviewResult = "revert"  // 退回 撤销变更
+	ReviewResultClarify StoriesReviewResult = "clarify" // 有待明确
+)
+
 // CustomResp 通用Resp
 type CustomResp struct {
 	Message string `json:"message,omitempty"`
