@@ -109,6 +109,15 @@ var (
 	ProjectReset  ProjectAuth = "reset"  // 重新定义
 )
 
+type ExecutionLifeTime string // 生命周期
+
+var (
+	LifeTimeShort ExecutionLifeTime = "short" // 短期
+	LifeTimeLong  ExecutionLifeTime = "long"  // 长期
+	LifeTimeOps   ExecutionLifeTime = "ops"   // 运维
+	LifeTimeNull  ExecutionLifeTime = ""      // 未定义
+)
+
 // CustomResp 通用Resp
 type CustomResp struct {
 	Message string `json:"message,omitempty"`

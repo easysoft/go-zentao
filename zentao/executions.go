@@ -18,8 +18,8 @@ package zentao
 
 import (
 	"fmt"
-	"time"
 
+	"github.com/davecgh/go-spew/spew"
 	"github.com/imroc/req/v3"
 )
 
@@ -35,18 +35,19 @@ type ProjectExecutions struct {
 }
 
 type Execution struct {
-	ID         int       `json:"id"`
-	Name       string    `json:"name"`
-	Project    int       `json:"project"`
-	Code       string    `json:"code"`
-	Type       string    `json:"type"`
-	Parent     int       `json:"parent"`
-	Begin      string    `json:"begin"`
-	End        string    `json:"end"`
-	Status     string    `json:"status"`
-	OpenedBy   UserMeta  `json:"openedBy"`
-	OpenedDate time.Time `json:"openedDate"`
-	Progress   int       `json:"progress"`
+	ID         int    `json:"id"`
+	Name       string `json:"name"`
+	Project    int    `json:"project"`
+	Code       string `json:"code"`
+	Type       string `json:"type"`
+	Parent     int    `json:"parent"`
+	Begin      string `json:"begin"`
+	End        string `json:"end"`
+	Status     string `json:"status"`
+	OpenedBy   any    `json:"openedBy"`
+	OpenedDate string `json:"openedDate"`
+	Delay      int    `json:"delay"`
+	Progress   any    `json:"progress"`
 }
 
 type ExecutionsCreateMeta struct {
@@ -55,75 +56,82 @@ type ExecutionsCreateMeta struct {
 	Code    string `json:"code"`
 	Begin   string `json:"begin"`
 	End     string `json:"end"`
-	Days    int    `json:"days"`
 
-	Lifetime string `json:"lifetime,omitempty"`
-	P0       string `json:"PO,omitempty"`
-	PM       string `json:"PM,omitempty"`
-	QD       string `json:"QD,omitempty"`
-	RD       string `json:"RD,omitempty"`
+	Plans    []int `json:"plans,omitempty"`
+	Products []int `json:"products,omitempty"`
+
+	Days        int               `json:"days,omitempty"`
+	Lifetime    ExecutionLifeTime `json:"lifetime,omitempty"`
+	P0          string            `json:"PO,omitempty"`
+	PM          string            `json:"PM,omitempty"`
+	QD          string            `json:"QD,omitempty"`
+	RD          string            `json:"RD,omitempty"`
+	TeamMembers []string          `json:"teamMembers,omitempty"`
+	Desc        string            `json:"desc,omitempty"`
+	Acl         ACL               `json:"acl,omitempty"`
+	// Whitelist   []string `json:"whitelist,omitempty"`
 }
 
 type ExecutionsCreateMsg struct {
-	ID             int         `json:"id"`
-	Project        int         `json:"project"`
-	Model          string      `json:"model"`
-	Type           string      `json:"type"`
-	Lifetime       string      `json:"lifetime"`
-	Budget         string      `json:"budget"`
-	Budgetunit     string      `json:"budgetUnit"`
-	Attribute      string      `json:"attribute"`
-	Percent        int         `json:"percent"`
-	Milestone      string      `json:"milestone"`
-	Output         string      `json:"output"`
-	Auth           string      `json:"auth"`
-	Parent         int         `json:"parent"`
-	Path           string      `json:"path"`
-	Grade          int         `json:"grade"`
-	Name           string      `json:"name"`
-	Code           string      `json:"code"`
-	Begin          string      `json:"begin"`
-	End            string      `json:"end"`
-	Realbegan      string      `json:"realBegan"`
-	Realend        string      `json:"realEnd"`
-	Days           int         `json:"days"`
-	Status         string      `json:"status"`
-	Substatus      string      `json:"subStatus"`
-	Pri            string      `json:"pri"`
-	Desc           string      `json:"desc"`
-	Version        int         `json:"version"`
-	Parentversion  int         `json:"parentVersion"`
-	Planduration   int         `json:"planDuration"`
-	Realduration   int         `json:"realDuration"`
-	Openedby       UserMeta    `json:"openedBy"`
-	Openeddate     time.Time   `json:"openedDate"`
-	Openedversion  string      `json:"openedVersion"`
-	Lasteditedby   string      `json:"lastEditedBy"`
-	Lastediteddate time.Time   `json:"lastEditedDate"`
-	Closedby       string      `json:"closedBy"`
-	Closeddate     interface{} `json:"closedDate"`
-	Canceledby     string      `json:"canceledBy"`
-	Canceleddate   interface{} `json:"canceledDate"`
-	Po             string      `json:"PO"`
-	Pm             string      `json:"PM"`
-	Qd             string      `json:"QD"`
-	Rd             string      `json:"RD"`
-	Team           string      `json:"team"`
-	ACL            string      `json:"acl"`
-	Whitelist      string      `json:"whitelist"`
-	Order          int         `json:"order"`
-	Deleted        string      `json:"deleted"`
-	Totalhours     int         `json:"totalHours"`
-	Totalestimate  int         `json:"totalEstimate"`
-	Totalconsumed  int         `json:"totalConsumed"`
-	Totalleft      int         `json:"totalLeft"`
+	ID             int               `json:"id"`
+	Project        int               `json:"project"`
+	Model          string            `json:"model"`
+	Type           string            `json:"type"`
+	Lifetime       ExecutionLifeTime `json:"lifetime"`
+	Budget         string            `json:"budget"`
+	Budgetunit     string            `json:"budgetUnit"`
+	Attribute      string            `json:"attribute"`
+	Percent        int               `json:"percent"`
+	Milestone      string            `json:"milestone"`
+	Output         string            `json:"output"`
+	Auth           string            `json:"auth"`
+	Parent         int               `json:"parent"`
+	Path           string            `json:"path"`
+	Grade          int               `json:"grade"`
+	Name           string            `json:"name"`
+	Code           string            `json:"code"`
+	Begin          string            `json:"begin"`
+	End            string            `json:"end"`
+	Realbegan      string            `json:"realBegan"`
+	Realend        string            `json:"realEnd"`
+	Days           int               `json:"days"`
+	Status         string            `json:"status"`
+	Substatus      string            `json:"subStatus"`
+	Pri            string            `json:"pri"`
+	Desc           string            `json:"desc"`
+	Version        int               `json:"version"`
+	Parentversion  int               `json:"parentVersion"`
+	Planduration   int               `json:"planDuration"`
+	Realduration   int               `json:"realDuration"`
+	Openedby       any               `json:"openedBy"`
+	Openeddate     string            `json:"openedDate"`
+	Openedversion  string            `json:"openedVersion"`
+	Lasteditedby   any               `json:"lastEditedBy"`
+	Lastediteddate string            `json:"lastEditedDate"`
+	Closedby       any               `json:"closedBy"`
+	Closeddate     string            `json:"closedDate"`
+	Canceledby     any               `json:"canceledBy"`
+	Canceleddate   string            `json:"canceledDate"`
+	Po             any               `json:"PO"`
+	Pm             any               `json:"PM"`
+	Qd             any               `json:"QD"`
+	Rd             any               `json:"RD"`
+	Team           string            `json:"team"`
+	ACL            ACL               `json:"acl"`
+	Whitelist      any               `json:"whitelist"`
+	Order          int               `json:"order"`
+	Deleted        bool              `json:"deleted"`
+	Totalhours     int               `json:"totalHours"`
+	Totalestimate  int               `json:"totalEstimate"`
+	Totalconsumed  int               `json:"totalConsumed"`
+	Totalleft      int               `json:"totalLeft"`
 }
 
 type ExecutionsUpdateMeta struct {
 	ExecutionsCreateMeta
 	TeamMembers []string `json:"teamMembers,omitempty"`
 	Desc        string   `json:"desc,omitempty"`
-	ACL         string   `json:"acl,omitempty"`
+	ACL         ACL      `json:"acl,omitempty"`
 	Whitelist   []string `json:"whitelist,omitempty"`
 }
 
@@ -139,6 +147,7 @@ func (s *ExecutionsService) ListByProject(id int64) (*ProjectExecutions, *req.Re
 // Create 创建执行
 func (s *ExecutionsService) Create(id int, build ExecutionsCreateMeta) (*ExecutionsCreateMsg, *req.Response, error) {
 	var u ExecutionsCreateMsg
+	spew.Dump(build)
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
 		SetBody(&build).
