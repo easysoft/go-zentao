@@ -88,10 +88,18 @@ Zentao API client enabling Go programs to interact with Zentao in a simple and u
   - [x] 修改任务
 - [x] Bug
   - [x] 获取产品Bug列表
+  - [x] 获取项目Bug列表
+  - [x] 获取执行Bug列表
   - [x] 获取Bug详情
   - [x] 创建Bug
   - [x] 删除Bug
   - [x] 修改Bug
+  - [x] 关闭Bug
+  - [x] 指派Bug
+  - [x] 确认Bug
+  - [x] 解决Bug
+  - [x] 激活Bug
+  - [ ] 评估Bug(开源版不支持)
 - [x] 版本(Builds)
   - [x] 获取项目版本列表
   - [x] 获取执行版本详情
@@ -140,7 +148,4 @@ import "github.com/easysoft/go-zentao/v20/zentao"
 docker compose -f hack/docker-compose.yml up -d
 ```
 
-## TODO
-
-- [ ] 优化代码 & 添加单元测试
 

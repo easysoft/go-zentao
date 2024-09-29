@@ -171,3 +171,21 @@ func (c *Client) RequestURL(path string) string {
 	u.Path = c.baseURL.Path + path
 	return u.String()
 }
+
+// ListOptions specifies the optional parameters to various List methods that
+type ListOptions struct {
+	Page  int `url:"page,omitempty" json:"page,omitempty"`
+	Limit int `url:"limit,omitempty" json:"limit,omitempty"`
+	// Status string `url:"status,omitempty" json:"status,omitempty"` // 目前不生效 NeedFixed
+}
+
+func (o ListOptions) toURLValues() string {
+	v := url.Values{}
+	if o.Page > 0 {
+		v.Set("page", fmt.Sprintf("%d", o.Page))
+	}
+	if o.Limit > 0 {
+		v.Set("limit", fmt.Sprintf("%d", o.Limit))
+	}
+	return v.Encode()
+}

@@ -118,6 +118,40 @@ var (
 	LifeTimeNull  ExecutionLifeTime = ""      // 未定义
 )
 
+type BugType string // Bug类型
+
+var (
+	CodeErrorBugType    BugType = "codeerror"    // 代码错误
+	DesignDefectBugType BugType = "designdefect" // 设计缺陷
+	ConfigBugType       BugType = "config"       // 配置相关
+	InstallBugType      BugType = "install"      // 安装部署
+	SecurityBugType     BugType = "security"     // 安全相关
+	PerformanceBugType  BugType = "performance"  // 性能问题
+	StandardBugType     BugType = "standard"     // 标准问题
+	AutomationBugType   BugType = "automation"   // 测试脚本
+	OtherBugType        BugType = "other"        // 其他
+)
+
+type BugStatus string // Bug状态
+
+var (
+	ActiveBugStatus   BugStatus = "active"   // 激活
+	ClosedBugStatus   BugStatus = "closed"   // 关闭
+	ResolvedBugStatus BugStatus = "resolved" // 已解决
+)
+
+type BugCloseReason string // Bug关闭原因
+
+var (
+	BugClose     BugCloseReason = "done"      // 完成
+	BugDuplicate BugCloseReason = "duplicate" // 重复
+	BugPostponed BugCloseReason = "postponed" // 延期
+	BugWillNotDo BugCloseReason = "willnotdo" // 不做
+	BugCancel    BugCloseReason = "cancel"    // 取消
+	BugByDesign  BugCloseReason = "bydesign"  // 设计如此
+	BugExternal  BugCloseReason = "external"  // 外部原因
+)
+
 // CustomResp 通用Resp
 type CustomResp struct {
 	Message string `json:"message,omitempty"`
