@@ -152,6 +152,17 @@ var (
 	BugExternal  BugCloseReason = "external"  // 外部原因
 )
 
+type ModuleType string // 模块类型
+
+var (
+	ModuleStory    ModuleType = "story"    // 需求
+	ModuleBug      ModuleType = "bug"      // Bug
+	ModuleTask     ModuleType = "task"     // 任务
+	ModuleCase     ModuleType = "case"     // 用例
+	ModuleFeedback ModuleType = "feedback" // 反馈
+	ModuleProduct  ModuleType = "product"  // 产品
+)
+
 // CustomResp 通用Resp
 type CustomResp struct {
 	Message string `json:"message,omitempty"`

@@ -128,6 +128,8 @@ Zentao API client enabling Go programs to interact with Zentao in a simple and u
   - [x] 修改反馈
   - [x] 关闭反馈
   - [x] 指派反馈
+- [x] 模块
+  - [x] 获取模块列表
 
 ### 支持PathINFO/Get内置页面接口
 
