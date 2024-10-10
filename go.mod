@@ -6,7 +6,7 @@ toolchain go1.23.1
 
 require (
 	github.com/davecgh/go-spew v1.1.1
-	github.com/imroc/req/v3 v3.46.1
+	github.com/imroc/req/v3 v3.47.0
 	github.com/stretchr/testify v1.9.0
 )
 
