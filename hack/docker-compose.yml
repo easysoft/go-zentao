@@ -33,7 +33,7 @@ services:
 
 # zentao service
   zentao:
-    image: easysoft/zentao:20.7.1
+    image: easysoft/zentao:20.8
     container_name: zentao
     pull_policy: always
     restart: always

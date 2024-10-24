@@ -10,7 +10,7 @@ Zentao API client enabling Go programs to interact with Zentao in a simple and u
 
 ## NOTE
 
-基于ZenTao最新开源版本[`20.7`](https://github.com/easysoft/zentaopms/tree/zentaopms_20.7_20240914)
+基于ZenTao最新开源版本[`20.8`](https://github.com/easysoft/zentaopms/tree/zentaopms_20.8_20241022)
 
 ## API
 
