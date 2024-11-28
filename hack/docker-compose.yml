@@ -29,11 +29,11 @@ services:
       - MARIADB_ROOT_PASSWORD=pass4Zentao
       - MARIADB_DATABASE=zentao
       - MARIADB_CHARACTER_SET=utf8mb4
-      - MARIADB_COLLATION=utf8mb4_unicode_ci
+      - MARIADB_COLLATE=utf8mb4_unicode_ci
 
 # zentao service
   zentao:
-    image: easysoft/zentao:20.8
+    image: easysoft/zentao
     container_name: zentao
     pull_policy: always
     restart: always
