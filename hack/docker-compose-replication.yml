@@ -17,19 +17,50 @@
 services:
 
 # db service for zentao
-  zentao-db:
+  zentao-db-master:
     image: bitnami/mariadb:10.6
-    container_name: zentao-db
+    container_name: zentao-db-master
     pull_policy: if_not_present
     restart: always
     volumes:
-      - 'zentao_db:/bitnami/mariadb'
+      - 'zentao_db_master:/bitnami/mariadb'
     environment:
-      - ALLOW_EMPTY_PASSWORD=yes
       - MARIADB_ROOT_PASSWORD=pass4Zentao
+      - MARIADB_DATABASE=zentao
+      - MARIADB_USER=my_user
+      - MARIADB_PASSWORD=my_password
+      - MARIADB_CHARACTER_SET=utf8mb4
+      - MARIADB_COLLATE=utf8mb4_unicode_ci
+      - MARIADB_REPLICATION_MODE=master
+      - MARIADB_REPLICATION_USER=repl_user
+      - MARIADB_REPLICATION_PASSWORD=repl_pass
+    healthcheck:
+      test: ['CMD', '/opt/bitnami/scripts/mariadb/healthcheck.sh']
+      interval: 15s
+      timeout: 5s
+      retries: 6
+
+  zentao-db-slave:
+    image: bitnami/mariadb:10.6
+    container_name: zentao-db-slave
+    pull_policy: if_not_present
+    restart: always
+    volumes:
+      - 'zentao_db_slave:/bitnami/mariadb'
+    depends_on:
+      - zentao-db-master
+    environment:
+      - MARIADB_USER=my_user
+      - MARIADB_PASSWORD=my_password
       - MARIADB_DATABASE=zentao
       - MARIADB_CHARACTER_SET=utf8mb4
       - MARIADB_COLLATE=utf8mb4_unicode_ci
+      - MARIADB_REPLICATION_MODE=slave
+      - MARIADB_REPLICATION_USER=repl_user
+      - MARIADB_REPLICATION_PASSWORD=repl_pass
+      - MARIADB_MASTER_HOST=zentao-db-master
+      - MARIADB_MASTER_PORT_NUMBER=3306
+      - MARIADB_MASTER_ROOT_PASSWORD=pass4Zentao
     healthcheck:
       test: ['CMD', '/opt/bitnami/scripts/mariadb/healthcheck.sh']
       interval: 15s
@@ -47,9 +78,9 @@ services:
     volumes:
       - 'zentao_data:/data'
     depends_on:
-      - zentao-db
+      - zentao-db-master
     environment:
-      - ZT_MYSQL_HOST=zentao-db
+      - ZT_MYSQL_HOST=zentao-db-master
       - ZT_MYSQL_PORT=3306
       - ZT_MYSQL_USER=root
       - ZT_MYSQL_PASSWORD=pass4Zentao
@@ -57,5 +88,6 @@ services:
 
 # persistence for mysql and zentao
 volumes:
-  zentao_db:
+  zentao_db_master:
+  zentao_db_slave:
   zentao_data:

@@ -25,16 +25,27 @@ services:
     volumes:
       - 'zentao_db:/bitnami/mariadb'
     environment:
-      - ALLOW_EMPTY_PASSWORD=yes
-      - MARIADB_ROOT_PASSWORD=pass4Zentao
+      - MARIADB_USER=my_user
+      - MARIADB_PASSWORD=my_password
       - MARIADB_DATABASE=zentao
       - MARIADB_CHARACTER_SET=utf8mb4
       - MARIADB_COLLATE=utf8mb4_unicode_ci
+      - MARIADB_ROOT_PASSWORD=pass4Zentao
     healthcheck:
       test: ['CMD', '/opt/bitnami/scripts/mariadb/healthcheck.sh']
       interval: 15s
       timeout: 5s
       retries: 6
+
+  zentao-cache:
+    image: bitnami/redis:6.2
+    container_name: zentao-cache
+    pull_policy: if_not_present
+    restart: always
+    environment:
+      - REDIS_PASSWORD=pass4Zentao
+    volumes:
+      - 'zentao_cache:/bitnami/redis/data'
 
 # zentao service
   zentao:
@@ -48,14 +59,25 @@ services:
       - 'zentao_data:/data'
     depends_on:
       - zentao-db
+      - zentao-cache
     environment:
       - ZT_MYSQL_HOST=zentao-db
       - ZT_MYSQL_PORT=3306
       - ZT_MYSQL_USER=root
       - ZT_MYSQL_PASSWORD=pass4Zentao
       - ZT_MYSQL_DB=zentao
+      - PHP_EXT_REDIS=true
+      - ZT_REDIS_HOST=zentao-cache
+      - ZT_REDIS_PORT=6379
+      - ZT_REDIS_PASSWORD=pass4Zentao
+      - ZT_REDIS_SERIALIZER= igbinary # php, igbinary
+      - ZT_CACHE_ENABLE=true
+      - ZT_CACHE_TYPE=redis
+      - ZT_CACHE_SCOPE=private
+      - ZT_CACHE_LIFETIME=0
 
 # persistence for mysql and zentao
 volumes:
   zentao_db:
+  zentao_cache:
   zentao_data:
