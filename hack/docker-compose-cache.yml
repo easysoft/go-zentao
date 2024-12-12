@@ -72,7 +72,7 @@ services:
       - ZT_REDIS_HOST=zentao-cache
       - ZT_REDIS_PORT=6379
       - ZT_REDIS_PASSWORD=pass4Zentao
-      - ZT_REDIS_SERIALIZER= igbinary # php, igbinary
+      - ZT_REDIS_SERIALIZER=igbinary # php, igbinary
       - ZT_CACHE_ENABLE=true
       - ZT_CACHE_TYPE=redis
       - ZT_CACHE_SCOPE=private
