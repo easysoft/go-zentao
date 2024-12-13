@@ -19,11 +19,17 @@ services:
 # db service for zentao
   zentao-db:
     image: bitnami/mariadb:10.6
+    # 国内镜像
+    # image: hub.zentao.net/app/mariadb:10.6-bitnami
     container_name: zentao-db
     pull_policy: if_not_present
     restart: always
     volumes:
       - 'zentao_db:/bitnami/mariadb'
+      # 使用宿主机目录挂载数据
+      # - '/data/zentao/mariadb:/bitnami/mariadb'
+    networks:
+      - zentao-net
     environment:
       - MARIADB_USER=my_user
       - MARIADB_PASSWORD=my_password
@@ -39,6 +45,8 @@ services:
 
   zentao-cache:
     image: bitnami/redis:6.2
+    # 国内镜像
+    # image: hub.zentao.net/app/redis:6.2-bitnami
     container_name: zentao-cache
     pull_policy: if_not_present
     restart: always
@@ -46,10 +54,16 @@ services:
       - REDIS_PASSWORD=pass4Zentao
     volumes:
       - 'zentao_cache:/bitnami/redis/data'
+      # 使用宿主机目录挂载数据
+      # - '/data/zentao/redis:/bitnami/redis/data'
+    networks:
+      - zentao-net
 
 # zentao service
   zentao:
     image: easysoft/zentao
+    # 国内镜像
+    # image: hub.zentao.net/app/zentao
     container_name: zentao
     pull_policy: always
     restart: always
@@ -57,6 +71,8 @@ services:
       - '80:80'
     volumes:
       - 'zentao_data:/data'
+      # 使用宿主机目录挂载数据
+      # - '/data/zentao/data:/data'
     depends_on:
       - zentao-db
       - zentao-cache
@@ -77,8 +93,22 @@ services:
       - ZT_CACHE_TYPE=redis
       - ZT_CACHE_SCOPE=private
       - ZT_CACHE_LIFETIME=0
+      - PHP_MAX_EXECUTION_TIME=120
+      - PHP_MEMORY_LIMIT=512M
+      - PHP_POST_MAX_SIZE=128M
+      - PHP_UPLOAD_MAX_FILESIZE=128M
+    networks:
+      - zentao-net
+      # 指定mac地址设置网络如下，需要删除`- zentao-net`
+      # zentao-net:
+      # 02:42:ac:11:00:02为示例mac地址
+      #   mac_address: 02:42:ac:11:00:02
 
-# persistence for mysql and zentao
+networks:
+  zentao-net:
+    driver: bridge
+
+# persistence for mysql, cache and zentao
 volumes:
   zentao_db:
   zentao_cache:
