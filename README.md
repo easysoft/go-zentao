@@ -17,6 +17,8 @@ Zentao API client enabling Go programs to interact with Zentao in a simple and u
 ### 支持Restful
 
 - [x] Token
+  - [x] 获取Token
+  - [x] Ping
 - [x] 用户(User)
   - [x] 获取用户信息
   - [x] 获取我的个人信息
@@ -130,6 +132,9 @@ Zentao API client enabling Go programs to interact with Zentao in a simple and u
   - [x] 指派反馈
 - [x] 模块
   - [x] 获取模块列表
+- [ ] 其他(Misc)
+  - [x] 获取系统配置参数
+  - [x] 获取禅道版本
 
 ### 支持PathINFO/Get内置页面接口
 

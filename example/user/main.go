@@ -68,4 +68,9 @@ func main() {
 		log.Fatal(err)
 	}
 	log.Printf("user %v", ul.Total)
+	token, _, err := zt.Token.Ping()
+	if err != nil {
+		log.Fatal(err)
+	}
+	log.Printf("token: %s, life: %v", token.Token, token.TokenLife)
 }

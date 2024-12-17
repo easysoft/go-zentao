@@ -16,6 +16,6 @@
 #
 
 
-# curl -X POST -d '{"account": "admin", "password": "jaege1ugh4ooYip7"}'  https://172.77.77.12/api.php/v1/tokens
+# curl -X POST -d '{"account": "admin", "password": "jaege1ugh4ooYip7"}'  http://127.0.0.1/api.php/v1/tokens
 
-curl -H "Token: e3faabcc414b9e1bc9c7a575c3fbdc7a" http://172.77.77.12/api.php/v1/user
+curl -H "Token: 1bd72495bd50e243b4fa7962023551f6" http://127.0.0.1/api.php/v1/config/version

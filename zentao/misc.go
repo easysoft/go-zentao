@@ -1,5 +1,5 @@
 //
-//  Copyright 2022, easysoft
+//  Copyright 2024, easysoft
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -20,35 +20,31 @@ import (
 	"github.com/imroc/req/v3"
 )
 
-type TokenService struct {
+type MiscService struct {
 	client *Client
 }
 
-type AccessToken struct {
-	Token     string `json:"token"`
-	TokenLife string `json:"tokenLife,omitempty"` // Ping接口返回的字段
+type Configurations []Configuration
+
+type Configuration struct {
+	Key   string `json:"key"`
+	Value string `json:"value"`
 }
 
-type BasicAuth struct {
-	Account  string `json:"account"`
-	Password string `json:"password"`
-}
-
-func (s *TokenService) GetAccessToken() (*AccessToken, *req.Response, error) {
-	var result AccessToken
-	resp, err := s.client.client.R().
-		SetBody(&BasicAuth{Account: s.client.username, Password: s.client.password}).
-		SetSuccessResult(&result).
-		Post(s.client.RequestURL("/tokens"))
-
-	return &result, resp, err
-}
-
-func (s *TokenService) Ping() (*AccessToken, *req.Response, error) {
-	var result AccessToken
+func (s *MiscService) GetConfigurations() (*Configurations, *req.Response, error) {
+	var result Configurations
 	resp, err := s.client.client.R().
 		SetHeader("Token", s.client.token).
 		SetSuccessResult(&result).
-		Get(s.client.RequestURL("/ping"))
+		Get(s.client.RequestURL("/configurations"))
+	return &result, resp, err
+}
+
+func (s *MiscService) GetVersion() (*Configuration, *req.Response, error) {
+	var result Configuration
+	resp, err := s.client.client.R().
+		SetHeader("Token", s.client.token).
+		SetSuccessResult(&result).
+		Get(s.client.RequestURL("/configurations/version"))
 	return &result, resp, err
 }
