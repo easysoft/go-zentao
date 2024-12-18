@@ -50,7 +50,7 @@ Zentao API client enabling Go programs to interact with Zentao in a simple and u
   - [x] 产品计划关联Bug
   - [x] 产品计划取消关联Bug
   - [ ] 操作计划(开启、关闭、完成)
-- [x] 发布
+- [x] 发布(Releases)
   - [x] 获取项目发布列表
   - [x] 获取产品发布列表
 - [x] 需求(Stories)
@@ -82,7 +82,7 @@ Zentao API client enabling Go programs to interact with Zentao in a simple and u
   - [x] 修改执行
   - [x] 查看执行详情
   - [x] 删除执行
-- [x] 任务
+- [x] 任务(Tasks)
   - [x] 获取执行任务列表
   - [x] 获取任务详情
   - [x] 创建任务
@@ -109,20 +109,20 @@ Zentao API client enabling Go programs to interact with Zentao in a simple and u
   - [x] 创建版本
   - [x] 获取版本详情
   - [x] 删除版本
-- [x] 用例
+- [x] 用例(TestCases)
   - [x] 获取产品用例列表
   - [x] 获取用例详情
   - [x] 创建用例
   - [x] 删除用例
   - [x] 修改用例
-- [x] 测试单
+- [x] 测试单(TestTasks)
   - [x] 获取测试单列表
   - [x] 获取项目的测试单
   - [x] 获取测试单详情
   - [x] 创建测试单
   - [x] 删除测试单
   - [x] 修改测试单
-- [x] 反馈
+- [x] 反馈(Feedbacks)
   - [x] 获取反馈列表
   - [x] 获取反馈详情
   - [x] 创建反馈
@@ -130,7 +130,7 @@ Zentao API client enabling Go programs to interact with Zentao in a simple and u
   - [x] 修改反馈
   - [x] 关闭反馈
   - [x] 指派反馈
-- [x] 模块
+- [x] 模块(Modules)
   - [x] 获取模块列表
 - [ ] 其他(Misc)
   - [x] 获取系统配置参数
