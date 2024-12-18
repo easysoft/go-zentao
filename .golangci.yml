@@ -19,21 +19,34 @@ linters-settings:
   goheader:
     template-path: .go-header.txt
 
+  gocritic:
+    disable-all: true
+    enabled-checks:
+      - commentedOutCode
+      - commentFormatting
+
 linters:
   enable:
     - asciicheck
+    - canonicalheader
     - dogsled
+    - dupl
     - errorlint
+    - gci
     - goconst
+    - gocritic
+    - gofmt
+    - goheader
+    - gosec
     - gosimple
     - govet
-    - goheader
     - ineffassign
     - misspell
     - nakedret
     - nolintlint
     - staticcheck
     - unconvert
+    - unparam
     - unused
     - whitespace
   disable-all: true

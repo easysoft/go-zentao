@@ -35,7 +35,7 @@ type ProgramsMeta struct {
 	End        string `json:"end,omitempty"`
 	Pm         any    `json:"PM,omitempty"`         // 请求是字符串, 返回是UserMeta
 	Budget     string `json:"budget,omitempty"`     // 预算
-	Budgetunit string `json:"budgetUnit,omitempty"` //预算币种(CNY/USD)
+	Budgetunit string `json:"budgetUnit,omitempty"` // 预算币种(CNY/USD)
 	ACL        ACL    `json:"acl,omitempty"`
 	Whitelist  any    `json:"whitelist,omitempty"` // 白名单, 请求和返回([]UserMeta)不一样, 请注意
 }
