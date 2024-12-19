@@ -14,6 +14,12 @@ Zentao API client enabling Go programs to interact with Zentao in a simple and u
 
 ## API
 
+### 使用
+
+```go
+import "github.com/easysoft/go-zentao/v21/zentao"
+```
+
 ### 支持Restful
 
 - [x] Token
@@ -26,6 +32,9 @@ Zentao API client enabling Go programs to interact with Zentao in a simple and u
   - [x] 创建用户
   - [x] 修改用户信息
   - [x] 获取用户列表
+  - [x] 获取部门列表
+  - [x] 获取部门详情
+  - [x] 获取权限分组
 - [x] 项目集(Programs)
   - [x] 获取项目集列表
   - [x] 修改项目集
@@ -139,12 +148,6 @@ Zentao API client enabling Go programs to interact with Zentao in a simple and u
 ### 支持PathINFO/Get内置页面接口
 
 > 有限支持, 是对Restful API的拓展
-
-## 使用
-
-```go
-import "github.com/easysoft/go-zentao/v20/zentao"
-```
 
 ## 测试账号
 

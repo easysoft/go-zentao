@@ -25,7 +25,7 @@ import (
 )
 
 // @title Zentao Go SDK
-// @version v20.0
+// @version v21.0
 // @description This is a Go SDK for Zentao API.
 
 // @schemes https

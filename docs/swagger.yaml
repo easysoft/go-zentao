@@ -1,11 +1,367 @@
 basePath: /api.php/v1
+definitions:
+  zentao.BugBody:
+    properties:
+      activatedCount:
+        type: integer
+      activatedDate: {}
+      assignedDate: {}
+      assignedTo: {}
+      branch:
+        description: 创建需求时, 该字段不写
+        type: integer
+      browser:
+        type: string
+      case:
+        type: integer
+      caseVersion:
+        type: integer
+      closedBy: {}
+      closedDate:
+        type: string
+      color:
+        type: string
+      confirmed:
+        type: integer
+      deadline:
+        type: string
+      deleted:
+        description: 字符串orbool
+      duplicateBug:
+        type: integer
+      entry:
+        type: string
+      execution:
+        type: integer
+      feedback:
+        type: integer
+      feedbackBy:
+        description: 仅bug接口
+      found:
+        type: string
+      hardware:
+        type: string
+      id:
+        type: integer
+      issueKey:
+        type: string
+      keywords:
+        type: string
+      lastEditedBy: {}
+      lastEditedDate:
+        type: string
+      lines:
+        type: string
+      linkBug:
+        type: string
+      mailto: {}
+      module:
+        type: integer
+      mr:
+        type: integer
+      needconfirm:
+        description: 仅列表返回
+        type: boolean
+      notifyEmail:
+        description: 仅bug接口
+        type: string
+      openedBuild: {}
+      openedBy: {}
+      openedDate:
+        type: string
+      os:
+        type: string
+      plan:
+        type: integer
+      pri:
+        type: integer
+      priOrder:
+        type: string
+      product:
+        type: integer
+      productStatus:
+        type: string
+      project:
+        type: integer
+      relatedBug:
+        type: string
+      repo:
+        type: integer
+      repoType:
+        type: string
+      resolution:
+        type: string
+      resolvedBuild:
+        type: string
+      resolvedBy: {}
+      resolvedDate: {}
+      result:
+        type: integer
+      severity:
+        type: integer
+      severityOrder:
+        type: integer
+      status:
+        type: string
+      statusName:
+        type: string
+      steps:
+        type: string
+      story:
+        type: integer
+      storyVersion:
+        type: integer
+      subStatus:
+        type: string
+      task:
+        type: integer
+      testtask:
+        type: integer
+      title:
+        type: string
+      toStory:
+        type: integer
+      toTask:
+        type: integer
+      type:
+        type: string
+      v1:
+        type: string
+      v2:
+        type: string
+    type: object
+  zentao.DepartmentCustomMeta:
+    properties:
+      function:
+        type: string
+      grade:
+        type: integer
+      id:
+        type: integer
+      manager:
+        type: string
+      name:
+        type: string
+      order:
+        type: integer
+      parent:
+        type: integer
+      path:
+        type: string
+      position:
+        type: string
+    type: object
+  zentao.DepartmentMeta:
+    properties:
+      function:
+        type: string
+      grade:
+        type: integer
+      id:
+        type: integer
+      items:
+        description: 子部门
+        items:
+          $ref: '#/definitions/zentao.DepartmentMeta'
+        type: array
+      key:
+        type: string
+      manager:
+        type: string
+      managerName:
+        type: string
+      name:
+        type: string
+      order:
+        type: integer
+      parent:
+        type: integer
+      path:
+        type: string
+      position:
+        type: string
+      text:
+        type: string
+      url:
+        type: string
+    type: object
+  zentao.GroupMeta:
+    properties:
+      accounts:
+        description: 用户列表 map[string]string
+      acl: {}
+      desc:
+        type: string
+      developer:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      privs: {}
+      project:
+        type: integer
+      role:
+        type: string
+      vision:
+        type: string
+    type: object
+  zentao.ListProductsBugsMsg:
+    properties:
+      bugs:
+        items:
+          $ref: '#/definitions/zentao.BugBody'
+        type: array
+      limit:
+        type: integer
+      page:
+        type: integer
+      total:
+        type: integer
+    type: object
+  zentao.UserList:
+    properties:
+      limit:
+        type: integer
+      page:
+        type: integer
+      total:
+        type: integer
+      users:
+        items:
+          $ref: '#/definitions/zentao.UserMeta'
+        type: array
+    type: object
+  zentao.UserMeta:
+    properties:
+      account:
+        type: string
+      avatar:
+        type: string
+      dept:
+        type: integer
+      email:
+        type: string
+      id:
+        type: integer
+      realname:
+        type: string
+      role:
+        description: Role这个字段比较特殊
+    type: object
 host: zentao.demo.qucheng.cc
 info:
   contact: {}
   description: This is a Go SDK for Zentao API.
   title: Zentao Go SDK
-  version: v20.0
-paths: {}
+  version: v21.0
+paths:
+  /departments:
+    get:
+      consumes:
+      - application/json
+      description: 获取所有部门信息.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/zentao.DepartmentMeta'
+            type: array
+      summary: 获取所有部门信息.
+      tags:
+      - Users
+  /departments/{id}:
+    get:
+      consumes:
+      - application/json
+      description: 获取部门信息.
+      parameters:
+      - description: 部门ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/zentao.DepartmentCustomMeta'
+      summary: 获取部门信息.
+      tags:
+      - Users
+  /groups:
+    get:
+      consumes:
+      - application/json
+      description: 获取所有分组信息.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/zentao.GroupMeta'
+            type: array
+      summary: 获取所有分组信息.
+      tags:
+      - Users
+  /products/{id}/bugs:
+    get:
+      consumes:
+      - application/json
+      description: 获取产品下的Bug列表
+      parameters:
+      - description: 产品ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - in: query
+        name: limit
+        type: integer
+      - in: query
+        name: page
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/zentao.ListProductsBugsMsg'
+      summary: 获取产品下的Bug列表
+      tags:
+      - Bugs
+  /users:
+    get:
+      consumes:
+      - application/json
+      description: 获取用户列表
+      parameters:
+      - description: 每页数量
+        in: query
+        name: limit
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/zentao.UserList'
+      summary: 获取用户列表
+      tags:
+      - Users
 schemes:
 - https
 swagger: "2.0"

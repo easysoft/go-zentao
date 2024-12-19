@@ -41,7 +41,13 @@ type UserCreateMeta struct {
 	Password string     `json:"password"`
 	Realname string     `json:"realname,omitempty"`
 	Visions  string     `json:"visions,omitempty"` // 研发综合界面 rnd, 运营管理界面 lite) 默认是rnd
+	Email    string     `json:"email,omitempty"`
 	Gender   UserGender `json:"gender"`
+	Type     UserType   `json:"type,omitempty"`  // 用户类型, 为空默认是内部用户
+	Role     string     `json:"role,omitempty"`  // 职位
+	Group    string     `json:"group,omitempty"` // 权限分组, 示例3,4
+	// 内部用户参数
+	Dept int `json:"dept,omitempty"`
 }
 
 type SelfMsg struct {
@@ -108,7 +114,46 @@ type UserList struct {
 	Users []UserMeta `json:"users"`
 }
 
+type DepartmentsMsg []DepartmentMeta
+
+type DepartmentMeta struct {
+	DepartmentCustomMeta
+	ManagerName string           `json:"managerName"`
+	URL         string           `json:"url"`
+	Key         string           `json:"key"`
+	Text        string           `json:"text"`
+	Items       []DepartmentMeta `json:"items,omitempty"` // 子部门
+}
+
+type DepartmentCustomMeta struct {
+	ID       int    `json:"id"`
+	Name     string `json:"name"`
+	Parent   int    `json:"parent"`
+	Path     string `json:"path"`
+	Grade    int    `json:"grade"`
+	Order    int    `json:"order"`
+	Position string `json:"position"`
+	Function string `json:"function"`
+	Manager  string `json:"manager"`
+}
+
+type GroupMeta struct {
+	ID        int    `json:"id"`
+	Project   int    `json:"project"`
+	Vision    string `json:"vision"`
+	Name      string `json:"name"`
+	Role      string `json:"role"`
+	Desc      string `json:"desc"`
+	ACL       any    `json:"acl"`
+	Developer string `json:"developer"`
+	Accounts  any    `json:"accounts,omitempty"` // 用户列表 map[string]string
+	Privs     any    `json:"privs"`
+}
+
+type GroupsMsg []GroupMeta
+
 // Self 获取我的个人信息
+// GET /user
 func (s *UsersService) Self() (*SelfMsg, *req.Response, error) {
 	var u SelfMsg
 	resp, err := s.client.client.R().
@@ -160,7 +205,15 @@ func (s *UsersService) UpdateByID(id int, user UserUpdateMeta) (*UserProfile, *r
 	return &u, resp, err
 }
 
-// List 获取用户列表
+// @Summary 获取用户列表
+// @Description 获取用户列表
+// @Tags Users
+// @Accept json
+// @Produce json
+// @Param limit query string false "每页数量"
+// @Param page query string false "页码"
+// @Success 200 {object} UserList
+// @Router /users [get]
 func (s *UsersService) List(limit, page string) (*UserList, *req.Response, error) {
 	var u UserList
 	resp, err := s.client.client.R().
@@ -172,4 +225,53 @@ func (s *UsersService) List(limit, page string) (*UserList, *req.Response, error
 		SetSuccessResult(&u).
 		Get(s.client.RequestURL("/users"))
 	return &u, resp, err
+}
+
+// @Summary 获取所有部门信息.
+// @Description 获取所有部门信息.
+// @Tags Users
+// @Accept json
+// @Produce json
+// @Success 200 {object} DepartmentsMsg
+// @Router /departments [get]
+func (s *UsersService) ListAllDepartments() (*DepartmentsMsg, *req.Response, error) {
+	var result DepartmentsMsg
+	resp, err := s.client.client.R().
+		SetHeader("Token", s.client.token).
+		SetSuccessResult(&result).
+		Get(s.client.RequestURL("/departments"))
+	return &result, resp, err
+}
+
+// @Summary 获取部门信息.
+// @Description 获取部门信息.
+// @Tags Users
+// @Accept json
+// @Produce json
+// @Param id path int true "部门ID"
+// @Success 200 {object} DepartmentCustomMeta
+// @Router /departments/{id} [get]
+func (s *UsersService) GetDepartmentByID(deptID int) (*DepartmentCustomMeta, *req.Response, error) {
+	var result DepartmentCustomMeta
+	resp, err := s.client.client.R().
+		SetHeader("Token", s.client.token).
+		SetSuccessResult(&result).
+		Get(s.client.RequestURL(fmt.Sprintf("/departments/%d", deptID)))
+	return &result, resp, err
+}
+
+// @Summary 获取所有分组信息.
+// @Description 获取所有分组信息.
+// @Tags Users
+// @Accept json
+// @Produce json
+// @Success 200 {object} GroupsMsg
+// @Router /groups [get]
+func (s *UsersService) ListAllGroups() (*GroupsMsg, *req.Response, error) {
+	var result GroupsMsg
+	resp, err := s.client.client.R().
+		SetHeader("Token", s.client.token).
+		SetSuccessResult(&result).
+		Get(s.client.RequestURL("/groups"))
+	return &result, resp, err
 }

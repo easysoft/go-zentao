@@ -14,12 +14,547 @@ const docTemplate = `{
     },
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
-    "paths": {}
+    "paths": {
+        "/departments": {
+            "get": {
+                "description": "获取所有部门信息.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Users"
+                ],
+                "summary": "获取所有部门信息.",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/zentao.DepartmentMeta"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/departments/{id}": {
+            "get": {
+                "description": "获取部门信息.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Users"
+                ],
+                "summary": "获取部门信息.",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "部门ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/zentao.DepartmentCustomMeta"
+                        }
+                    }
+                }
+            }
+        },
+        "/groups": {
+            "get": {
+                "description": "获取所有分组信息.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Users"
+                ],
+                "summary": "获取所有分组信息.",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/zentao.GroupMeta"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/products/{id}/bugs": {
+            "get": {
+                "description": "获取产品下的Bug列表",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Bugs"
+                ],
+                "summary": "获取产品下的Bug列表",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "产品ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "page",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/zentao.ListProductsBugsMsg"
+                        }
+                    }
+                }
+            }
+        },
+        "/users": {
+            "get": {
+                "description": "获取用户列表",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Users"
+                ],
+                "summary": "获取用户列表",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "每页数量",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "页码",
+                        "name": "page",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/zentao.UserList"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "zentao.BugBody": {
+            "type": "object",
+            "properties": {
+                "activatedCount": {
+                    "type": "integer"
+                },
+                "activatedDate": {},
+                "assignedDate": {},
+                "assignedTo": {},
+                "branch": {
+                    "description": "创建需求时, 该字段不写",
+                    "type": "integer"
+                },
+                "browser": {
+                    "type": "string"
+                },
+                "case": {
+                    "type": "integer"
+                },
+                "caseVersion": {
+                    "type": "integer"
+                },
+                "closedBy": {},
+                "closedDate": {
+                    "type": "string"
+                },
+                "color": {
+                    "type": "string"
+                },
+                "confirmed": {
+                    "type": "integer"
+                },
+                "deadline": {
+                    "type": "string"
+                },
+                "deleted": {
+                    "description": "字符串orbool"
+                },
+                "duplicateBug": {
+                    "type": "integer"
+                },
+                "entry": {
+                    "type": "string"
+                },
+                "execution": {
+                    "type": "integer"
+                },
+                "feedback": {
+                    "type": "integer"
+                },
+                "feedbackBy": {
+                    "description": "仅bug接口"
+                },
+                "found": {
+                    "type": "string"
+                },
+                "hardware": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "issueKey": {
+                    "type": "string"
+                },
+                "keywords": {
+                    "type": "string"
+                },
+                "lastEditedBy": {},
+                "lastEditedDate": {
+                    "type": "string"
+                },
+                "lines": {
+                    "type": "string"
+                },
+                "linkBug": {
+                    "type": "string"
+                },
+                "mailto": {},
+                "module": {
+                    "type": "integer"
+                },
+                "mr": {
+                    "type": "integer"
+                },
+                "needconfirm": {
+                    "description": "仅列表返回",
+                    "type": "boolean"
+                },
+                "notifyEmail": {
+                    "description": "仅bug接口",
+                    "type": "string"
+                },
+                "openedBuild": {},
+                "openedBy": {},
+                "openedDate": {
+                    "type": "string"
+                },
+                "os": {
+                    "type": "string"
+                },
+                "plan": {
+                    "type": "integer"
+                },
+                "pri": {
+                    "type": "integer"
+                },
+                "priOrder": {
+                    "type": "string"
+                },
+                "product": {
+                    "type": "integer"
+                },
+                "productStatus": {
+                    "type": "string"
+                },
+                "project": {
+                    "type": "integer"
+                },
+                "relatedBug": {
+                    "type": "string"
+                },
+                "repo": {
+                    "type": "integer"
+                },
+                "repoType": {
+                    "type": "string"
+                },
+                "resolution": {
+                    "type": "string"
+                },
+                "resolvedBuild": {
+                    "type": "string"
+                },
+                "resolvedBy": {},
+                "resolvedDate": {},
+                "result": {
+                    "type": "integer"
+                },
+                "severity": {
+                    "type": "integer"
+                },
+                "severityOrder": {
+                    "type": "integer"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "statusName": {
+                    "type": "string"
+                },
+                "steps": {
+                    "type": "string"
+                },
+                "story": {
+                    "type": "integer"
+                },
+                "storyVersion": {
+                    "type": "integer"
+                },
+                "subStatus": {
+                    "type": "string"
+                },
+                "task": {
+                    "type": "integer"
+                },
+                "testtask": {
+                    "type": "integer"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "toStory": {
+                    "type": "integer"
+                },
+                "toTask": {
+                    "type": "integer"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "v1": {
+                    "type": "string"
+                },
+                "v2": {
+                    "type": "string"
+                }
+            }
+        },
+        "zentao.DepartmentCustomMeta": {
+            "type": "object",
+            "properties": {
+                "function": {
+                    "type": "string"
+                },
+                "grade": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "manager": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "order": {
+                    "type": "integer"
+                },
+                "parent": {
+                    "type": "integer"
+                },
+                "path": {
+                    "type": "string"
+                },
+                "position": {
+                    "type": "string"
+                }
+            }
+        },
+        "zentao.DepartmentMeta": {
+            "type": "object",
+            "properties": {
+                "function": {
+                    "type": "string"
+                },
+                "grade": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "items": {
+                    "description": "子部门",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/zentao.DepartmentMeta"
+                    }
+                },
+                "key": {
+                    "type": "string"
+                },
+                "manager": {
+                    "type": "string"
+                },
+                "managerName": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "order": {
+                    "type": "integer"
+                },
+                "parent": {
+                    "type": "integer"
+                },
+                "path": {
+                    "type": "string"
+                },
+                "position": {
+                    "type": "string"
+                },
+                "text": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                }
+            }
+        },
+        "zentao.GroupMeta": {
+            "type": "object",
+            "properties": {
+                "accounts": {
+                    "description": "用户列表 map[string]string"
+                },
+                "acl": {},
+                "desc": {
+                    "type": "string"
+                },
+                "developer": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "privs": {},
+                "project": {
+                    "type": "integer"
+                },
+                "role": {
+                    "type": "string"
+                },
+                "vision": {
+                    "type": "string"
+                }
+            }
+        },
+        "zentao.ListProductsBugsMsg": {
+            "type": "object",
+            "properties": {
+                "bugs": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/zentao.BugBody"
+                    }
+                },
+                "limit": {
+                    "type": "integer"
+                },
+                "page": {
+                    "type": "integer"
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
+        },
+        "zentao.UserList": {
+            "type": "object",
+            "properties": {
+                "limit": {
+                    "type": "integer"
+                },
+                "page": {
+                    "type": "integer"
+                },
+                "total": {
+                    "type": "integer"
+                },
+                "users": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/zentao.UserMeta"
+                    }
+                }
+            }
+        },
+        "zentao.UserMeta": {
+            "type": "object",
+            "properties": {
+                "account": {
+                    "type": "string"
+                },
+                "avatar": {
+                    "type": "string"
+                },
+                "dept": {
+                    "type": "integer"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "realname": {
+                    "type": "string"
+                },
+                "role": {
+                    "description": "Role这个字段比较特殊"
+                }
+            }
+        }
+    }
 }`
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "v20.0",
+	Version:          "v21.0",
 	Host:             "zentao.demo.qucheng.cc",
 	BasePath:         "/api.php/v1",
 	Schemes:          []string{"https"},

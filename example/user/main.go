@@ -21,7 +21,9 @@ import (
 	"log"
 	"time"
 
-	"github.com/easysoft/go-zentao/v20/zentao"
+	"github.com/easysoft/go-zentao/v21/zentao"
+
+	"github.com/davecgh/go-spew/spew"
 )
 
 func main() {
@@ -73,4 +75,40 @@ func main() {
 		log.Fatal(err)
 	}
 	log.Printf("token: %s, life: %v", token.Token, token.TokenLife)
+	depts, _, err := zt.Users.ListAllDepartments()
+	if err != nil {
+		log.Fatal(err)
+	}
+	spew.Dump(depts)
+	cu2, _, err := zt.Users.Create(zentao.UserCreateMeta{
+		Account:  fmt.Sprintf("abc%d%d", time.Now().Minute(), time.Now().Second()), // 不超过30位且字母、数字或下划线
+		Password: "demo556x.x",
+		Realname: fmt.Sprintf("正式员工%d%d", time.Now().Minute(), time.Now().Second()),
+		Gender:   zentao.ManGender,
+		Dept:     1,
+		Role:     "qa",
+		Group:    "3,4",
+	})
+	if err != nil {
+		log.Fatal(err)
+	}
+	spew.Dump(cu2)
+	cu3, _, err := zt.Users.Create(zentao.UserCreateMeta{
+		Account:  fmt.Sprintf("wb%d%d", time.Now().Minute(), time.Now().Second()), // 不超过30位且字母、数字或下划线
+		Password: "wb001x.x",
+		Realname: fmt.Sprintf("外包%d%d", time.Now().Minute(), time.Now().Second()),
+		Gender:   zentao.ManGender,
+		Type:     zentao.OutSideUser,
+		Role:     "qa",
+		Group:    "3,4",
+	})
+	if err != nil {
+		log.Fatal(err)
+	}
+	spew.Dump(cu3)
+	groups, _, err := zt.Users.ListAllGroups()
+	if err != nil {
+		log.Fatal(err)
+	}
+	spew.Dump(groups)
 }
