@@ -65,6 +65,8 @@ type Client struct {
 	Login *LoginService
 }
 
+// Deprecated: please use zentao.NewBasicAuthClient instead
+// NewBasicAuthClient 使用用户名和密码创建一个客户端
 func NewBasicAuthClient(username, password string, options ...ClientOptionFunc) (*Client, error) {
 	client, err := newClient(options...)
 	if err != nil {

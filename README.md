@@ -147,11 +147,11 @@ import "github.com/easysoft/go-zentao/v21/zentao"
 
 ### 支持PathINFO/Get内置页面接口
 
-> 有限支持, 是对Restful API的拓展
+> 暂无计划支持
 
-## 测试账号
+## 本地测试
 
-> 推荐本地部署
+> 推荐本地部署, 示例为docker compose部署
 
 ```bash
 #部署方式:
