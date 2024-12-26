@@ -82,9 +82,11 @@ services:
       - ZT_MYSQL_USER=root
       - ZT_MYSQL_PASSWORD=pass4Zentao
       - ZT_MYSQL_DB=zentao
+      # 从21.3版本开始，如果已经设置了redis相关环境变量自动开启redis session缓存，可不用配置如下环境变量
       - PHP_SESSION_TYPE=redis
       - PHP_SESSION_PATH=tcp://zentao-cache:6379?auth=pass4Zentao
       - PHP_EXT_REDIS=true
+      # end
       - ZT_REDIS_HOST=zentao-cache
       - ZT_REDIS_PORT=6379
       - ZT_REDIS_PASSWORD=pass4Zentao
