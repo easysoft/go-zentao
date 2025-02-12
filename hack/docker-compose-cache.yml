@@ -93,8 +93,9 @@ services:
       - ZT_REDIS_SERIALIZER=igbinary # php, igbinary
       - ZT_CACHE_ENABLE=true
       - ZT_CACHE_TYPE=redis
-      - ZT_CACHE_SCOPE=private
+      - ZT_CACHE_SCOPE=private # 可选shared, private
       - ZT_CACHE_LIFETIME=0
+      - ZT_REDIS_DATABASE=1 # 如果scope为独享，需要设置该值。默认session模式使用0，cache模式使用1
       - PHP_MAX_EXECUTION_TIME=120
       - PHP_MEMORY_LIMIT=512M
       - PHP_POST_MAX_SIZE=128M
