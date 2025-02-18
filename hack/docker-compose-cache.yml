@@ -77,6 +77,7 @@ services:
       - zentao-db
       - zentao-cache
     environment:
+      # - DEBUG=true # debug模式
       - ZT_MYSQL_HOST=zentao-db
       - ZT_MYSQL_PORT=3306
       - ZT_MYSQL_USER=root
@@ -87,6 +88,7 @@ services:
       # - PHP_SESSION_PATH=tcp://zentao-cache:6379?auth=pass4Zentao
       # - PHP_EXT_REDIS=true
       # end
+      # - PHP_SESSION_REDIS_DATABASE=6 # 如果session是redis默认使用6, session database和cache database不要复用
       - ZT_REDIS_HOST=zentao-cache
       - ZT_REDIS_PORT=6379
       - ZT_REDIS_PASSWORD=pass4Zentao
@@ -95,7 +97,7 @@ services:
       - ZT_CACHE_TYPE=redis
       - ZT_CACHE_SCOPE=private # 可选shared, private
       - ZT_CACHE_LIFETIME=0
-      - ZT_REDIS_DATABASE=1 # 如果scope为独享，需要设置该值。默认session模式使用0，cache模式使用1
+      # - ZT_REDIS_DATABASE=0 # 默认禅道为0
       - PHP_MAX_EXECUTION_TIME=120
       - PHP_MEMORY_LIMIT=512M
       - PHP_POST_MAX_SIZE=128M
