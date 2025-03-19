@@ -1,4 +1,5 @@
 example/example
+_example
 coverage.txt
 *.out
 .idea

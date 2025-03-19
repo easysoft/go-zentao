@@ -35,7 +35,7 @@ import (
 const (
 	defaultBaseURL = "https://zentao.demo.qucheng.cc/"
 	userAgent      = "go-zentao"
-	apiVersionPath = "api.php/v1"
+	apiVersionPath = "/api.php/v1"
 )
 
 type Client struct {
@@ -130,8 +130,8 @@ func newClient(options ...ClientOptionFunc) (*Client, error) {
 
 func (c *Client) setBaseURL(urlStr string) error {
 	// Make sure the given URL end with a slash
-	if !strings.HasSuffix(urlStr, "/") {
-		urlStr += "/"
+	if strings.HasSuffix(urlStr, "/") {
+		urlStr = strings.TrimSuffix(urlStr, "/")
 	}
 
 	baseURL, err := url.Parse(urlStr)

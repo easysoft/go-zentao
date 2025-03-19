@@ -26,9 +26,9 @@ import (
 )
 
 func main() {
-	loadSessionID()
-	// basicAuthExample()
-	// userExample()
+	// loadSessionID()
+	basicAuthExample()
+	userExample()
 }
 
 // This example shows how to create a client with username and password.

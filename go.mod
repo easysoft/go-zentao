@@ -1,7 +1,8 @@
 module github.com/easysoft/go-zentao/v21
 
 go 1.22.0
-toolchain go1.23.1
+
+toolchain go1.24.1
 
 require (
 	github.com/davecgh/go-spew v1.1.1

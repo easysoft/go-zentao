@@ -39,3 +39,66 @@ func setup(t *testing.T) (*http.ServeMux, *httptest.Server, *Client) {
 func teardown(server *httptest.Server) {
 	server.Close()
 }
+
+func TestClient_setBaseURL(t *testing.T) {
+	tests := []struct {
+		name    string
+		urlStr  string
+		want    string
+		wantErr bool
+	}{
+		{
+			name:    "基础 URL",
+			urlStr:  "https://zentao.demo.qucheng.cc",
+			want:    "https://zentao.demo.qucheng.cc/api.php/v1",
+			wantErr: false,
+		},
+		{
+			name:    "已包含 api.php/v1",
+			urlStr:  "https://zentao.demo.qucheng.cc/api.php/v1",
+			want:    "https://zentao.demo.qucheng.cc/api.php/v1",
+			wantErr: false,
+		},
+		{
+			name:    "已包含斜杠结尾",
+			urlStr:  "https://zentao.demo.qucheng.cc/",
+			want:    "https://zentao.demo.qucheng.cc/api.php/v1",
+			wantErr: false,
+		},
+		{
+			name:    "完整 URL 带斜杠",
+			urlStr:  "https://zentao.demo.qucheng.cc/api.php/v1/",
+			want:    "https://zentao.demo.qucheng.cc/api.php/v1",
+			wantErr: false,
+		},
+		{
+			name:    "无效 URL",
+			urlStr:  "://invalid-url",
+			want:    "",
+			wantErr: true,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			c := &Client{}
+			err := c.setBaseURL(tt.urlStr)
+
+			// 检查错误情况
+			if (err != nil) != tt.wantErr {
+				t.Errorf("setBaseURL() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+
+			// 如果期望发生错误，不需要检查后续结果
+			if tt.wantErr {
+				return
+			}
+
+			// 检查生成的 URL 是否符合预期
+			if got := c.baseURL.String(); got != tt.want {
+				t.Errorf("setBaseURL() got = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
