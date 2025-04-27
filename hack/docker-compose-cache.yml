@@ -89,6 +89,8 @@ services:
       # - PHP_EXT_REDIS=true
       # end
       # - PHP_SESSION_REDIS_DATABASE=6 # 如果session是redis默认使用6, session database和cache database不要复用
+      #     如果配置PHP_SESSION_PATH，则PHP_SESSION_REDIS_DATABASE不生效，如果需要指定database，可以在PHP_SESSION_PATH后指定database
+      #     # 例如：PHP_SESSION_PATH=tcp://zentao-cache:6379?auth=pass4Zentao&database=6
       - ZT_REDIS_HOST=zentao-cache
       - ZT_REDIS_PORT=6379
       - ZT_REDIS_PASSWORD=pass4Zentao
@@ -102,6 +104,7 @@ services:
       - PHP_MEMORY_LIMIT=512M
       - PHP_POST_MAX_SIZE=128M
       - PHP_UPLOAD_MAX_FILESIZE=128M
+      # - ZT_WEB_ROOT=/zt
     networks:
       - zentao-net
       # 指定mac地址设置网络如下，需要删除`- zentao-net`
