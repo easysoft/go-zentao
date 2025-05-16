@@ -1,4 +1,7 @@
 name: api
+permissions:
+  contents: read
+  packages: write
 
 env:
   # Common versions
