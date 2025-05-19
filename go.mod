@@ -1,11 +1,12 @@
 module github.com/easysoft/go-zentao/v21
 
-go 1.22.0
+go 1.24.0
+
 toolchain go1.24.1
 
 require (
 	github.com/davecgh/go-spew v1.1.1
-	github.com/imroc/req/v3 v3.51.0
+	github.com/imroc/req/v3 v3.52.1
 	github.com/stretchr/testify v1.10.0
 )
 
@@ -16,6 +17,7 @@ require (
 	github.com/google/pprof v0.0.0-20250423184734-337e5dd93bb4 // indirect
 	github.com/hashicorp/errwrap v1.1.0 // indirect
 	github.com/hashicorp/go-multierror v1.1.1 // indirect
+	github.com/icholy/digest v1.1.0 // indirect
 	github.com/klauspost/compress v1.18.0 // indirect
 	github.com/onsi/ginkgo/v2 v2.23.4 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
