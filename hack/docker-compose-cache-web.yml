@@ -1,0 +1,158 @@
+#
+#  Copyright 2024, Zentao
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+#
+
+services:
+
+# db service for zentao
+  zentao-db:
+    image: bitnami/mariadb:10.6
+    # 国内镜像
+    # image: hub.zentao.net/app/mariadb:10.6-bitnami
+    container_name: zentao-db
+    pull_policy: if_not_present
+    restart: always
+    volumes:
+      - 'zentao_db:/bitnami/mariadb'
+      # 使用宿主机目录挂载数据
+      # - '/data/zentao/mariadb:/bitnami/mariadb'
+    networks:
+      - zentao-net
+    environment:
+      - MARIADB_USER=my_user
+      - MARIADB_PASSWORD=my_password
+      - MARIADB_DATABASE=zentao
+      - MARIADB_CHARACTER_SET=utf8mb4
+      - MARIADB_COLLATE=utf8mb4_unicode_ci
+      - MARIADB_ROOT_PASSWORD=pass4Zentao
+    healthcheck:
+      test: ['CMD', '/opt/bitnami/scripts/mariadb/healthcheck.sh']
+      interval: 15s
+      timeout: 5s
+      retries: 6
+
+  zentao-cache:
+    image: bitnami/redis:6.2
+    # 国内镜像
+    # image: hub.zentao.net/app/redis:6.2-bitnami
+    container_name: zentao-cache
+    pull_policy: if_not_present
+    restart: always
+    environment:
+      - REDIS_PASSWORD=pass4Zentao
+    volumes:
+      - 'zentao_cache:/bitnami/redis/data'
+      # 使用宿主机目录挂载数据
+      # - '/data/zentao/redis:/bitnami/redis/data'
+    networks:
+      - zentao-net
+
+# zentao service
+  zentao:
+    image: easysoft/zentao
+    # 国内镜像
+    # image: hub.zentao.net/app/zentao
+    container_name: zentao
+    pull_policy: always
+    restart: always
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.zentao.rule=Host(`zentao.192.168.23.16.sslip.io`)"
+      - "traefik.http.routers.zentao.middlewares=gzip@docker"
+    volumes:
+      - 'zentao_data:/data'
+      # 使用宿主机目录挂载数据
+      # - '/data/zentao/data:/data'
+    depends_on:
+      - zentao-db
+      - zentao-cache
+    environment:
+      # - DEBUG=true # debug模式
+      - ZT_MYSQL_HOST=zentao-db
+      - ZT_MYSQL_PORT=3306
+      - ZT_MYSQL_USER=root
+      - ZT_MYSQL_PASSWORD=pass4Zentao
+      - ZT_MYSQL_DB=zentao
+      # 从21.3版本开始，如果已经设置了redis相关环境变量自动开启redis session缓存，可不用配置如下环境变量
+      # - PHP_SESSION_TYPE=redis
+      # - PHP_SESSION_PATH=tcp://zentao-cache:6379?auth=pass4Zentao
+      # - PHP_EXT_REDIS=true
+      # end
+      # - PHP_SESSION_REDIS_DATABASE=6 # 如果session是redis默认使用6, session database和cache database不要复用
+      #     如果配置PHP_SESSION_PATH，则PHP_SESSION_REDIS_DATABASE不生效，如果需要指定database，可以在PHP_SESSION_PATH后指定database
+      #     # 例如：PHP_SESSION_PATH=tcp://zentao-cache:6379?auth=pass4Zentao&database=6
+      - ZT_REDIS_HOST=zentao-cache
+      - ZT_REDIS_PORT=6379
+      - ZT_REDIS_PASSWORD=pass4Zentao
+      - ZT_REDIS_SERIALIZER=igbinary # php, igbinary
+      - ZT_CACHE_ENABLE=true
+      - ZT_CACHE_TYPE=redis
+      - ZT_CACHE_SCOPE=private # 可选shared, private
+      - ZT_CACHE_LIFETIME=0
+      # - ZT_REDIS_DATABASE=0 # 默认禅道为0
+      - PHP_MAX_EXECUTION_TIME=120
+      - PHP_MEMORY_LIMIT=512M
+      - PHP_POST_MAX_SIZE=128M
+      - PHP_UPLOAD_MAX_FILESIZE=128M
+      # - ZT_WEB_ROOT=/zt
+    networks:
+      - zentao-net
+      # 指定mac地址设置网络如下，需要删除`- zentao-net`
+      # zentao-net:
+      # 02:42:ac:11:00:02为示例mac地址
+      #   mac_address: 02:42:ac:11:00:02
+
+  traefik:
+    image: traefik:v3.4
+    # 国内镜像
+    # image: hub.zentao.net/app/traefik:v3.4
+    container_name: traefik
+    pull_policy: if_not_present
+    networks:
+      - zentao-net
+    command:
+      - "--api.insecure=true"
+      - "--api.dashboard=true"
+      - "--providers.docker.network=zentao-net"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.http.address=:80"
+      - "--log.level=INFO"
+      - "--accesslog=true"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.traefik-dashboard.entrypoints=http"
+      - "traefik.http.routers.traefik-dashboard.rule=Host(`traefik.192.168.23.16.sslip.io`)"
+      - "traefik.http.routers.traefik-dashboard.service=dashboard@internal"
+      - "traefik.http.routers.traefik-dashboard-api.entrypoints=http"
+      - "traefik.http.routers.traefik-dashboard-api.rule=Host(`traefik.192.168.23.16.sslip.io`) && PathPrefix(`/api`)"
+      - "traefik.http.routers.traefik-dashboard-api.service=api@internal"
+      - "traefik.http.middlewares.gzip.compress=true"
+      - "traefik.http.routers.traefik-dashboard.middlewares=gzip@docker"
+    ports:
+      - "80:80"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    restart: always
+
+networks:
+  zentao-net:
+    driver: bridge
+
+# persistence for mysql, cache and zentao
+volumes:
+  zentao_db:
+  zentao_cache:
+  zentao_data:
