@@ -109,7 +109,7 @@ jobs:
         run: |
           task coverage
       - name: Update coverage report
-        uses: ncruces/go-coverage-report@v0.3.0
+        uses: ncruces/go-coverage-report@v0.3.1
         with:
           report: 'true'
           amend: 'true'
