@@ -185,15 +185,6 @@ type CommentBug struct {
 	Comment string `json:"comment,omitempty"`
 }
 
-// @Summary 获取产品下的Bug列表
-// @Description 获取产品下的Bug列表
-// @Tags Bugs
-// @Accept json
-// @Produce json
-// @Param id path int true "产品ID"
-// @Param op query ListOptions false "查询参数"
-// @Success 200 {object} ListProductsBugsMsg
-// @Router /products/{id}/bugs [get]
 func (s *BugsService) ListByProducts(id int64, op ListOptions) (*ListProductsBugsMsg, *req.Response, error) {
 	var et ListProductsBugsMsg
 	resp, err := s.client.client.R().

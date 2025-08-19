@@ -205,15 +205,6 @@ func (s *UsersService) UpdateByID(id int, user UserUpdateMeta) (*UserProfile, *r
 	return &u, resp, err
 }
 
-// @Summary 获取用户列表
-// @Description 获取用户列表
-// @Tags Users
-// @Accept json
-// @Produce json
-// @Param limit query string false "每页数量"
-// @Param page query string false "页码"
-// @Success 200 {object} UserList
-// @Router /users [get]
 func (s *UsersService) List(limit, page string) (*UserList, *req.Response, error) {
 	var u UserList
 	resp, err := s.client.client.R().
@@ -227,13 +218,6 @@ func (s *UsersService) List(limit, page string) (*UserList, *req.Response, error
 	return &u, resp, err
 }
 
-// @Summary 获取所有部门信息.
-// @Description 获取所有部门信息.
-// @Tags Users
-// @Accept json
-// @Produce json
-// @Success 200 {object} DepartmentsMsg
-// @Router /departments [get]
 func (s *UsersService) ListAllDepartments() (*DepartmentsMsg, *req.Response, error) {
 	var result DepartmentsMsg
 	resp, err := s.client.client.R().
@@ -243,14 +227,6 @@ func (s *UsersService) ListAllDepartments() (*DepartmentsMsg, *req.Response, err
 	return &result, resp, err
 }
 
-// @Summary 获取部门信息.
-// @Description 获取部门信息.
-// @Tags Users
-// @Accept json
-// @Produce json
-// @Param id path int true "部门ID"
-// @Success 200 {object} DepartmentCustomMeta
-// @Router /departments/{id} [get]
 func (s *UsersService) GetDepartmentByID(deptID int) (*DepartmentCustomMeta, *req.Response, error) {
 	var result DepartmentCustomMeta
 	resp, err := s.client.client.R().
@@ -260,13 +236,6 @@ func (s *UsersService) GetDepartmentByID(deptID int) (*DepartmentCustomMeta, *re
 	return &result, resp, err
 }
 
-// @Summary 获取所有分组信息.
-// @Description 获取所有分组信息.
-// @Tags Users
-// @Accept json
-// @Produce json
-// @Success 200 {object} GroupsMsg
-// @Router /groups [get]
 func (s *UsersService) ListAllGroups() (*GroupsMsg, *req.Response, error) {
 	var result GroupsMsg
 	resp, err := s.client.client.R().

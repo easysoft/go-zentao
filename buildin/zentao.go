@@ -24,14 +24,6 @@ import (
 	"github.com/imroc/req/v3"
 )
 
-// @title Zentao Go SDK
-// @version v21.0
-// @description This is a Go SDK for Zentao API.
-
-// @schemes https
-// @host zentao.demo.qucheng.cc
-// @BasePath /
-
 const (
 	defaultBaseURL = "https://zentao.demo.qucheng.cc"
 	userAgent      = "go-zentao"
@@ -63,9 +55,9 @@ type Client struct {
 
 	// build-in
 	Login *LoginService
+	User  *UserService
 }
 
-// Deprecated: please use zentao.NewBasicAuthClient instead
 // NewBasicAuthClient 使用用户名和密码创建一个客户端
 func NewBasicAuthClient(username, password string, options ...ClientOptionFunc) (*Client, error) {
 	client, err := newClient(options...)
@@ -83,6 +75,16 @@ func NewBasicAuthClient(username, password string, options ...ClientOptionFunc) 
 	// auth password
 	client.username = username
 	client.password = password
+
+	// 执行登录验证
+	success, _, _, err := client.Login.Login()
+	if err != nil {
+		return nil, fmt.Errorf("login failed: %w", err)
+	}
+	if !success {
+		return nil, fmt.Errorf("login authentication failed")
+	}
+
 	return client, nil
 }
 
@@ -101,6 +103,7 @@ func newClient(options ...ClientOptionFunc) (*Client, error) {
 		}
 	}
 	c.Login = &LoginService{client: c}
+	c.User = &UserService{client: c}
 	return c, nil
 }
 

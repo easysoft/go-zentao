@@ -24,14 +24,6 @@ import (
 	"github.com/imroc/req/v3"
 )
 
-// @title Zentao Go SDK
-// @version v21.0
-// @description This is a Go SDK for Zentao API.
-
-// @schemes https
-// @host zentao.demo.qucheng.cc
-// @BasePath /api.php/v1
-
 const (
 	defaultBaseURL = "https://zentao.demo.qucheng.cc/"
 	userAgent      = "go-zentao"
@@ -130,9 +122,7 @@ func newClient(options ...ClientOptionFunc) (*Client, error) {
 
 func (c *Client) setBaseURL(urlStr string) error {
 	// Make sure the given URL end with a slash
-	if strings.HasSuffix(urlStr, "/") {
-		urlStr = strings.TrimSuffix(urlStr, "/")
-	}
+	urlStr = strings.TrimSuffix(urlStr, "/")
 
 	baseURL, err := url.Parse(urlStr)
 	if err != nil {

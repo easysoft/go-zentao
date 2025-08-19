@@ -34,14 +34,14 @@ jobs:
         run: |
           echo "install task"
           go install github.com/go-task/task/v3/cmd/task@latest
-      - name: build api
-        run: |
-          task swag
-      - name: Build and push docs api
-        uses: docker/build-push-action@v6
-        with:
-          platforms: linux/amd64,linux/arm64
-          pull: true
-          push: true
-          tags: ttl.sh/easysoft/zentaoapi
-          context: docs
+      # - name: build api
+      #   run: |
+      #     task swag
+      # - name: Build and push docs api
+      #   uses: docker/build-push-action@v6
+      #   with:
+      #     platforms: linux/amd64,linux/arm64
+      #     pull: true
+      #     push: true
+      #     tags: ttl.sh/easysoft/zentaoapi
+      #     context: docs

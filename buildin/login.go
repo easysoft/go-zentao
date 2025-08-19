@@ -47,52 +47,52 @@ type LoginRespData struct {
 }
 
 type LoginUserData struct {
-	ID             string          `json:"id"`
-	Company        string          `json:"company"`
-	Type           string          `json:"type"`
-	Dept           string          `json:"dept"`
-	Account        string          `json:"account"`
-	Role           string          `json:"role"`
-	Realname       string          `json:"realname"`
-	Pinyin         string          `json:"pinyin"`
-	Nickname       string          `json:"nickname"`
-	Commiter       string          `json:"commiter"`
-	Avatar         string          `json:"avatar"`
-	Birthday       string          `json:"birthday"`
-	Gender         string          `json:"gender"`
-	Email          string          `json:"email"`
-	Skype          string          `json:"skype"`
-	Qq             string          `json:"qq"`
-	Mobile         string          `json:"mobile"`
-	Phone          string          `json:"phone"`
-	Weixin         string          `json:"weixin"`
-	Dingding       string          `json:"dingding"`
-	Slack          string          `json:"slack"`
-	Whatsapp       string          `json:"whatsapp"`
-	Address        string          `json:"address"`
-	Zipcode        string          `json:"zipcode"`
-	Nature         string          `json:"nature"`
-	Analysis       string          `json:"analysis"`
-	Strategy       string          `json:"strategy"`
-	Join           string          `json:"join"`
-	Visits         string          `json:"visits"`
-	Visions        string          `json:"visions"`
-	IP             string          `json:"ip"`
-	Last           string          `json:"last"`
-	Fails          string          `json:"fails"`
-	Locked         string          `json:"locked"`
-	Feedback       string          `json:"feedback"`
-	Ranzhi         string          `json:"ranzhi"`
-	Ldap           string          `json:"ldap"`
-	Score          string          `json:"score"`
-	ScoreLevel     string          `json:"scoreLevel"`
-	ResetToken     string          `json:"resetToken"`
-	ClientStatus   string          `json:"clientStatus"`
-	ClientLang     string          `json:"clientLang"`
-	LastTime       string          `json:"lastTime"`
-	Admin          bool            `json:"admin"`
-	ModifyPassword bool            `json:"modifyPassword"`
-	Rights         LoginUserRights `json:"rights"`
+	ID             int         `json:"id"`
+	Company        string      `json:"company"`
+	Type           string      `json:"type"`
+	Dept           int         `json:"dept"`
+	Account        string      `json:"account"`
+	Role           string      `json:"role"`
+	Realname       string      `json:"realname"`
+	Pinyin         string      `json:"pinyin"`
+	Nickname       string      `json:"nickname"`
+	Commiter       string      `json:"commiter"`
+	Avatar         string      `json:"avatar"`
+	Birthday       string      `json:"birthday"`
+	Gender         string      `json:"gender"`
+	Email          string      `json:"email"`
+	Skype          string      `json:"skype"`
+	Qq             string      `json:"qq"`
+	Mobile         string      `json:"mobile"`
+	Phone          string      `json:"phone"`
+	Weixin         string      `json:"weixin"`
+	Dingding       string      `json:"dingding"`
+	Slack          string      `json:"slack"`
+	Whatsapp       string      `json:"whatsapp"`
+	Address        string      `json:"address"`
+	Zipcode        string      `json:"zipcode"`
+	Nature         string      `json:"nature"`
+	Analysis       string      `json:"analysis"`
+	Strategy       string      `json:"strategy"`
+	Join           string      `json:"join"`
+	Visits         int         `json:"visits"`
+	Visions        string      `json:"visions"`
+	IP             string      `json:"ip"`
+	Last           string      `json:"last"`
+	Fails          int         `json:"fails"`
+	Locked         string      `json:"locked"`
+	Feedback       string      `json:"feedback"`
+	Ranzhi         string      `json:"ranzhi"`
+	Ldap           string      `json:"ldap"`
+	Score          int         `json:"score"`
+	ScoreLevel     int         `json:"scoreLevel"`
+	ResetToken     string      `json:"resetToken"`
+	ClientStatus   string      `json:"clientStatus"`
+	ClientLang     string      `json:"clientLang"`
+	LastTime       int         `json:"lastTime"`
+	Admin          bool        `json:"admin"`
+	ModifyPassword bool        `json:"modifyPassword"`
+	Rights         interface{} `json:"rights"`
 	Groups         struct {
 		Num13 string `json:"13"`
 	} `json:"groups"`
@@ -195,7 +195,12 @@ func (s *LoginService) Login() (bool, *LoginRespData, *req.Response, error) {
 	} else {
 		resp, err = s.client.client.R().
 			SetSuccessResult(&data).
-			Get(s.client.RequestURLFmt("/user-login.json?account=%s&password=%s&zentaosid=%s", s.client.username, s.client.password, s.client.zentaosid))
+			SetQueryParams(map[string]string{
+				"account":   s.client.username,
+				"password":  s.client.password,
+				"zentaosid": s.client.zentaosid,
+			}).
+			Get(s.client.RequestURL("/user-login.json"))
 	}
 	if err != nil {
 		return false, &data, resp, err
