@@ -44,7 +44,7 @@ services:
       retries: 6
 
   zentao-cache:
-    image: bitnami/redis:6.2
+    image: soldevelo/redis:6.2
     # 国内镜像
     # image: hub.zentao.net/app/redis:6.2-bitnami
     container_name: zentao-cache
